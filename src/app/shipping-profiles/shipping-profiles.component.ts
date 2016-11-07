@@ -12,22 +12,22 @@ import { ParcelServicesData } from './data/parcel-services-data';
 import { PopupComponent } from '../popup/popup.component';
 import { ShippingProfileSettingsData } from './data/shipping-profile-settings-data';
 import { ShippingProfileCorrelationData } from './data/shipping-profile-correlation-data';
+import { PlentySelectBoxValue } from '@plentymarkets/terra-components/index';
 
 @Component({
   selector: 'shipping-profiles-table',
   template: require('./shipping-profiles.component.html'),
   styles: [require('./shipping-profiles.component.scss').toString()]
 })
-export class ShippingProfilesComponent implements OnInit {
-
-  private parcelServicePresetList;
-  private shippingProfileSettingsList;
+export class ShippingProfilesComponent implements OnInit
+{
+  private parcelServicePresetList:Array<PlentySelectBoxValue>;
+  private shippingProfileSettingsList:Array<PlentySelectBoxValue>;
   private shippingProfileCorrelationList;
 
-  constructor(private service:ShippingProfileService) {
+  constructor(private service:ShippingProfileService)
+  {
 
-    this.parcelServicePresetList = [];
-    this.shippingProfileSettingsList = [];
     this.shippingProfileCorrelationList = [];
 
     service.getShippingProfileCorrelations().subscribe(
@@ -81,6 +81,19 @@ export class ShippingProfilesComponent implements OnInit {
    * directive is instantiated.
    */
   ngOnInit() {
+
+    this.parcelServicePresetList = [
+      {
+        value:   '0',
+        caption: 'Default'
+      }
+    ];
+    this.shippingProfileSettingsList = [
+      {
+        value:   '0',
+        caption: 'Default'
+      }
+    ];
 
   }
 
