@@ -1,0 +1,17 @@
+<div class="col-xs-12">
+  <!--element with 'dataTable' attribute which are manipulated by DataTableDemoDirective
+      define provided data service -->
+  <div class="snap">
+    <plenty-data-table dataTable [service]="dataTableDemoService"></plenty-data-table>
+  </div>
+  <plenty-button class="demo-button-border" caption="Get selected Rows" (clicked)="onButtonClick()"></plenty-button>
+
+  <!-- specific data binding of plenty-button [isPrimary] with string as content -->
+  <plenty-button class="button-popup" [isPrimary]="true" caption="Select Rows" (clicked)="onPopupClick()"></plenty-button>
+  <popup class="popup" [isOpen]="isPopupOpen">
+    <div>
+      <!-- specific data binding of plenty-multi-select-box [isDisabled] with 'disabled' attribute from parent component as content -->
+      <plenty-multi-select-box [valueList]="values" [isDisabled]="disabled" [isError]="error"></plenty-multi-select-box>
+    </div>
+  </popup>
+</div>

@@ -1,0 +1,42 @@
+<div class="col-xs-6">
+  <div class="table-responsive">
+    {{ parcelServicePresetList | json }}
+    <br>
+    {{ shippingProfileSettingsList | json }}
+
+    <table class="table data-table table-striped table-bordered">
+      <thead>
+      <tr>
+        <th>Etsy Shipping Profile</th>
+        <th>Parcel Service Preset</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <template ngFor let-row [ngForOf]="shippingProfileCorrelationList">
+        <tr>
+          <td>
+            <plenty-select-box name="label"
+                               [listBoxValues]="parcelServicePresetList"
+                               tooltipText="Default"
+                               defaultSelection="row.parcelServicePresetId"
+                               tooltipPlacement="Choose an parcel service preset">
+            </plenty-select-box>
+            {{ row.parcelServicePresetId }}
+          </td>
+          <td>
+            <plenty-select-box name="label"
+                               [listBoxValues]="shippingProfileSettingsList"
+                               tooltipText="Default"
+                               defaultSelection="row.settingsId"
+                               tooltipPlacement="Choose an parcel service preset">
+            </plenty-select-box>
+            {{ row.settingsId }}
+          </td>
+        </tr>
+      </template>
+      </tbody>
+    </table>
+  </div>
+  <plenty-button [isSmall]="true" caption="Small Button"></plenty-button>
+</div>

@@ -1,0 +1,14 @@
+.popup {
+  margin-top: 2px;
+  .popup-in {
+    background: #FFF;
+    position: absolute !important;
+    display: block;
+    width: 270px;
+    height: auto;
+    left: 15px;
+  }
+}
+.transparent {
+  opacity: .7;
+}
