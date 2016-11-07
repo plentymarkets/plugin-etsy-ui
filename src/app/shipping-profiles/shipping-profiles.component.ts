@@ -16,7 +16,7 @@ import { ShippingProfileCorrelationData } from './data/shipping-profile-correlat
 @Component({
   selector: 'shipping-profiles-table',
   template: require('./shipping-profiles.component.html'),
-  styles: [require('./shipping-profiles.component.scss')]
+  styles: [require('./shipping-profiles.component.scss').toString()]
 })
 export class ShippingProfilesComponent implements OnInit {
 

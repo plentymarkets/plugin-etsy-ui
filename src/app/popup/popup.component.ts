@@ -20,7 +20,7 @@ declare var jQuery:any;
 @Component({
   selector: 'popup',
   template: require('./popup.component.html'),
-  styles: [require('./popup.component.scss')],
+  styles: [require('./popup.component.scss').toString()],
   encapsulation: ViewEncapsulation.None
 })
 export class PopupComponent implements DoCheck {

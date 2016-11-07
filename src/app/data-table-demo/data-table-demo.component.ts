@@ -24,7 +24,7 @@ import {
 @Component({
   selector: 'data-table-demo',
   template: require('./data-table-demo.component.html'),
-  styles: [require('./data-table-demo.component.scss')]
+  styles: [require('./data-table-demo.component.scss').toString()]
 })
 export class DataTableDemoComponent implements OnInit, AfterViewInit, DoCheck {
 

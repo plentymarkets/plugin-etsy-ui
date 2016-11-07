@@ -17,7 +17,7 @@ import {
 @Component({
   selector: 'etsy-app',
   template: require('./etsy-app.component.html'),
-  styles:   [require('./etsy-app.component.scss')]
+  styles:   [require('./etsy-app.component.scss').toString()]
 })
 export class EtsyComponent implements OnInit{
 

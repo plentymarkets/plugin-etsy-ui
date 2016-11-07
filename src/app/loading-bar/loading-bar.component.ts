@@ -6,8 +6,8 @@ import {
 
 @Component({
   selector: 'loading-bar',
-  templateUrl: './loading-bar.component.html',
-  styleUrls: ['./loading-bar.component.css'],
+  template: require('./loading-bar.component.html'),
+  styles: [require('./loading-bar.component.css').toString()],
   encapsulation: ViewEncapsulation.None
 })
 export class LoadingBarComponent implements OnInit {
