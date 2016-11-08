@@ -1,3 +1,5 @@
+
+<plenty-alert-panel></plenty-alert-panel>
 <div style="margin: 5px 5px 5px 10px;">
   <div class="spacer">
     <div class="col-xs-12">
@@ -11,11 +13,10 @@
               <thead>
               <tr>
                 <th>Parcel Service Preset</th>
-                <th>Etsy Shipping Profile</th>
+                <th colspan="2">Etsy Shipping Profile</th>
               </tr>
               </thead>
               <tbody>
-
               <template ngFor let-row [ngForOf]="shippingProfileCorrelationList">
                 <tr>
                   <td>
@@ -37,6 +38,9 @@
                         </option>
                       </template>
                     </select>
+                  </td>
+                  <td>
+                    <plenty-button [isSmall]="true" icon="icon-cancel" (clicked)="removeCorrelation(row)"></plenty-button>
                   </td>
                 </tr>
               </template>

@@ -12,22 +12,22 @@ import { ParcelServicesData } from './data/parcel-services-data';
 import { PopupComponent } from '../popup/popup.component';
 import { ShippingProfileSettingsData } from './data/shipping-profile-settings-data';
 import { ShippingProfileCorrelationData } from './data/shipping-profile-correlation-data';
+import { PlentySelectBoxValue } from '@plentymarkets/terra-components/index';
+import { PlentyAlert } from '@plentymarkets/terra-components/index';
 
 @Component({
   selector: 'shipping-profiles-table',
   template: require('./shipping-profiles.component.html'),
-  styles: [require('./shipping-profiles.component.scss')]
+  styles: [require('./shipping-profiles.component.scss').toString()]
 })
 export class ShippingProfilesComponent implements OnInit {
-
-  private parcelServicePresetList;
-  private shippingProfileSettingsList;
-  private shippingProfileCorrelationList;
+  private alert:PlentyAlert = PlentyAlert.getInstance();
+  private parcelServicePresetList:Array<PlentySelectBoxValue>;
+  private shippingProfileSettingsList:Array<PlentySelectBoxValue>;
+  private shippingProfileCorrelationList:Array<ShippingProfileCorrelationData>;
 
   constructor(private service:ShippingProfileService) {
 
-    this.parcelServicePresetList = [];
-    this.shippingProfileSettingsList = [];
     this.shippingProfileCorrelationList = [];
 
     service.getShippingProfileCorrelations().subscribe(
@@ -77,29 +77,50 @@ export class ShippingProfilesComponent implements OnInit {
    */
   ngOnInit() {
 
+    this.parcelServicePresetList = [
+      {
+        value: '0',
+        caption: 'Default'
+      }
+    ];
+    this.shippingProfileSettingsList = [
+      {
+        value: '0',
+        caption: 'Default'
+      }
+    ];
+
   }
 
-  private saveCorrelations():void
-  {
-    this.service.saveCorrelations({
-      correlations:this.shippingProfileCorrelationList}).subscribe(
+  private saveCorrelations():void {
+    this.service.saveCorrelations({correlations: this.shippingProfileCorrelationList}).subscribe(
       res => {
-
+        this.alert.addAlert('Shipping profile correlations saved successfully',
+          true,
+          'info',
+          5000,
+          'etsy.shipping.profile.correlations');
       },
 
       error => {
-
+        this.alert.addAlert('Shipping profile correlations not saved',
+          true,
+          'danger',
+          5000,
+          'etsy.shipping.profile.correlations');
       }
     );
   }
 
-  private addCorrelation():void
-  {
+  private addCorrelation():void {
     this.shippingProfileCorrelationList.push({
       settingsId: null,
       parcelServicePresetId: null
     });
+  }
 
-    // this.service.saveCorrelations(this.shippingProfileCorrelationList);
+  private removeCorrelation(item:ShippingProfileCorrelationData):void {
+    var index = this.shippingProfileCorrelationList.indexOf(item);
+    this.shippingProfileCorrelationList.splice(index, 1);
   }
 }
