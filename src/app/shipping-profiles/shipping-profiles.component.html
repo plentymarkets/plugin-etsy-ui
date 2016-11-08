@@ -1,0 +1,72 @@
+<plenty-alert-panel></plenty-alert-panel>
+
+<div style="margin: 15px 5px 5px 10px;">
+  <div class="spacer">
+    <div class="col-xs-12">
+      <h5>Shipping Profile Correlations</h5>
+      <hr>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <div class="table-responsive">
+            <table class="table data-table table-striped table-bordered">
+              <thead>
+              <tr>
+                <th>Parcel Service Preset</th>
+                <th colspan="2">Etsy Shipping Profile</th>
+              </tr>
+              </thead>
+              <tbody>
+              <template ngFor let-row [ngForOf]="shippingProfileCorrelationList">
+                <tr>
+                  <td>
+                    <select [(ngModel)]="row.parcelServicePresetId">
+                      <template ngFor let-optionParcelServicePreset [ngForOf]="parcelServicePresetList">
+                        <option [ngValue]="optionParcelServicePreset.value"
+                                selected="{{ optionParcelServicePreset.value == row.parcelServicePresetId ? 'selected' : '' }}">
+                          {{ optionParcelServicePreset.caption }}
+                        </option>
+                      </template>
+                    </select>
+                  </td>
+                  <td>
+                    <select [(ngModel)]="row.settingsId">
+                      <template ngFor let-optionShippingProfileSettings [ngForOf]="shippingProfileSettingsList">
+                        <option [ngValue]="optionShippingProfileSettings.value"
+                                selected="{{ optionShippingProfileSettings.value == row.settingsId ? 'selected' : '' }}">
+                          {{ optionShippingProfileSettings.caption }}
+                        </option>
+                      </template>
+                    </select>
+                  </td>
+                  <td>
+                    <plenty-button [isSmall]="true" icon="icon-cancel" (clicked)="removeCorrelation(row)"></plenty-button>
+                  </td>
+                </tr>
+              </template>
+              </tbody>
+            </table>
+          </div>
+          <plenty-button [isSmall]="true"
+                         [isPrimary]="true"
+                         icon="icon-add"
+                         (clicked)="addCorrelation()"
+                         caption="Add correlation"></plenty-button>
+          <plenty-button [isSmall]="true"
+                         [isDisabled]="isSaving"
+                         icon="icon-confirm"
+                         (clicked)="saveCorrelations()"
+                         caption="Save"></plenty-button>
+
+          <plenty-button [isSmall]="true"
+                         [isPrimary]="true"
+                         [isAlignRight]="true"
+                         icon="icon-download"
+                         (clicked)="import()"
+                         caption="Import Etsy Shipping Profiles"></plenty-button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
