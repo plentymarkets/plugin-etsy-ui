@@ -25,44 +25,66 @@ export class ShippingProfilesComponent implements OnInit {
   private parcelServicePresetList:Array<PlentySelectBoxValue>;
   private shippingProfileSettingsList:Array<PlentySelectBoxValue>;
   private shippingProfileCorrelationList:Array<ShippingProfileCorrelationData>;
+  private isSaving:boolean = true;
 
   constructor(private service:ShippingProfileService) {
 
     this.shippingProfileCorrelationList = [];
 
     service.getShippingProfileCorrelations().subscribe(
-      res => {
-        for (let index in res) {
-          this.shippingProfileCorrelationList.push(res[index]);
+      response => {
+        for (let index in response) {
+          this.shippingProfileCorrelationList.push(response[index]);
         }
+
+        this.isSaving = false;
+      },
+
+      error => {
+        this.alert.addAlert('Could not load shipping profile correlations: ' + error.statusText,
+          true,
+          'danger',
+          5000);
       }
     );
 
     service.getParcelServiceList().subscribe(
-      res => {
-
-
-        for (let index in res) {
-          let data:ParcelServicesData = res[index];
+      response => {
+        for (let index in response) {
+          let data:ParcelServicesData = response[index];
 
           this.parcelServicePresetList.push({
             value: data.id,
             caption: data.name
           });
         }
+      },
+
+      error => {
+        this.alert.addAlert('Could not load parcel service preset list: ' + error.statusText,
+          true,
+          'danger',
+          5000);
       }
     );
 
     service.getShippingProfileSettingsList().subscribe(
-      res => {
-        for (let index in res) {
-          let data:ShippingProfileSettingsData = res[index];
+      response => {
+        for (let index in response) {
+          let data:ShippingProfileSettingsData = response[index];
 
           this.shippingProfileSettingsList.push({
             value: data.id,
             caption: data.name
           });
         }
+      },
+
+      error => {
+        this.alert.addAlert('Could not load shipping profile settings list: ' + error.statusText,
+          true,
+          'danger',
+          5000);
       }
     );
 
@@ -93,21 +115,25 @@ export class ShippingProfilesComponent implements OnInit {
   }
 
   private saveCorrelations():void {
+    this.isSaving = true;
+
     this.service.saveCorrelations({correlations: this.shippingProfileCorrelationList}).subscribe(
-      res => {
+      response => {
         this.alert.addAlert('Shipping profile correlations saved successfully',
           true,
-          'info',
-          5000,
-          'etsy.shipping.profile.correlations');
+          'success',
+          5000);
+
+        this.isSaving = false;
       },
 
       error => {
         this.alert.addAlert('Shipping profile correlations not saved',
           true,
           'danger',
-          5000,
-          'etsy.shipping.profile.correlations');
+          5000);
+
+        this.isSaving = false;
       }
     );
   }

@@ -1,6 +1,6 @@
-
 <plenty-alert-panel></plenty-alert-panel>
-<div style="margin: 5px 5px 5px 10px;">
+
+<div style="margin: 15px 5px 5px 10px;">
   <div class="spacer">
     <div class="col-xs-12">
       <h5>Shipping Profile Correlations</h5>
@@ -47,10 +47,23 @@
               </tbody>
             </table>
           </div>
-          <plenty-button [isSmall]="true" [isPrimary]="true" icon="icon-add" (clicked)="addCorrelation()"
+          <plenty-button [isSmall]="true"
+                         [isPrimary]="true"
+                         icon="icon-add"
+                         (clicked)="addCorrelation()"
                          caption="Add correlation"></plenty-button>
-          <plenty-button [isSmall]="true" caption="Save" icon="icon-confirm"
-                         (clicked)="saveCorrelations()"></plenty-button>
+          <plenty-button [isSmall]="true"
+                         [isDisabled]="isSaving"
+                         icon="icon-confirm"
+                         (clicked)="saveCorrelations()"
+                         caption="Save"></plenty-button>
+
+          <plenty-button [isSmall]="true"
+                         [isPrimary]="true"
+                         [isAlignRight]="true"
+                         icon="icon-download"
+                         (clicked)="import()"
+                         caption="Import Etsy Shipping Profiles"></plenty-button>
         </div>
 
       </div>
