@@ -62,4 +62,17 @@ export class ShippingProfileService extends BaseService
       this.http.get(url, {headers: this.headers, body: ''})
     );
   }
+
+  public saveCorrelations(data:any):Observable<any>
+  {
+    this.setAuthorization();
+
+    let url:string;
+
+    url = this.url + 'correlate';
+
+    return this.mapRequest(
+      this.http.post(url, data, {headers: this.headers})
+    );
+  }
 }

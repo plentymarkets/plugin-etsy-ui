@@ -33,12 +33,7 @@ export class ShippingProfilesComponent implements OnInit {
     service.getShippingProfileCorrelations().subscribe(
       res => {
         for (let index in res) {
-          let data:ShippingProfileCorrelationData = res[index];
-
-          this.shippingProfileCorrelationList.push({
-            settingsId: data.settingsId,
-            parcelServicePresetId: data.parcelServicePresetId
-          });
+          this.shippingProfileCorrelationList.push(res[index]);
         }
       }
     );
@@ -84,5 +79,27 @@ export class ShippingProfilesComponent implements OnInit {
 
   }
 
+  private saveCorrelations():void
+  {
+    this.service.saveCorrelations({
+      correlations:this.shippingProfileCorrelationList}).subscribe(
+      res => {
 
+      },
+
+      error => {
+
+      }
+    );
+  }
+
+  private addCorrelation():void
+  {
+    this.shippingProfileCorrelationList.push({
+      settingsId: null,
+      parcelServicePresetId: null
+    });
+
+    // this.service.saveCorrelations(this.shippingProfileCorrelationList);
+  }
 }
