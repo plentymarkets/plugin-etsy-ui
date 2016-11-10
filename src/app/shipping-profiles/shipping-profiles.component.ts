@@ -15,137 +15,185 @@ import { PlentySelectBoxValue } from '@plentymarkets/terra-components/index';
 import { PlentyAlert } from '@plentymarkets/terra-components/index';
 
 @Component({
-  selector: 'shipping-profiles-table',
-  template: require('./shipping-profiles.component.html'),
-  styles: [require('./shipping-profiles.component.scss').toString()]
+    selector: 'shipping-profiles-table',
+    template: require('./shipping-profiles.component.html'),
+    styles: [require('./shipping-profiles.component.scss').toString()]
 })
 export class ShippingProfilesComponent implements OnInit {
-  private alert:PlentyAlert = PlentyAlert.getInstance();
-  private parcelServicePresetList:Array<PlentySelectBoxValue>;
-  private shippingProfileSettingsList:Array<PlentySelectBoxValue>;
-  private shippingProfileCorrelationList:Array<ShippingProfileCorrelationData>;
-  private isSaving:boolean = true;
+    private alert:PlentyAlert = PlentyAlert.getInstance();
+    private parcelServicePresetList:Array<PlentySelectBoxValue>;
+    private shippingProfileSettingsList:Array<PlentySelectBoxValue>;
+    private shippingProfileCorrelationList:Array<ShippingProfileCorrelationData>;
+    private isSaving:boolean = true;
+    private isImporting:boolean = true;
+    private service:ShippingProfileService;
 
-  constructor(private service:ShippingProfileService) {
+    constructor(private S:ShippingProfileService) {
 
-    this.shippingProfileCorrelationList = [];
+        this.service = S;
+        this.shippingProfileCorrelationList = [];
 
-    service.getShippingProfileCorrelations().subscribe(
-      response => {
-        for (let index in response) {
-          this.shippingProfileCorrelationList.push(response[index]);
-        }
+        this.getShippingProfileCorrelations();
+        this.getParcelServiceList();
+        this.getShippingProfileSettingsList();
+    }
 
-        this.isSaving = false;
-      },
+    /*
+     * belong to OnInit Lifecycle hook
+     * get called right after the directive's data-bound properties have been checked for the
+     * first time, and before any of its children have been checked. It is invoked only once when the
+     * directive is instantiated.
+     */
+    ngOnInit() {
 
-      error => {
-        this.alert.addAlert('Could not load shipping profile correlations: ' + error.statusText,
-          true,
-          'danger',
-          5000);
-      }
-    );
+    }
 
-    service.getParcelServiceList().subscribe(
-      response => {
-        for (let index in response) {
-          let data:ParcelServicesData = response[index];
+    private getShippingProfileCorrelations():void {
+        this.service.getShippingProfileCorrelations().subscribe(
+            response => {
+                for (let index in response) {
+                    this.shippingProfileCorrelationList.push(response[index]);
+                }
 
-          this.parcelServicePresetList.push({
-            value: data.id,
-            caption: data.name
-          });
-        }
-      },
+                this.isSaving = false;
+                this.isImporting = false;
+            },
 
-      error => {
-        this.alert.addAlert('Could not load parcel service preset list: ' + error.statusText,
-          true,
-          'danger',
-          5000);
-      }
-    );
+            error => {
+                this.alert.addAlert('Could not load shipping profile correlations: ' + error.statusText,
+                    true,
+                    'danger',
+                    5000);
+            }
+        );
+    }
 
-    service.getShippingProfileSettingsList().subscribe(
-      response => {
-        for (let index in response) {
-          let data:ShippingProfileSettingsData = response[index];
+    private getParcelServiceList():void {
 
-          this.shippingProfileSettingsList.push({
-            value: data.id,
-            caption: data.name
-          });
-        }
-      },
+        this.parcelServicePresetList = [
+            {
+                value: null,
+                caption: 'Default'
+            }
+        ];
 
-      error => {
-        this.alert.addAlert('Could not load shipping profile settings list: ' + error.statusText,
-          true,
-          'danger',
-          5000);
-      }
-    );
+        this.service.getParcelServiceList().subscribe(
+            response => {
+                for (let index in response) {
+                    let data:ParcelServicesData = response[index];
+
+                    this.parcelServicePresetList.push({
+                        value: data.id,
+                        caption: data.name
+                    });
+                }
+            },
+
+            error => {
+                this.alert.addAlert('Could not load parcel service preset list: ' + error.statusText,
+                    true,
+                    'danger',
+                    5000);
+            }
+        );
+    }
+
+    private getShippingProfileSettingsList():void {
+
+        this.shippingProfileSettingsList = [
+            {
+                value: null,
+                caption: 'Default'
+            }
+        ];
+
+        this.service.getShippingProfileSettingsList().subscribe(
+            response => {
+                for (let index in response) {
+                    let data:ShippingProfileSettingsData = response[index];
+
+                    this.shippingProfileSettingsList.push({
+                        value: data.id,
+                        caption: data.name
+                    });
+                }
+            },
+
+            error => {
+                this.alert.addAlert('Could not load shipping profile settings list: ' + error.statusText,
+                    true,
+                    'danger',
+                    5000);
+            }
+        );
+    }
 
 
-  }
+    private saveCorrelations():void {
+        this.isSaving = true;
+        this.isImporting = true;
 
-  /*
-   * belong to OnInit Lifecycle hook
-   * get called right after the directive's data-bound properties have been checked for the
-   * first time, and before any of its children have been checked. It is invoked only once when the
-   * directive is instantiated.
-   */
-  ngOnInit() {
+        this.service.saveCorrelations({correlations: this.shippingProfileCorrelationList}).subscribe(
+            response => {
+                this.alert.addAlert('Shipping profile correlations saved successfully',
+                    true,
+                    'success',
+                    5000);
 
-    this.parcelServicePresetList = [
-      {
-        value: '0',
-        caption: 'Default'
-      }
-    ];
-    this.shippingProfileSettingsList = [
-      {
-        value: '0',
-        caption: 'Default'
-      }
-    ];
+                this.isSaving = false;
+                this.isImporting = false;
+            },
 
-  }
+            error => {
+                this.alert.addAlert('Shipping profile correlations not saved' + error.statusText,
+                    true,
+                    'danger',
+                    5000);
 
-  private saveCorrelations():void {
-    this.isSaving = true;
+                this.isSaving = false;
+                this.isImporting = false;
+            }
+        );
+    }
 
-    this.service.saveCorrelations({correlations: this.shippingProfileCorrelationList}).subscribe(
-      response => {
-        this.alert.addAlert('Shipping profile correlations saved successfully',
-          true,
-          'success',
-          5000);
+    private addCorrelation():void {
+        this.shippingProfileCorrelationList.push({
+            settingsId: null,
+            parcelServicePresetId: null
+        });
+    }
 
-        this.isSaving = false;
-      },
+    private removeCorrelation(item:ShippingProfileCorrelationData):void {
+        var index = this.shippingProfileCorrelationList.indexOf(item);
+        this.shippingProfileCorrelationList.splice(index, 1);
+    }
 
-      error => {
-        this.alert.addAlert('Shipping profile correlations not saved',
-          true,
-          'danger',
-          5000);
+    private import():void {
+        this.isSaving = true;
+        this.isImporting = true;
 
-        this.isSaving = false;
-      }
-    );
-  }
+        this.service.importShippingProfiles().subscribe(
+            response => {
+                this.alert.addAlert('Shipping profiles imported',
+                    true,
+                    'success',
+                    5000);
 
-  private addCorrelation():void {
-    this.shippingProfileCorrelationList.push({
-      settingsId: null,
-      parcelServicePresetId: null
-    });
-  }
+                this.getShippingProfileSettingsList();
 
-  private removeCorrelation(item:ShippingProfileCorrelationData):void {
-    var index = this.shippingProfileCorrelationList.indexOf(item);
-    this.shippingProfileCorrelationList.splice(index, 1);
-  }
+                this.isSaving = false;
+                this.isImporting = false;
+            },
+
+            error => {
+                this.alert.addAlert('Shipping profiles could not be imported' + error.statusText,
+                    true,
+                    'danger',
+                    5000);
+
+                this.isSaving = false;
+                this.isImporting = false;
+            }
+        );
+    }
 }
