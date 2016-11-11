@@ -1,11 +1,3 @@
-/*
- *
- * demonstrate parts and use of a component
- *
- * > DataTableDemoComponent <
- * use native PlentyDataTable Component and specify used service and class with matching format for responded data
- */
-
 import { Component, OnInit } from '@angular/core';
 import { ShippingProfileService } from './service/shipping-profile.service.ts';
 import { ParcelServicesData } from './data/parcel-services-data';

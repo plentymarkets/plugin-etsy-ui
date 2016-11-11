@@ -1,10 +1,3 @@
-/**
- * > DataTableDemoService <
- * is a provider for TerraDemoModule
- * extend native TerraComponents BaseService
- * call data via rest call
- * provide data for data table
- */
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import {
@@ -19,7 +12,7 @@ import { ShippingProfileCorrelationData } from '../data/shipping-profile-correla
 @Injectable()
 export class ShippingProfileService extends BaseService {
     constructor(loadingBarService:PlentyLoadingBarService, http:Http) {
-        super(loadingBarService, http, '/etsy/shipping-profiles/');
+        super(loadingBarService, http, 'http://master.plentymarkets.com/etsy/shipping-profiles/');
     }
 
     public getParcelServiceList():Observable<ParcelServicesData> {

@@ -1,0 +1,17 @@
+<div style="margin: 15px 5px 5px 0px;">
+	<div class="spacer">
+		<div class="col-xs-12">
+			<div *ngIf="isAuthenticated === null" class="alert alert-warning">Checking authentication status...</div>
+			<div *ngIf="isAuthenticated === true" class="alert alert-success">You are already authenticated but if you wish you can renew your token.</div>
+			<div *ngIf="isAuthenticated === false" class="alert alert-danger">You are currently not authenticated. Please log in.</div>
+
+			<plenty-button
+					[isLarge]="true"
+					[isDisabled]="isLoginLoading"
+					caption="Login to Etsy"
+					icon="icon-visibility_private"
+					(clicked)="openLoginPopup()"></plenty-button>
+		</div>
+	</div>
+</div>
+

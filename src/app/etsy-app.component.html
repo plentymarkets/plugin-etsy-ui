@@ -1,2 +1,10 @@
 <plenty-loading-bar></plenty-loading-bar>
-<shipping-profiles-table></shipping-profiles-table>
+
+<div *ngIf="action == 'shipping'">
+	<shipping-profiles-table></shipping-profiles-table>
+</div>
+
+<div *ngIf="action == 'login'">
+	<login></login>
+</div>
+
