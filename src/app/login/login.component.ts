@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PlentyAlert } from '@plentymarkets/terra-components/index';
+import { TerraAlertComponent } from '@plentymarkets/terra-components/index';
 import { LoginService } from "./service/login.service";
 
 @Component({
@@ -10,7 +10,7 @@ import { LoginService } from "./service/login.service";
 export class LoginComponent implements OnInit {
     private service:LoginService;
     private isAuthenticated:boolean = null;
-    private alert:PlentyAlert = PlentyAlert.getInstance();
+    private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
     private isLoginLoading = true;
 
     constructor(private L:LoginService) {
@@ -36,10 +36,12 @@ export class LoginComponent implements OnInit {
             },
 
             error => {
-                this.alert.addAlert('Could not check the login status: ' + error.statusText,
-                    true,
-                    'danger',
-                    5000);
+                this.alert.addAlert({
+                    msg: 'Could not check the login status: ' + error.statusText,
+                    closable: true,
+                    type: 'danger',
+                    dismissOnTimeout: 5000
+                });
             }
         );
     }
@@ -64,10 +66,13 @@ export class LoginComponent implements OnInit {
             },
 
             error => {
-                this.alert.addAlert('Could not get the login url: ' + error.statusText,
-                    true,
-                    'danger',
-                    5000);
+
+                this.alert.addAlert({
+                    msg: 'Could not get the login url: ' + error.statusText,
+                    closable: true,
+                    type: 'danger',
+                    dismissOnTimeout: 5000
+                });
             }
         );
     }

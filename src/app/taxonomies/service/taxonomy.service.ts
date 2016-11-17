@@ -2,29 +2,26 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { TerraLoadingBarService, TerraBaseService } from '@plentymarkets/terra-components';
 import { Observable } from 'rxjs';
-import { ParcelServicesData } from '../data/parcel-services-data';
-import { ShippingProfileSettingsData } from '../data/shipping-profile-settings-data';
-import { ShippingProfileCorrelationData } from '../data/shipping-profile-correlation-data';
 
 @Injectable()
-export class ShippingProfileService extends TerraBaseService {
+export class TaxonomyService extends TerraBaseService {
     constructor(loadingBarService:TerraLoadingBarService, http:Http) {
-        super(loadingBarService, http, 'http://master.plentymarkets.com/etsy/shipping-profiles/');
+        super(loadingBarService, http, 'http://master.plentymarkets.com/etsy/taxonomies/');
     }
 
-    public getParcelServiceList():Observable<ParcelServicesData> {
+    public getCorrelations():Observable<any> {
         this.setAuthorization();
 
         let url:string;
 
-        url = this.url + 'parcel-service-presets';
+        url = this.url + 'correlations';
 
         return this.mapRequest(
             this.http.get(url, {headers: this.headers, body: ''})
         );
     }
 
-    public getShippingProfileSettingsList():Observable<ShippingProfileSettingsData> {
+    public getTaxonomies():Observable<any> {
         this.setAuthorization();
 
         let url:string;
@@ -36,15 +33,22 @@ export class ShippingProfileService extends TerraBaseService {
         );
     }
 
-    public getShippingProfileCorrelations():Observable<ShippingProfileCorrelationData> {
+    public getCategories(page?:number, perPage?:number):Observable<any> {
         this.setAuthorization();
 
         let url:string;
 
-        url = this.url + 'correlations';
+        if(page && perPage)
+        {
+            url = this.url + 'categories?page=' + page + '&itemsPerPage=' + perPage;
+        }
+        else
+        {
+            url = this.url + 'categories';
+        }
 
         return this.mapRequest(
-            this.http.get(url, {headers: this.headers, body: ''})
+            this.http.get(url, { headers: this.headers, body: '' })
         );
     }
 
@@ -57,18 +61,6 @@ export class ShippingProfileService extends TerraBaseService {
 
         return this.mapRequest(
             this.http.post(url, data, {headers: this.headers})
-        );
-    }
-
-    public importShippingProfiles():Observable<any> {
-        this.setAuthorization();
-
-        let url:string;
-
-        url = this.url + 'import';
-
-        return this.mapRequest(
-            this.http.post(url, '', {headers: this.headers})
         );
     }
 }

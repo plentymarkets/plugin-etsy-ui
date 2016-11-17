@@ -1,0 +1,71 @@
+<div style="margin: 15px 5px 5px 0px;">
+	<div class="spacer">
+		<div class="col-xs-12">
+			<terra-base-toolbar>
+				Etsy > Taxonomy Correlations
+			</terra-base-toolbar>
+			<terra-base-toolbar>
+				<div class="btn-group" role="group">
+					<terra-button [inputIsDisabled]="isLoading"
+								  inputIcon="icon-confirm"
+								  inputCaption="Save"
+								  (outputClicked)="saveCorrelations()"></terra-button>
+				</div>
+			</terra-base-toolbar>
+
+			<terra-pager [inputPagingSize]="pagingSize" [inputDefaultPagingSize]="defaultPagingSize" [inputPagingData]="pagingData"
+						 (outputDoPaging)="doPaging($event)"></terra-pager>
+
+			<div class="row">
+				<div class="col-xs-12">
+					<table class="table table-striped table-bordered" style="overflow-x: visible">
+						<thead>
+						<tr>
+							<th>Category</th>
+							<th>Etsy Taxonomy</th>
+						</tr>
+						</thead>
+						<tbody>
+						<template ngFor let-row [ngForOf]="categories">
+							<tr>
+								<td>
+									{{ row.name }}
+								</td>
+								<td>
+									<input type="hidden" [(ngModel)]="row.taxonomyId">
+
+									<!--
+									<div class="input-unit-v1">
+										<label>Etsy Taxonomy</label>
+										<i>?</i>
+										<input autocomplete="off" type="text" [(ngModel)]="row.taxonomyId">
+									</div>
+-->
+
+									<terra-number-input
+											inputName="{{ row.taxonomyName }}"
+											[inputValue]="row.taxonomyId" ></terra-number-input>
+									<terra-button
+											[inputIsSmall]="true"
+											inputIcon="icon-search"
+											(outputClicked)="openTaxonomiesOverlay(row)"
+											inputCaption="Search"></terra-button>
+								</td>
+							</tr>
+						</template>
+						</tbody>
+					</table>
+
+					<terra-overlay
+							#viewTaxonomiesOverlay
+							inputOverlayTitle="Showcase overlay with secondary button"
+							[inputHasPrimaryButton]="true"
+							(outputPrimaryButtonClicked)="updateTaxonomy($event)"
+						   [inputIsSmall]="true">
+						<terra-tree #tree [inputLeafList]="taxonomiesList"></terra-tree>
+					</terra-overlay>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

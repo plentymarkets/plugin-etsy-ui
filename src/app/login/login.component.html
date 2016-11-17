@@ -5,12 +5,12 @@
 			<div *ngIf="isAuthenticated === true" class="alert alert-success">You are already authenticated but if you wish you can renew your token.</div>
 			<div *ngIf="isAuthenticated === false" class="alert alert-danger">You are currently not authenticated. Please log in.</div>
 
-			<plenty-button
-					[isLarge]="true"
-					[isDisabled]="isLoginLoading"
-					caption="Login to Etsy"
-					icon="icon-visibility_private"
-					(clicked)="openLoginPopup()"></plenty-button>
+			<terra-button
+					[inputIsLarge]="true"
+					[inputIsDisabled]="isLoginLoading"
+					inputCaption="Login to Etsy"
+					inputIcon="icon-visibility_private"
+					(outputClicked)="openLoginPopup()"></terra-button>
 		</div>
 	</div>
 </div>

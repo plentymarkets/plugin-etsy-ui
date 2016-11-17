@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import {
-    PlentyLoadingBarService,
-    BaseService
+    TerraLoadingBarService,
+    TerraBaseService
 } from '@plentymarkets/terra-components';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class LoginService extends BaseService {
-    constructor(loadingBarService:PlentyLoadingBarService, http:Http) {
+export class LoginService extends TerraBaseService {
+    constructor(loadingBarService:TerraLoadingBarService, http:Http) {
         super(loadingBarService, http, 'http://master.plentymarkets.com/etsy/auth/');
     }
 

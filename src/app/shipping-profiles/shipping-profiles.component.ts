@@ -3,8 +3,8 @@ import { ShippingProfileService } from './service/shipping-profile.service.ts';
 import { ParcelServicesData } from './data/parcel-services-data';
 import { ShippingProfileSettingsData } from './data/shipping-profile-settings-data';
 import { ShippingProfileCorrelationData } from './data/shipping-profile-correlation-data';
-import { PlentySelectBoxValue } from '@plentymarkets/terra-components/index';
-import { PlentyAlert } from '@plentymarkets/terra-components/index';
+import { TerraSelectBoxValueInterface } from '@plentymarkets/terra-components/index';
+import { TerraAlertComponent } from '@plentymarkets/terra-components/index';
 
 @Component({
     selector: 'shipping-profiles-table',
@@ -12,12 +12,11 @@ import { PlentyAlert } from '@plentymarkets/terra-components/index';
     styles: [require('./shipping-profiles.component.scss').toString()]
 })
 export class ShippingProfilesComponent implements OnInit {
-    private alert:PlentyAlert = PlentyAlert.getInstance();
-    private parcelServicePresetList:Array<PlentySelectBoxValue>;
-    private shippingProfileSettingsList:Array<PlentySelectBoxValue>;
+    private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
+    private parcelServicePresetList:Array<TerraSelectBoxValueInterface>;
+    private shippingProfileSettingsList:Array<TerraSelectBoxValueInterface>;
     private shippingProfileCorrelationList:Array<ShippingProfileCorrelationData>;
-    private isSaving:boolean = true;
-    private isImporting:boolean = true;
+    private isLoading:boolean = true;
     private service:ShippingProfileService;
 
     constructor(private S:ShippingProfileService) {
@@ -47,15 +46,20 @@ export class ShippingProfilesComponent implements OnInit {
                     this.shippingProfileCorrelationList.push(response[index]);
                 }
 
-                this.isSaving = false;
-                this.isImporting = false;
+                this.isLoading = false;
             },
 
             error => {
-                this.alert.addAlert('Could not load shipping profile correlations: ' + error.statusText,
-                    true,
-                    'danger',
-                    5000);
+
+                this.alert.addAlert({
+                    msg: 'Could not load shipping profile correlations: ' + error.statusText,
+                    closable: true,
+                    type: 'danger',
+                    dismissOnTimeout: 5000
+                });
+
+                this.isLoading = false;
+
             }
         );
     }
@@ -82,10 +86,14 @@ export class ShippingProfilesComponent implements OnInit {
             },
 
             error => {
-                this.alert.addAlert('Could not load parcel service preset list: ' + error.statusText,
-                    true,
-                    'danger',
-                    5000);
+
+                this.alert.addAlert({
+                    msg: 'Could not load parcel service preset list: ' + error.statusText,
+                    closable: true,
+                    type: 'danger',
+                    dismissOnTimeout: 5000
+                });
+
             }
         );
     }
@@ -112,38 +120,45 @@ export class ShippingProfilesComponent implements OnInit {
             },
 
             error => {
-                this.alert.addAlert('Could not load shipping profile settings list: ' + error.statusText,
-                    true,
-                    'danger',
-                    5000);
+
+                this.alert.addAlert({
+                    msg: 'Could not load shipping profile settings list: ' + error.statusText,
+                    closable: true,
+                    type: 'danger',
+                    dismissOnTimeout: 5000
+                });
+
             }
         );
     }
 
 
     private saveCorrelations():void {
-        this.isSaving = true;
-        this.isImporting = true;
+        this.isLoading = true;
 
         this.service.saveCorrelations({correlations: this.shippingProfileCorrelationList}).subscribe(
             response => {
-                this.alert.addAlert('Shipping profile correlations saved successfully',
-                    true,
-                    'success',
-                    5000);
 
-                this.isSaving = false;
-                this.isImporting = false;
+                this.alert.addAlert({
+                    msg: 'Shipping profile correlations saved successfully',
+                    closable: true,
+                    type: 'success',
+                    dismissOnTimeout: 5000
+                });
+
+                this.isLoading = false;
             },
 
             error => {
-                this.alert.addAlert('Shipping profile correlations not saved' + error.statusText,
-                    true,
-                    'danger',
-                    5000);
 
-                this.isSaving = false;
-                this.isImporting = false;
+                this.alert.addAlert({
+                    msg: 'Shipping profile correlations not saved' + error.statusText,
+                    closable: true,
+                    type: 'danger',
+                    dismissOnTimeout: 5000
+                });
+
+                this.isLoading = false;
             }
         );
     }
@@ -161,30 +176,33 @@ export class ShippingProfilesComponent implements OnInit {
     }
 
     private import():void {
-        this.isSaving = true;
-        this.isImporting = true;
+        this.isLoading = true;
 
         this.service.importShippingProfiles().subscribe(
             response => {
-                this.alert.addAlert('Shipping profiles imported',
-                    true,
-                    'success',
-                    5000);
+
+                this.alert.addAlert({
+                    msg: 'Shipping profiles imported',
+                    closable: true,
+                    type: 'success',
+                    dismissOnTimeout: 5000
+                });
 
                 this.getShippingProfileSettingsList();
 
-                this.isSaving = false;
-                this.isImporting = false;
+                this.isLoading = false;
             },
 
             error => {
-                this.alert.addAlert('Shipping profiles could not be imported' + error.statusText,
-                    true,
-                    'danger',
-                    5000);
 
-                this.isSaving = false;
-                this.isImporting = false;
+                this.alert.addAlert({
+                    msg: 'Shipping profiles could not be imported' + error.statusText,
+                    closable: true,
+                    type: 'danger',
+                    dismissOnTimeout: 5000
+                });
+
+                this.isLoading = false;
             }
         );
     }

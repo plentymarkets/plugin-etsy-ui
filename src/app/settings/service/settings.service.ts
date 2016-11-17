@@ -1,24 +1,35 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { PlentyLoadingBarService, BaseService } from '@plentymarkets/terra-components';
+import { TerraLoadingBarService, TerraBaseService } from '@plentymarkets/terra-components';
 import { Observable } from 'rxjs';
-import { SettingsData } from '../data/settings.data';
 
 @Injectable()
-export class SettingsService extends BaseService {
-    constructor(loadingBarService:PlentyLoadingBarService, http:Http) {
-        super(loadingBarService, http, 'http://master.plentymarkets.com/etsy/settings/all');
+export class SettingsService extends TerraBaseService {
+    constructor(loadingBarService:TerraLoadingBarService, http:Http) {
+        super(loadingBarService, http, 'http://master.plentymarkets.com/etsy/settings/');
     }
 
-    public getSettings():Observable<SettingsData> {
+    public getSettings():Observable<any> {
         this.setAuthorization();
 
         let url:string;
 
-        url = this.url + 'parcel-service-presets';
+        url = this.url + 'all';
 
         return this.mapRequest(
             this.http.get(url, {headers: this.headers, body: ''})
+        );
+    }
+
+    public saveSettings(data:any):Observable<any> {
+        this.setAuthorization();
+
+        let url:string;
+
+        url = this.url + 'save';
+
+        return this.mapRequest(
+            this.http.post(url, data, {headers: this.headers})
         );
     }
 }
