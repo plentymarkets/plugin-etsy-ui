@@ -1,9 +1,45 @@
 <div style="margin: 15px 5px 5px 0px;">
 	<div class="spacer">
 		<div class="col-xs-12">
+			<terra-base-toolbar>
+				Etsy > Shipping Profiles Correlations
+
+				<terra-button
+						[inputIsLarge]="true"
+						inputIcon="icon-reload"
+						[inputIsSmall]="true"
+						[inputIsAlignRight]="true"
+						(outputClicked)="reload()"></terra-button>
+			</terra-base-toolbar>
+			<br>
 			<h5>Shipping Profile Correlations</h5>
 			<hr>
 
+			<terra-base-toolbar>
+				<div class="btn-group" role="group">
+					<terra-button [inputIsSmall]="true"
+								  [inputIsPrimary]="true"
+								  inputIcon="icon-add"
+								  [inputIsDisabled]="isLoading"
+								  (outputClicked)="addCorrelation()"
+								  inputCaption="Add correlation"></terra-button>
+					<terra-button [inputIsSmall]="true"
+								  [inputIsDisabled]="isLoading"
+								  inputIcon="icon-confirm"
+								  (outputClicked)="saveCorrelations()"
+								  inputCaption="Save"></terra-button>
+				</div>
+
+				<div class="btn-group" role="group" style="float: right">
+					<terra-button [inputIsSmall]="true"
+								  [inputIsPrimary]="true"
+								  [inputIsAlignRight]="true"
+								  [inputIsDisabled]="isLoading"
+								  inputIcon="icon-download"
+								  (outputClicked)="import()"
+								  inputCaption="Import Etsy Shipping Profiles"></terra-button>
+				</div>
+			</terra-base-toolbar>
 			<div class="row">
 				<div class="col-xs-12">
 					<table class="table table-striped table-bordered" style="overflow-x: visible">
@@ -49,28 +85,7 @@
 						</template>
 						</tbody>
 					</table>
-
-					<terra-button [inputIsSmall]="true"
-								  [inputIsPrimary]="true"
-								  inputIcon="icon-add"
-								  [inputIsDisabled]="isLoading"
-								  (outputClicked)="addCorrelation()"
-								  inputCaption="Add correlation"></terra-button>
-					<terra-button [inputIsSmall]="true"
-								  [inputIsDisabled]="isLoading"
-								  inputIcon="icon-confirm"
-								  (outputClicked)="saveCorrelations()"
-								  inputCaption="Save"></terra-button>
-
-					<terra-button [inputIsSmall]="true"
-								  [inputIsPrimary]="true"
-								  [inputIsAlignRight]="true"
-								  [inputIsDisabled]="isLoading"
-								  inputIcon="icon-download"
-								  (outputClicked)="import()"
-								  inputCaption="Import Etsy Shipping Profiles"></terra-button>
 				</div>
-
 			</div>
 		</div>
 	</div>

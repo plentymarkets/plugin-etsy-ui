@@ -1,15 +1,38 @@
 <div style="margin: 15px 5px 5px 0px;">
 	<div class="spacer">
 		<div class="col-lg-12">
+			<terra-base-toolbar>
+				Etsy > Settings
+
+				<terra-button
+						[inputIsLarge]="true"
+						inputIcon="icon-reload"
+						[inputIsSmall]="true"
+						[inputIsAlignRight]="true"
+						(outputClicked)="etsyComponent.reload()"></terra-button>
+			</terra-base-toolbar>
+
+			<br>
 			<h5>Settings</h5>
 			<hr>
 
+			<terra-base-toolbar>
+				<div class="btn-group" role="group">
+					<terra-button
+							[inputIsDisabled]="isLoading"
+							inputCaption="Save"
+							inputIcon="icon-confirm"
+							(outputClicked)="saveSettings()"></terra-button>
+				</div>
+			</terra-base-toolbar>
+
+			<br>
 			<h6>Shop Settings</h6>
 			<div class="row">
 				<div class="col-lg-6">
-					<terra-number-input
-							inputName="Shop Id"
-							inputValue="settings.shop.shopId"></terra-number-input>
+					<terra-text-input
+							[(ngModel)]="settings.shop.shopId"
+							inputName="Shop Id"></terra-text-input>
 
 					<terra-select-box
 							[inputListBoxValues]="availableLanguages"
@@ -26,18 +49,18 @@
 			<h6>Payment Settings</h6>
 			<div class="row">
 				<div class="col-lg-6">
+					<!--
 					<terra-text-input
 							inputName="Payment Method Name"
-							inputValue="settings.payment.name"></terra-text-input>
+							[inputValue]="settings.payment.name"></terra-text-input> -->
 
-
-					<terra-button
-							inputCaption="Save"
-							inputIcon="icon-confirm"
-							(outputClicked)="saveSettings()"></terra-button>
+					<div class="input-unit-v1">
+						<label>Payment Method Name</label>
+						<i>?</i>
+						<input autocomplete="off" type="text" pattern="^.*$" [(ngModel)]="settings.payment.name">
+					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
 </div>

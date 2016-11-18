@@ -3,7 +3,17 @@
 		<div class="col-xs-12">
 			<terra-base-toolbar>
 				Etsy > Taxonomy Correlations
+
+				<terra-button
+						[inputIsLarge]="true"
+						inputIcon="icon-reload"
+						[inputIsSmall]="true"
+						[inputIsAlignRight]="true"
+						(outputClicked)="reload()"></terra-button>
 			</terra-base-toolbar>
+			<br>
+			<h5>Taxonomy Correlations</h5>
+			<hr>
 			<terra-base-toolbar>
 				<div class="btn-group" role="group">
 					<terra-button [inputIsDisabled]="isLoading"
@@ -34,17 +44,9 @@
 								<td>
 									<input type="hidden" [(ngModel)]="row.taxonomyId">
 
-									<!--
-									<div class="input-unit-v1">
-										<label>Etsy Taxonomy</label>
-										<i>?</i>
-										<input autocomplete="off" type="text" [(ngModel)]="row.taxonomyId">
-									</div>
--->
-
 									<terra-number-input
-											inputName="{{ row.taxonomyName }}"
-											[inputValue]="row.taxonomyId" ></terra-number-input>
+											inputName="{{ getTaxonomyName(row.taxonomyId) }}"
+											[(ngModel)]="row.taxonomyId"></terra-number-input>
 									<terra-button
 											[inputIsSmall]="true"
 											inputIcon="icon-search"

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { TerraAlertComponent, TerraMultiSelectBoxValueInterface, TerraSelectBoxValueInterface } from '@plentymarkets/terra-components/index';
+import { Component, OnInit, forwardRef, Inject } from '@angular/core';
+import { TerraMultiSelectBoxValueInterface, TerraSelectBoxValueInterface } from '@plentymarkets/terra-components/index';
 import { SettingsService } from "./service/settings.service";
+import { EtsyComponent } from "../etsy-app.component";
 
 @Component({
     selector: 'settings',
@@ -10,17 +11,17 @@ import { SettingsService } from "./service/settings.service";
 export class SettingsComponent implements OnInit {
     private service:SettingsService;
     private settings;
+    private testSettings:string = '';
     private isLoading:boolean = true;
     private exportLanguages:Array<TerraMultiSelectBoxValueInterface>;
     private availableLanguages:Array<TerraSelectBoxValueInterface>;
-    private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 
-    constructor(private S:SettingsService) {
+    constructor(private S:SettingsService, @Inject(forwardRef(() => EtsyComponent)) private etsyComponent:EtsyComponent) {
         this.service = S;
 
         this.settings = {
             shop: {
-                shopId: 10,
+                shopId: 0,
                 mainLanguage: 'de',
                 exportLanguages: []
             },
@@ -31,17 +32,17 @@ export class SettingsComponent implements OnInit {
 
         this.exportLanguages = [
             {
-                value:   'en',
+                value: 'en',
                 caption: 'English',
                 selected: false,
             },
             {
-                value:   'de',
+                value: 'de',
                 caption: 'German',
                 selected: false
             },
             {
-                value:   'fr',
+                value: 'fr',
                 caption: 'French',
                 selected: false
             },
@@ -49,15 +50,15 @@ export class SettingsComponent implements OnInit {
 
         this.availableLanguages = [
             {
-                value:   'en',
+                value: 'en',
                 caption: 'English',
             },
             {
-                value:   'de',
+                value: 'de',
                 caption: 'German',
             },
             {
-                value:   'fr',
+                value: 'fr',
                 caption: 'French',
             },
         ];
@@ -73,73 +74,62 @@ export class SettingsComponent implements OnInit {
         this.loadSettings();
     }
 
-    private loadSettings()
-    {
+    private loadSettings() {
+        this.etsyComponent.callLoadingEvent(true);
+
         this.service.getSettings().subscribe(
             response => {
                 this.mapSettings(response);
+
+                this.etsyComponent.callLoadingEvent(false);
+                this.etsyComponent.isLoading = false;
                 this.isLoading = false;
             },
 
             error => {
-                this.alert.addAlert({
-                    msg: 'Could not load settings: ' + error.statusText,
-                    closable: true,
-                    type: 'danger',
-                    dismissOnTimeout: 5000
-                });
-
+                this.etsyComponent.callLoadingEvent(false);
+                this.etsyComponent.callStatusEvent('Could not load settings: ' + error.statusText, 'danger');
+                this.etsyComponent.isLoading = false;
                 this.isLoading = false;
             }
         );
     }
 
-    private mapSettings(response:any):void
-    {
-        if(typeof response !== 'undefined')
-        {
+    private mapSettings(response:any):void {
+        if (typeof response !== 'undefined') {
             let settings = this.settings;
 
-            if("shop" in response)
-            {
-                if("shopId" in response.shop)
-                {
+            if ("shop" in response) {
+                if ("shopId" in response.shop) {
                     settings.shop.shopId = response.shop.shopId;
                 }
 
-                if("mainLanguage" in response.shop)
-                {
+                if ("mainLanguage" in response.shop) {
                     settings.shop.mainLanguage = response.shop.mainLanguage;
                 }
 
-                let exportLanguages = this.exportLanguages;
-
-                if("exportLanguages" in response.shop)
-                {
-                    response.shop.exportLanguages.forEach(function(responseItem){
-                        exportLanguages.forEach(function(item, key) {
-                            if(item.value == responseItem)
-                            {
-                                exportLanguages[key].selected = true;
+                if ("exportLanguages" in response.shop) {
+                    response.shop.exportLanguages.forEach((responseItem) => {
+                        this.exportLanguages.forEach((item, key) => {
+                            if (item.value == responseItem) {
+                                this.exportLanguages[key].selected = true;
                             }
                         });
                     });
                 }
             }
 
-            if("payment" in response)
-            {
-                if("name" in response.payment)
-                {
+            if ("payment" in response) {
+                if ("name" in response.payment) {
                     settings.payment.name = response.payment.name;
                 }
             }
         }
     }
 
-    private saveSettings():void
-    {
+    private saveSettings():void {
         this.isLoading = true;
+        this.etsyComponent.callLoadingEvent(true);
 
         let data = {
             shop: {
@@ -154,36 +144,24 @@ export class SettingsComponent implements OnInit {
 
         this.service.saveSettings(data).subscribe(
             response => {
-                this.alert.addAlert({
-                    msg: 'Settings saved successfully',
-                    closable: true,
-                    type: 'success',
-                    dismissOnTimeout: 5000
-                });
-
+                this.etsyComponent.callStatusEvent('Settings saved successfully', 'success');
+                this.etsyComponent.callLoadingEvent(false);
                 this.isLoading = false;
             },
 
             error => {
-                this.alert.addAlert({
-                    msg: 'Could not save settings: ' + error.statusText,
-                    closable: true,
-                    type: 'danger',
-                    dismissOnTimeout: 5000
-                });
-
+                this.etsyComponent.callStatusEvent('Could not save settings: ' + error.statusText, 'danger');
+                this.etsyComponent.callLoadingEvent(false);
                 this.isLoading = false;
             }
         );
     }
 
-    private getSelectedExportLanguages():Array<any>
-    {
+    private getSelectedExportLanguages():Array<any> {
         let exportLanguagesList = [];
 
-        this.exportLanguages.forEach(function(item) {
-            if(item.selected === true)
-            {
+        this.exportLanguages.forEach((item) => {
+            if (item.selected === true) {
                 exportLanguagesList.push(item.value);
             }
         });

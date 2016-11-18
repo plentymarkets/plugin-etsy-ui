@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class SettingsService extends TerraBaseService {
     constructor(loadingBarService:TerraLoadingBarService, http:Http) {
-        super(loadingBarService, http, 'http://master.plentymarkets.com/etsy/settings/');
+        super(loadingBarService, http, '/etsy/settings/');
     }
 
     public getSettings():Observable<any> {

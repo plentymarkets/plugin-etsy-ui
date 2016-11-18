@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class TaxonomyService extends TerraBaseService {
     constructor(loadingBarService:TerraLoadingBarService, http:Http) {
-        super(loadingBarService, http, 'http://master.plentymarkets.com/etsy/taxonomies/');
+        super(loadingBarService, http, '/etsy/taxonomies/');
     }
 
     public getCorrelations():Observable<any> {

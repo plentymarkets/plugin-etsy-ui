@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
-import { TerraAlertComponent,TerraTreeComponent, TerraMultiSelectBoxValueInterface, TerraSelectBoxValueInterface, TerraPagerInterface, TerraOverlayComponent, TerraLeafInterface } from '@plentymarkets/terra-components/index';
+import { Component, OnInit, ViewChild, HostListener, Inject, forwardRef } from '@angular/core';
+import { TerraTreeComponent, TerraMultiSelectBoxValueInterface, TerraSelectBoxValueInterface, TerraPagerInterface, TerraOverlayComponent, TerraLeafInterface } from '@plentymarkets/terra-components/index';
 import { TaxonomyService } from "./service/taxonomy.service";
 import { TaxonomyCorrelationData } from "./data/taxonomy-correlation.data";
+import { EtsyComponent } from "../etsy-app.component";
 
 @Component({
     selector: 'taxonomies',
@@ -10,7 +11,6 @@ import { TaxonomyCorrelationData } from "./data/taxonomy-correlation.data";
 })
 export class TaxonomiesComponent implements OnInit {
     private isLoading:boolean = true;
-    private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
     private taxonomiesList:Array<TerraLeafInterface> = [];
     private taxonomiesNameList:Array<any> = [];
     private correlations:Array<any>;
@@ -21,7 +21,7 @@ export class TaxonomiesComponent implements OnInit {
     @ViewChild('viewTaxonomiesOverlay') public viewTaxonomiesOverlay:TerraOverlayComponent;
     @ViewChild('tree') public tree:TerraTreeComponent;
 
-    constructor(private taxonomyService:TaxonomyService) {
+    constructor(private taxonomyService:TaxonomyService, @Inject(forwardRef(() => EtsyComponent)) private etsyComponent:EtsyComponent) {
         this.pagingData = {
             pagingUnit: 'Categories',
             total: 0,
@@ -44,135 +44,120 @@ export class TaxonomiesComponent implements OnInit {
     ngOnInit() {
     }
 
-    private doPaging(pagerData:TerraPagerInterface):void
-    {
+    private doPaging(pagerData:TerraPagerInterface):void {
         this.getData(pagerData.perPage, pagerData.currentPage)
     }
 
-    private getTaxonomies()
-    {
+    private getTaxonomies() {
+        this.etsyComponent.callLoadingEvent(true);
+
         this.taxonomyService.getTaxonomies().subscribe(
             response => {
                 this.buildTaxonomiesTree(response);
+
+                this.etsyComponent.callLoadingEvent(false);
 
                 this.getCorrelations();
             },
 
             error => {
-                this.alert.addAlert({
-                    msg: 'Taxonomies could not be loaded: ' + error.statusText,
-                    closable: true,
-                    type: 'danger',
-                    dismissOnTimeout: 5000
-                });
+                this.etsyComponent.callStatusEvent('Taxonomies could not be loaded: ' + error.statusText, 'danger');
+                this.etsyComponent.callLoadingEvent(false);
+                this.etsyComponent.isLoading = false;
+                this.isLoading = false;
             }
         )
     }
 
-    private getCorrelations()
-    {
-        let vm = this;
+    private getCorrelations() {
+        this.etsyComponent.callLoadingEvent(true);
 
         this.taxonomyService.getCorrelations().subscribe(
             response => {
-                vm.correlations = response;
+                this.correlations = response;
 
-                vm.getData(vm.pagingData.perPage, vm.pagingData.currentPage);
+                this.etsyComponent.callLoadingEvent(false);
+
+                this.getData(this.pagingData.perPage, this.pagingData.currentPage);
             },
 
             error => {
-                vm.alert.addAlert({
-                    msg: 'Correlations could not be loaded: ' + error.statusText,
-                    closable: true,
-                    type: 'danger',
-                    dismissOnTimeout: 5000
-                });
+                this.etsyComponent.callStatusEvent('Correlations could not be loaded: ' + error.statusText, 'danger');
+                this.etsyComponent.callLoadingEvent(false);
+                this.etsyComponent.isLoading = false;
+                this.isLoading = false;
             }
         );
     }
 
-    private getData(perPage, currentPage)
-    {
-        let vm = this;
+    private getData(perPage, currentPage) {
+        this.etsyComponent.callLoadingEvent(true);
+        this.isLoading = true;
 
         this.taxonomyService.getCategories(currentPage, perPage).subscribe(
             response => {
-                vm.calculatePagingData(response, perPage, currentPage);
+                this.calculatePagingData(response, perPage, currentPage);
 
-                vm.categories = response.entries;
+                this.categories = response.entries;
 
-                vm.categories.forEach(function(item, key) {
-                    vm.categories[key].taxonomyName = '-';
+                this.categories.forEach((item, key) => {
+                    this.categories[key].taxonomyName = ' ';
 
-                    vm.correlations.forEach(function(correlationItem) {
-                        if(item.categoryId == correlationItem.categoryId)
-                        {
-                            vm.categories[key].taxonomyId = correlationItem.taxonomyId;
-                            vm.categories[key].taxonomyName = vm.getTaxonomyName(correlationItem.taxonomyId);
+                    this.correlations.forEach((correlationItem) => {
+                        if (item.categoryId == correlationItem.categoryId) {
+                            this.categories[key].taxonomyId = correlationItem.taxonomyId;
+                            this.categories[key].taxonomyName = this.getTaxonomyName(correlationItem.taxonomyId);
                         }
-                    })
-
-                    vm.isLoading = false;
+                    });
                 });
+
+                this.etsyComponent.callLoadingEvent(false);
+                this.etsyComponent.isLoading = false;
+                this.isLoading = false;
             },
 
             error => {
-
-                vm.alert.addAlert({
-                    msg: 'Categories could not be loaded: ' + error.statusText,
-                    closable: true,
-                    type: 'danger',
-                    dismissOnTimeout: 5000
-                });
-
+                this.etsyComponent.callStatusEvent('Categories could not be loaded: ' + error.statusText, 'danger');
+                this.etsyComponent.callLoadingEvent(false);
+                this.etsyComponent.isLoading = false;
+                this.isLoading = false;
             }
         );
     }
 
-    private getTaxonomyName(taxonomyId):string
-    {
-        if(this.taxonomiesNameList[taxonomyId])
-        {
+    private getTaxonomyName(taxonomyId):string {
+        if (this.taxonomiesNameList[taxonomyId]) {
             return this.taxonomiesNameList[taxonomyId];
         }
 
-        return 'None';
+        return ' ';
     }
 
-    private openTaxonomiesOverlay(row)
-    {
+    private openTaxonomiesOverlay(row) {
         this.rowInOverlay = row;
 
         this.viewTaxonomiesOverlay.showOverlay();
     }
 
-    private updateTaxonomy(event)
-    {
+    private updateTaxonomy(event) {
         let leaf:TerraLeafInterface = this.tree.getSelectedLeaf();
 
-        if(leaf != null)
-        {
+        if (leaf != null) {
             this.rowInOverlay.taxonomyId = leaf.id;
             this.rowInOverlay.taxonomyName = this.getTaxonomyName(leaf.id);
             this.viewTaxonomiesOverlay.hideOverlay();
         }
     }
 
-    private buildTaxonomiesTree(taxonomies):void
-    {
-        let vm = this;
+    private buildTaxonomiesTree(taxonomies):void {
+        taxonomies.forEach((item) => {
+            this.taxonomiesNameList[item.id] = item.name;
 
-        taxonomies.forEach(function(item) {
-            vm.taxonomiesNameList[item.id] = item.name;
-
-            vm.taxonomiesList.push(vm.getLeaf(item));
+            this.taxonomiesList.push(this.getLeaf(item));
         });
     }
 
-    private getLeaf(item)
-    {
-        let vm = this;
-
+    private getLeaf(item) {
         let leafData = {
             caption: item.name,
             id: item.id,
@@ -180,69 +165,60 @@ export class TaxonomiesComponent implements OnInit {
             subLeafList: null
         };
 
-        vm.taxonomiesNameList[item.id] = item.name;
+        this.taxonomiesNameList[item.id] = item.name;
 
-        if(item.children.length > 0)
-        {
+        if (item.children.length > 0) {
             leafData.icon = 'icon-folder';
             leafData.subLeafList = [];
 
-            item.children.forEach(function(child) {
-                leafData.subLeafList.push(vm.getLeaf(child));
+            item.children.forEach((child) => {
+                leafData.subLeafList.push(this.getLeaf(child));
             });
         }
 
         return leafData;
     }
 
-    private saveCorrelations()
-    {
-        let vm = this;
+    private saveCorrelations() {
+        this.etsyComponent.callLoadingEvent(true);
+        this.isLoading = true;
 
-        this.categories.forEach(function(categoryData) {
-            vm.updateOrAddCorrelation(categoryData);
+        this.categories.forEach((categoryData) => {
+            this.updateOrAddCorrelation(categoryData);
         });
 
 
-        this.taxonomyService.saveCorrelations({ correlations: this.correlations }).subscribe(
+        this.taxonomyService.saveCorrelations({correlations: this.correlations}).subscribe(
             result => {
-                this.alert.addAlert({
-                    msg: 'Taxonomy correlations saved successfully',
-                    closable: true,
-                    type: 'success',
-                    dismissOnTimeout: 5000
-                });
+                this.etsyComponent.callStatusEvent('Taxonomy correlations saved successfully', 'success');
+                this.etsyComponent.callLoadingEvent(false);
+                this.isLoading = false;
             },
 
             error => {
-                this.alert.addAlert({
-                    msg: 'Correlations could not be saved: ' + error.statusText,
-                    closable: true,
-                    type: 'danger',
-                    dismissOnTimeout: 5000
-                });
+                this.etsyComponent.callStatusEvent('Correlations could not be saved: ' + error.statusText, 'danger');
+                this.etsyComponent.callLoadingEvent(false);
+                this.isLoading = false;
             }
         )
     }
 
     private updateOrAddCorrelation(categoryData) {
-        let vm = this;
         let isUpdate = false;
 
-        this.correlations.forEach(function (correlationData, key) {
+        this.correlations.forEach((correlationData, key) => {
             if (correlationData.categoryId == categoryData.categoryId) {
                 isUpdate = true;
                 if (categoryData.taxonomyId) {
-                    vm.correlations[key].taxonomyId = categoryData.taxonomyId
+                    this.correlations[key].taxonomyId = categoryData.taxonomyId
                 }
                 else {
-                    vm.correlations[key].taxonomyId = null;
+                    this.correlations[key].taxonomyId = null;
                 }
             }
         });
 
-        if (isUpdate == false && categoryData.taxonomyId)
-        {
+        if (isUpdate == false && categoryData.taxonomyId) {
             this.correlations.push({
                 taxonomyId: categoryData.taxonomyId,
                 categoryId: categoryData.categoryId
@@ -254,14 +230,16 @@ export class TaxonomiesComponent implements OnInit {
         this.pagingData.total = response.totalsCount;
         this.pagingData.currentPage = currentPage;
         this.pagingData.perPage = perPage;
-
         this.pagingData.lastPage = Math.ceil(response.totalsCount / perPage);
 
         let from = perPage * (currentPage - 1);
         this.pagingData.from = (from <= 0) ? 1 : from;
 
         let to = (this.pagingData.from <= 1) ? perPage : (this.pagingData.from + perPage);
-
         this.pagingData.to = (to > this.pagingData.total) ? this.pagingData.total : to;
+    }
+
+    private reload() {
+        location.reload();
     }
 }

@@ -1,18 +1,25 @@
-<terra-loading-bar></terra-loading-bar>
+<div class="loading" [hidden]="!isLoading">
+	<div class="icon-referrer_backend loading-backend"></div>
+	<div class="loading-text">Loading
+		<span class="dot-one">.</span>
+		<span class="dot-two">.</span>
+		<span class="dot-three">.</span>
+	</div>
+</div>
 
-<div *ngIf="action == 'shipping'">
+<div *ngIf="action == 'shipping'" [hidden]="isLoading">
 	<shipping-profiles-table></shipping-profiles-table>
 </div>
 
-<div *ngIf="action == 'login'">
+<div *ngIf="action == 'login'" [hidden]="isLoading">
 	<login></login>
 </div>
 
-<div *ngIf="action == 'settings'">
+<div *ngIf="action == 'settings'" [hidden]="isLoading">
 	<settings></settings>
 </div>
 
-<div *ngIf="action == 'taxonomies'">
+<div *ngIf="action == 'taxonomies'" [hidden]="isLoading">
 	<taxonomies></taxonomies>
 </div>
 

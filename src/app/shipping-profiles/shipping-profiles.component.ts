@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, forwardRef } from '@angular/core';
 import { ShippingProfileService } from './service/shipping-profile.service.ts';
 import { ParcelServicesData } from './data/parcel-services-data';
 import { ShippingProfileSettingsData } from './data/shipping-profile-settings-data';
 import { ShippingProfileCorrelationData } from './data/shipping-profile-correlation-data';
 import { TerraSelectBoxValueInterface } from '@plentymarkets/terra-components/index';
-import { TerraAlertComponent } from '@plentymarkets/terra-components/index';
+import { EtsyComponent } from "../etsy-app.component";
 
 @Component({
     selector: 'shipping-profiles-table',
@@ -12,21 +12,30 @@ import { TerraAlertComponent } from '@plentymarkets/terra-components/index';
     styles: [require('./shipping-profiles.component.scss').toString()]
 })
 export class ShippingProfilesComponent implements OnInit {
-    private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
     private parcelServicePresetList:Array<TerraSelectBoxValueInterface>;
     private shippingProfileSettingsList:Array<TerraSelectBoxValueInterface>;
     private shippingProfileCorrelationList:Array<ShippingProfileCorrelationData>;
     private isLoading:boolean = true;
     private service:ShippingProfileService;
 
-    constructor(private S:ShippingProfileService) {
+    constructor(private S:ShippingProfileService, @Inject(forwardRef(() => EtsyComponent)) private etsyComponent:EtsyComponent) {
 
         this.service = S;
         this.shippingProfileCorrelationList = [];
+        this.parcelServicePresetList = [
+            {
+                value: null,
+                caption: 'Default'
+            }
+        ];
+        this.shippingProfileSettingsList = [
+            {
+                value: null,
+                caption: 'Default'
+            }
+        ];
 
         this.getShippingProfileCorrelations();
-        this.getParcelServiceList();
-        this.getShippingProfileSettingsList();
     }
 
     /*
@@ -40,38 +49,31 @@ export class ShippingProfilesComponent implements OnInit {
     }
 
     private getShippingProfileCorrelations():void {
+        this.etsyComponent.callLoadingEvent(true);
+
         this.service.getShippingProfileCorrelations().subscribe(
             response => {
                 for (let index in response) {
                     this.shippingProfileCorrelationList.push(response[index]);
                 }
 
-                this.isLoading = false;
+                this.etsyComponent.callLoadingEvent(false);
+
+                this.getParcelServiceList();
             },
 
             error => {
 
-                this.alert.addAlert({
-                    msg: 'Could not load shipping profile correlations: ' + error.statusText,
-                    closable: true,
-                    type: 'danger',
-                    dismissOnTimeout: 5000
-                });
-
+                this.etsyComponent.callStatusEvent('Could not load shipping profile correlations: ' + error.statusText, 'danger');
+                this.etsyComponent.callLoadingEvent(false);
+                this.etsyComponent.isLoading = false;
                 this.isLoading = false;
-
             }
         );
     }
 
     private getParcelServiceList():void {
-
-        this.parcelServicePresetList = [
-            {
-                value: null,
-                caption: 'Default'
-            }
-        ];
+        this.etsyComponent.callLoadingEvent(true);
 
         this.service.getParcelServiceList().subscribe(
             response => {
@@ -83,29 +85,22 @@ export class ShippingProfilesComponent implements OnInit {
                         caption: data.name
                     });
                 }
+
+                this.etsyComponent.callLoadingEvent(false);
+                this.getShippingProfileSettingsList();
             },
 
             error => {
-
-                this.alert.addAlert({
-                    msg: 'Could not load parcel service preset list: ' + error.statusText,
-                    closable: true,
-                    type: 'danger',
-                    dismissOnTimeout: 5000
-                });
-
+                this.etsyComponent.callStatusEvent('Could not load parcel service preset list: ' + error.statusText, 'danger');
+                this.etsyComponent.callLoadingEvent(false);
+                this.etsyComponent.isLoading = false;
+                this.isLoading = false;
             }
         );
     }
 
     private getShippingProfileSettingsList():void {
-
-        this.shippingProfileSettingsList = [
-            {
-                value: null,
-                caption: 'Default'
-            }
-        ];
+        this.etsyComponent.callLoadingEvent(true);
 
         this.service.getShippingProfileSettingsList().subscribe(
             response => {
@@ -117,47 +112,36 @@ export class ShippingProfilesComponent implements OnInit {
                         caption: data.name
                     });
                 }
+
+                this.etsyComponent.callLoadingEvent(false);
+                this.etsyComponent.isLoading = false;
+                this.isLoading = false;
             },
 
             error => {
-
-                this.alert.addAlert({
-                    msg: 'Could not load shipping profile settings list: ' + error.statusText,
-                    closable: true,
-                    type: 'danger',
-                    dismissOnTimeout: 5000
-                });
-
+                this.etsyComponent.callStatusEvent('Could not load shipping profile settings list: ' + error.statusText, 'danger');
+                this.etsyComponent.callLoadingEvent(false);
+                this.etsyComponent.isLoading = false;
+                this.isLoading = false;
             }
         );
     }
 
 
     private saveCorrelations():void {
+        this.etsyComponent.callLoadingEvent(true);
         this.isLoading = true;
 
         this.service.saveCorrelations({correlations: this.shippingProfileCorrelationList}).subscribe(
             response => {
-
-                this.alert.addAlert({
-                    msg: 'Shipping profile correlations saved successfully',
-                    closable: true,
-                    type: 'success',
-                    dismissOnTimeout: 5000
-                });
-
+                this.etsyComponent.callStatusEvent('Shipping profile correlations saved successfully', 'success');
+                this.etsyComponent.callLoadingEvent(false);
                 this.isLoading = false;
             },
 
             error => {
-
-                this.alert.addAlert({
-                    msg: 'Shipping profile correlations not saved' + error.statusText,
-                    closable: true,
-                    type: 'danger',
-                    dismissOnTimeout: 5000
-                });
-
+                this.etsyComponent.callStatusEvent('Shipping profile correlations not saved' + error.statusText, 'danger');
+                this.etsyComponent.callLoadingEvent(false);
                 this.isLoading = false;
             }
         );
@@ -177,33 +161,26 @@ export class ShippingProfilesComponent implements OnInit {
 
     private import():void {
         this.isLoading = true;
+        this.etsyComponent.callLoadingEvent(true);
 
         this.service.importShippingProfiles().subscribe(
             response => {
-
-                this.alert.addAlert({
-                    msg: 'Shipping profiles imported',
-                    closable: true,
-                    type: 'success',
-                    dismissOnTimeout: 5000
-                });
-
                 this.getShippingProfileSettingsList();
 
+                this.etsyComponent.callStatusEvent('Shipping profiles imported successfully', 'success');
+                this.etsyComponent.callLoadingEvent(false);
                 this.isLoading = false;
             },
 
             error => {
-
-                this.alert.addAlert({
-                    msg: 'Shipping profiles could not be imported' + error.statusText,
-                    closable: true,
-                    type: 'danger',
-                    dismissOnTimeout: 5000
-                });
-
+                this.etsyComponent.callStatusEvent('Shipping profiles could not be imported' + error.statusText, 'danger');
+                this.etsyComponent.callLoadingEvent(false);
                 this.isLoading = false;
             }
         );
+    }
+
+    private reload() {
+        location.reload();
     }
 }
