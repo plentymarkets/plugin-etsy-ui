@@ -2,22 +2,28 @@ import { Component, OnInit, forwardRef, Inject } from '@angular/core';
 import { TerraMultiSelectBoxValueInterface, TerraSelectBoxValueInterface } from '@plentymarkets/terra-components/index';
 import { SettingsService } from "./service/settings.service";
 import { EtsyComponent } from "../etsy-app.component";
+import { Locale } from "angular2localization/angular2localization";
+import { LocaleService} from "angular2localization/angular2localization";
+import { LocalizationService} from "angular2localization/angular2localization";
 
 @Component({
     selector: 'settings',
     template: require('./settings.component.html'),
     styles: [require('./settings.component.scss').toString()]
 })
-export class SettingsComponent implements OnInit {
-    private service:SettingsService;
+export class SettingsComponent extends Locale implements OnInit {
     private settings;
-    private testSettings:string = '';
     private isLoading:boolean = true;
     private exportLanguages:Array<TerraMultiSelectBoxValueInterface>;
     private availableLanguages:Array<TerraSelectBoxValueInterface>;
 
-    constructor(private S:SettingsService, @Inject(forwardRef(() => EtsyComponent)) private etsyComponent:EtsyComponent) {
-        this.service = S;
+    constructor(
+        private service:SettingsService,
+        @Inject(forwardRef(() => EtsyComponent)) private etsyComponent:EtsyComponent,
+        locale:LocaleService,
+        localization:LocalizationService
+    ) {
+        super(locale,localization);
 
         this.settings = {
             shop: {
@@ -88,7 +94,7 @@ export class SettingsComponent implements OnInit {
 
             error => {
                 this.etsyComponent.callLoadingEvent(false);
-                this.etsyComponent.callStatusEvent('Could not load settings: ' + error.statusText, 'danger');
+                this.etsyComponent.callStatusEvent(this.localization.translate('errorLoadSettings') + ': ' + error.statusText, 'danger');
                 this.etsyComponent.isLoading = false;
                 this.isLoading = false;
             }
@@ -144,13 +150,13 @@ export class SettingsComponent implements OnInit {
 
         this.service.saveSettings(data).subscribe(
             response => {
-                this.etsyComponent.callStatusEvent('Settings saved successfully', 'success');
+                this.etsyComponent.callStatusEvent(this.localization.translate('successSaveSettings'), 'success');
                 this.etsyComponent.callLoadingEvent(false);
                 this.isLoading = false;
             },
 
             error => {
-                this.etsyComponent.callStatusEvent('Could not save settings: ' + error.statusText, 'danger');
+                this.etsyComponent.callStatusEvent(this.localization.translate('errorSaveSettings') + ': ' + error.statusText, 'danger');
                 this.etsyComponent.callLoadingEvent(false);
                 this.isLoading = false;
             }

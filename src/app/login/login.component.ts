@@ -1,19 +1,26 @@
 import { Component, OnInit, Inject, forwardRef } from '@angular/core';
 import { LoginService } from "./service/login.service";
 import { EtsyComponent } from "../etsy-app.component";
+import { Locale } from "angular2localization/angular2localization";
+import { LocaleService } from "angular2localization/angular2localization";
+import { LocalizationService } from "angular2localization/angular2localization";
 
 @Component({
     selector: 'login',
     template: require('./login.component.html'),
     styles: [require('./login.component.scss').toString()]
 })
-export class LoginComponent implements OnInit {
-    private service:LoginService;
+export class LoginComponent extends Locale implements OnInit {
     private isAuthenticated:boolean = null;
     private isLoading = true;
 
-    constructor(private L:LoginService, @Inject(forwardRef(() => EtsyComponent)) private etsyComponent:EtsyComponent) {
-        this.service = L;
+    constructor(
+        private service:LoginService,
+        @Inject(forwardRef(() => EtsyComponent)) private etsyComponent:EtsyComponent,
+        locale:LocaleService,
+        localization:LocalizationService
+    ) {
+        super(locale, localization);
     }
 
     /*
@@ -39,7 +46,7 @@ export class LoginComponent implements OnInit {
             },
 
             error => {
-                this.etsyComponent.callStatusEvent('Could not check the login status: ' + error.statusText, 'danger');
+                this.etsyComponent.callStatusEvent(this.localization.translate('errorLoginStatusCheck') + ': ' + error.statusText, 'danger');
                 this.etsyComponent.callLoadingEvent(false);
                 this.etsyComponent.isLoading = false;
                 this.isLoading = false;
@@ -71,7 +78,7 @@ export class LoginComponent implements OnInit {
             },
 
             error => {
-                this.etsyComponent.callStatusEvent('Could not get the login url: ' + error.statusText, 'danger');
+                this.etsyComponent.callStatusEvent(this.localization.translate('errorFetchLoginUrl') + ': ' + error.statusText, 'danger');
                 this.etsyComponent.callLoadingEvent(false);
                 this.isLoading = false;
             }

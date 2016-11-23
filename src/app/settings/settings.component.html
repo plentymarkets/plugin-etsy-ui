@@ -1,20 +1,9 @@
 <div style="margin: 15px 5px 5px 0px;">
 	<div class="spacer">
 		<div class="col-lg-12">
-			<terra-base-toolbar>
-				Etsy > Settings
-
-				<terra-button
-						[inputIsLarge]="true"
-						inputIcon="icon-reload"
-						[inputIsSmall]="true"
-						[inputIsAlignRight]="true"
-						(outputClicked)="etsyComponent.reload()"></terra-button>
-			</terra-base-toolbar>
+			<etsy-toolbar breadcrumbs="Etsy > {{'settings' | translate:lang}}" [isLoading]="isLoading"></etsy-toolbar>
 
 			<br>
-			<h5>Settings</h5>
-			<hr>
 
 			<terra-base-toolbar>
 				<div class="btn-group" role="group">
@@ -27,18 +16,20 @@
 			</terra-base-toolbar>
 
 			<br>
-			<h6>Shop Settings</h6>
+			<h6>{{'shopSettings' | translate:lang}}</h6>
 			<div class="row">
 				<div class="col-lg-6">
 					<terra-text-input
 							[(ngModel)]="settings.shop.shopId"
-							inputName="Shop Id"></terra-text-input>
+							[inputDisabled]="isLoading"
+							inputName="{{'shopId' | translate:lang}}"></terra-text-input>
 
 					<terra-select-box
+							[inputDisabled]="isLoading"
 							[inputListBoxValues]="availableLanguages"
-							inputName="Main Shop Language"></terra-select-box>
+							inputName="{{'mainShopLanguage' | translate:lang}}"></terra-select-box>
 
-					<label>Languages for export</label>
+					<label>{{'exportLanguages' | translate:lang}}</label>
 					<terra-multi-select-box
 							[inputValueList]="exportLanguages"
 							[inputIsDisabled]="false"
@@ -46,19 +37,13 @@
 				</div>
 			</div>
 
-			<h6>Payment Settings</h6>
+			<h6>{{'paymentSettings' | translate:lang}}</h6>
 			<div class="row">
 				<div class="col-lg-6">
-					<!--
 					<terra-text-input
-							inputName="Payment Method Name"
-							[inputValue]="settings.payment.name"></terra-text-input> -->
-
-					<div class="input-unit-v1">
-						<label>Payment Method Name</label>
-						<i>?</i>
-						<input autocomplete="off" type="text" pattern="^.*$" [(ngModel)]="settings.payment.name">
-					</div>
+							inputName="{{'paymentMethodName' | translate:lang}}"
+							[inputDisabled]="isLoading"
+							[(ngModel)]="settings.payment.name"></terra-text-input>
 				</div>
 			</div>
 		</div>

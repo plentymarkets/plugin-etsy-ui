@@ -5,22 +5,29 @@ import { ShippingProfileSettingsData } from './data/shipping-profile-settings-da
 import { ShippingProfileCorrelationData } from './data/shipping-profile-correlation-data';
 import { TerraSelectBoxValueInterface } from '@plentymarkets/terra-components/index';
 import { EtsyComponent } from "../etsy-app.component";
+import { LocaleService } from "angular2localization/angular2localization";
+import { LocalizationService } from "angular2localization/angular2localization";
+import { Locale } from "angular2localization/angular2localization";
 
 @Component({
     selector: 'shipping-profiles-table',
     template: require('./shipping-profiles.component.html'),
     styles: [require('./shipping-profiles.component.scss').toString()]
 })
-export class ShippingProfilesComponent implements OnInit {
+export class ShippingProfilesComponent extends Locale implements OnInit {
     private parcelServicePresetList:Array<TerraSelectBoxValueInterface>;
     private shippingProfileSettingsList:Array<TerraSelectBoxValueInterface>;
     private shippingProfileCorrelationList:Array<ShippingProfileCorrelationData>;
     private isLoading:boolean = true;
-    private service:ShippingProfileService;
 
-    constructor(private S:ShippingProfileService, @Inject(forwardRef(() => EtsyComponent)) private etsyComponent:EtsyComponent) {
+    constructor(
+        private service:ShippingProfileService,
+        @Inject(forwardRef(() => EtsyComponent)) private etsyComponent:EtsyComponent,
+        locale:LocaleService,
+        localization:LocalizationService
+    ) {
+        super(locale, localization);
 
-        this.service = S;
         this.shippingProfileCorrelationList = [];
         this.parcelServicePresetList = [
             {
@@ -64,7 +71,7 @@ export class ShippingProfilesComponent implements OnInit {
 
             error => {
 
-                this.etsyComponent.callStatusEvent('Could not load shipping profile correlations: ' + error.statusText, 'danger');
+                this.etsyComponent.callStatusEvent(this.localization.translate('errorLoadShippingProfileCorrelations') + ': ' + error.statusText, 'danger');
                 this.etsyComponent.callLoadingEvent(false);
                 this.etsyComponent.isLoading = false;
                 this.isLoading = false;
@@ -91,7 +98,7 @@ export class ShippingProfilesComponent implements OnInit {
             },
 
             error => {
-                this.etsyComponent.callStatusEvent('Could not load parcel service preset list: ' + error.statusText, 'danger');
+                this.etsyComponent.callStatusEvent(this.localization.translate('errorLoadParcelServicePresetList') + ': ' + error.statusText, 'danger');
                 this.etsyComponent.callLoadingEvent(false);
                 this.etsyComponent.isLoading = false;
                 this.isLoading = false;
@@ -119,7 +126,7 @@ export class ShippingProfilesComponent implements OnInit {
             },
 
             error => {
-                this.etsyComponent.callStatusEvent('Could not load shipping profile settings list: ' + error.statusText, 'danger');
+                this.etsyComponent.callStatusEvent(this.localization.translate('errorLoadShippingProfileSettingsList') + ': ' + error.statusText, 'danger');
                 this.etsyComponent.callLoadingEvent(false);
                 this.etsyComponent.isLoading = false;
                 this.isLoading = false;
@@ -134,13 +141,13 @@ export class ShippingProfilesComponent implements OnInit {
 
         this.service.saveCorrelations({correlations: this.shippingProfileCorrelationList}).subscribe(
             response => {
-                this.etsyComponent.callStatusEvent('Shipping profile correlations saved successfully', 'success');
+                this.etsyComponent.callStatusEvent(this.localization.translate('successSaveShippingProfileCorrelations'), 'success');
                 this.etsyComponent.callLoadingEvent(false);
                 this.isLoading = false;
             },
 
             error => {
-                this.etsyComponent.callStatusEvent('Shipping profile correlations not saved' + error.statusText, 'danger');
+                this.etsyComponent.callStatusEvent(this.localization.translate('errorSaveShippingProfileCorrelations') + ': ' + error.statusText, 'danger');
                 this.etsyComponent.callLoadingEvent(false);
                 this.isLoading = false;
             }
@@ -167,13 +174,13 @@ export class ShippingProfilesComponent implements OnInit {
             response => {
                 this.getShippingProfileSettingsList();
 
-                this.etsyComponent.callStatusEvent('Shipping profiles imported successfully', 'success');
+                this.etsyComponent.callStatusEvent(this.localization.translate('successImportShippingProfiles'), 'success');
                 this.etsyComponent.callLoadingEvent(false);
                 this.isLoading = false;
             },
 
             error => {
-                this.etsyComponent.callStatusEvent('Shipping profiles could not be imported' + error.statusText, 'danger');
+                this.etsyComponent.callStatusEvent(this.localization.translate('errorImportShippingProfiles') + ': ' + error.statusText, 'danger');
                 this.etsyComponent.callLoadingEvent(false);
                 this.isLoading = false;
             }

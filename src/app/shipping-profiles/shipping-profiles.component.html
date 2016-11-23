@@ -1,19 +1,9 @@
 <div style="margin: 15px 5px 5px 0px;">
 	<div class="spacer">
 		<div class="col-xs-12">
-			<terra-base-toolbar>
-				Etsy > Shipping Profiles Correlations
+			<etsy-toolbar breadcrumbs="Etsy > {{'shippingProfilesCorrelations' | translate:lang}}" [isLoading]="isLoading"></etsy-toolbar>
 
-				<terra-button
-						[inputIsLarge]="true"
-						inputIcon="icon-reload"
-						[inputIsSmall]="true"
-						[inputIsAlignRight]="true"
-						(outputClicked)="reload()"></terra-button>
-			</terra-base-toolbar>
 			<br>
-			<h5>Shipping Profile Correlations</h5>
-			<hr>
 
 			<terra-base-toolbar>
 				<div class="btn-group" role="group">
@@ -22,7 +12,7 @@
 								  inputIcon="icon-add"
 								  [inputIsDisabled]="isLoading"
 								  (outputClicked)="addCorrelation()"
-								  inputCaption="Add correlation"></terra-button>
+								  inputCaption="{{'addCorrelation' | translate:lang}}"></terra-button>
 					<terra-button [inputIsSmall]="true"
 								  [inputIsDisabled]="isLoading"
 								  inputIcon="icon-confirm"
@@ -37,7 +27,7 @@
 								  [inputIsDisabled]="isLoading"
 								  inputIcon="icon-download"
 								  (outputClicked)="import()"
-								  inputCaption="Import Etsy Shipping Profiles"></terra-button>
+								  inputCaption="{{'importEtsyShippingProfiles' | translate:lang}}"></terra-button>
 				</div>
 			</terra-base-toolbar>
 			<div class="row">
@@ -45,15 +35,15 @@
 					<table class="table table-striped table-bordered" style="overflow-x: visible">
 						<thead>
 						<tr>
-							<th>Parcel Service Preset</th>
-							<th colspan="2">Etsy Shipping Profile</th>
+							<th>{{'parcelServicePreset' | translate:lang}}</th>
+							<th colspan="2">{{'etsyShippingProfile' | translate:lang}}</th>
 						</tr>
 						</thead>
 						<tbody>
 						<template ngFor let-row [ngForOf]="shippingProfileCorrelationList">
 							<tr>
 								<td>
-									<select [(ngModel)]="row.parcelServicePresetId">
+									<select [(ngModel)]="row.parcelServicePresetId" [disabled]="isLoading">
 										<template ngFor let-optionParcelServicePreset
 												  [ngForOf]="parcelServicePresetList">
 											<option [ngValue]="optionParcelServicePreset.value"
@@ -64,7 +54,7 @@
 									</select>
 								</td>
 								<td>
-									<select [(ngModel)]="row.settingsId">
+									<select [(ngModel)]="row.settingsId" [disabled]="isLoading">
 										<template ngFor let-optionShippingProfileSettings
 												  [ngForOf]="shippingProfileSettingsList">
 											<option [ngValue]="optionShippingProfileSettings.value"
@@ -77,9 +67,10 @@
 								<td>
 									<terra-button
 											[inputIsSmall]="true"
+											[inputIsDisabled]="isLoading"
 											inputIcon="icon-cancel"
 											(outputClicked)="removeCorrelation(row)"
-											inputCaption="Delete"></terra-button>
+											inputCaption="{{'delete' | translate:lang}}"></terra-button>
 								</td>
 							</tr>
 						</template>

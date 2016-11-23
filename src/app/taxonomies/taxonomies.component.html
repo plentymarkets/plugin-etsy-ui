@@ -1,29 +1,21 @@
 <div style="margin: 15px 5px 5px 0px;">
 	<div class="spacer">
 		<div class="col-xs-12">
-			<terra-base-toolbar>
-				Etsy > Taxonomy Correlations
+			<etsy-toolbar breadcrumbs="Etsy > {{'taxonomyCorrelations' | translate:lang}}" [isLoading]="isLoading"></etsy-toolbar>
 
-				<terra-button
-						[inputIsLarge]="true"
-						inputIcon="icon-reload"
-						[inputIsSmall]="true"
-						[inputIsAlignRight]="true"
-						(outputClicked)="reload()"></terra-button>
-			</terra-base-toolbar>
 			<br>
-			<h5>Taxonomy Correlations</h5>
-			<hr>
 			<terra-base-toolbar>
 				<div class="btn-group" role="group">
 					<terra-button [inputIsDisabled]="isLoading"
 								  inputIcon="icon-confirm"
-								  inputCaption="Save"
+								  inputCaption="{{'save' | translate:lang}}"
 								  (outputClicked)="saveCorrelations()"></terra-button>
 				</div>
 			</terra-base-toolbar>
 
-			<terra-pager [inputPagingSize]="pagingSize" [inputDefaultPagingSize]="defaultPagingSize" [inputPagingData]="pagingData"
+			<terra-pager [inputPagingSize]="pagingSize"
+						 [inputDefaultPagingSize]="defaultPagingSize"
+						 [inputPagingData]="pagingData"
 						 (outputDoPaging)="doPaging($event)"></terra-pager>
 
 			<div class="row">
@@ -31,8 +23,8 @@
 					<table class="table table-striped table-bordered" style="overflow-x: visible">
 						<thead>
 						<tr>
-							<th>Category</th>
-							<th>Etsy Taxonomy</th>
+							<th>{{'category' | translate:lang}}</th>
+							<th>{{'taxonomy' | translate:lang}}</th>
 						</tr>
 						</thead>
 						<tbody>
@@ -46,12 +38,14 @@
 
 									<terra-number-input
 											inputName="{{ getTaxonomyName(row.taxonomyId) }}"
+											[inputDisabled]="isLoading"
 											[(ngModel)]="row.taxonomyId"></terra-number-input>
 									<terra-button
+											[inputIsDisabled]="isLoading"
 											[inputIsSmall]="true"
 											inputIcon="icon-search"
 											(outputClicked)="openTaxonomiesOverlay(row)"
-											inputCaption="Search"></terra-button>
+											inputCaption="{{'search' | translate:lang}}"></terra-button>
 								</td>
 							</tr>
 						</template>
@@ -60,10 +54,10 @@
 
 					<terra-overlay
 							#viewTaxonomiesOverlay
-							inputOverlayTitle="Showcase overlay with secondary button"
+							inputOverlayTitle=" "
 							[inputHasPrimaryButton]="true"
 							(outputPrimaryButtonClicked)="updateTaxonomy($event)"
-						   [inputIsSmall]="true">
+						   	[inputIsSmall]="true">
 						<terra-tree #tree [inputLeafList]="taxonomiesList"></terra-tree>
 					</terra-overlay>
 				</div>

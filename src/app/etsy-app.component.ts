@@ -1,5 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Locale } from 'angular2localization';
+import { LocaleService } from "angular2localization/angular2localization";
+import { LocalizationService } from "angular2localization/angular2localization";
 
 @Component({
     selector: 'etsy-app',
@@ -9,6 +11,31 @@ import { Locale } from 'angular2localization';
 })
 
 export class EtsyComponent extends Locale {
+
+    constructor(locale:LocaleService, localization:LocalizationService) {
+        super(locale, localization);
+
+        //Definitions for i18n
+        if(process.env.ENV === 'production')
+        {
+            this.localization.translationProvider('locale_');
+        }
+        else
+        {
+            this.localization.translationProvider('src/app/assets/lang/locale_');
+        }
+
+        // this.locale.addLanguage('de');
+        this.locale.addLanguage('en');
+        this.locale.definePreferredLocale('en', 'EN', 30); //default language is en
+
+        let langInLocalStorage:string = localStorage.getItem('plentymarkets_lang_') || 'de';
+
+        this.locale.setCurrentLocale(langInLocalStorage, langInLocalStorage.toUpperCase());
+        this.localization.updateTranslation();
+    }
+
+
     private action:any = this.getUrlVars()['action'];
     private _isLoading = true;
 

@@ -12,12 +12,19 @@ import { SettingsService } from "./settings/service/settings.service";
 import { SettingsComponent } from "./settings/settings.component";
 import { TaxonomiesComponent } from "./taxonomies/taxonomies.component";
 import { TaxonomyService } from "./taxonomies/service/taxonomy.service";
+import { ToolbarComponent } from "./toolbar/toolbar.component";
+import { LocaleModule } from "angular2localization/angular2localization";
+import { LocalizationModule } from "angular2localization/angular2localization";
+import {LocaleService} from "angular2localization/angular2localization";
+import { LocalizationService } from "angular2localization/angular2localization";
 
 @NgModule({
     imports: [
         BrowserModule,
         HttpModule,
         FormsModule,
+        LocaleModule,
+        LocalizationModule,
         TerraComponentsModule.forRoot()
     ],
     declarations: [
@@ -25,14 +32,17 @@ import { TaxonomyService } from "./taxonomies/service/taxonomy.service";
         ShippingProfilesComponent,
         LoginComponent,
         SettingsComponent,
-        TaxonomiesComponent
+        TaxonomiesComponent,
+        ToolbarComponent
     ],
 
     providers: [
         ShippingProfileService,
         LoginService,
         SettingsService,
-        TaxonomyService
+        TaxonomyService,
+        LocaleService,
+        LocalizationService
     ],
 
     bootstrap: [

@@ -3,13 +3,16 @@ import { TerraTreeComponent, TerraMultiSelectBoxValueInterface, TerraSelectBoxVa
 import { TaxonomyService } from "./service/taxonomy.service";
 import { TaxonomyCorrelationData } from "./data/taxonomy-correlation.data";
 import { EtsyComponent } from "../etsy-app.component";
+import { LocaleService } from "angular2localization/angular2localization";
+import { LocalizationService } from "angular2localization/angular2localization";
+import { Locale } from "angular2localization/angular2localization";
 
 @Component({
     selector: 'taxonomies',
     template: require('./taxonomies.component.html'),
     styles: [require('./taxonomies.component.scss').toString()]
 })
-export class TaxonomiesComponent implements OnInit {
+export class TaxonomiesComponent extends Locale implements OnInit {
     private isLoading:boolean = true;
     private taxonomiesList:Array<TerraLeafInterface> = [];
     private taxonomiesNameList:Array<any> = [];
@@ -21,16 +24,25 @@ export class TaxonomiesComponent implements OnInit {
     @ViewChild('viewTaxonomiesOverlay') public viewTaxonomiesOverlay:TerraOverlayComponent;
     @ViewChild('tree') public tree:TerraTreeComponent;
 
-    constructor(private taxonomyService:TaxonomyService, @Inject(forwardRef(() => EtsyComponent)) private etsyComponent:EtsyComponent) {
-        this.pagingData = {
-            pagingUnit: 'Categories',
-            total: 0,
-            currentPage: 1,
-            perPage: 25,
-            lastPage: 0,
-            from: 0,
-            to: 0
-        };
+    constructor(
+        private taxonomyService:TaxonomyService,
+        @Inject(forwardRef(() => EtsyComponent)) private etsyComponent:EtsyComponent,
+        locale:LocaleService,
+        localization:LocalizationService
+    ) {
+        super(locale, localization);
+
+        this.localization.translationChanged.subscribe(() => {
+            this.pagingData = {
+                pagingUnit: this.localization.translate('categories'),
+                total: 0,
+                currentPage: 1,
+                perPage: 25,
+                lastPage: 0,
+                from: 0,
+                to: 0
+            };
+        });
 
         this.getTaxonomies();
     }
@@ -61,7 +73,7 @@ export class TaxonomiesComponent implements OnInit {
             },
 
             error => {
-                this.etsyComponent.callStatusEvent('Taxonomies could not be loaded: ' + error.statusText, 'danger');
+                this.etsyComponent.callStatusEvent(this.localization.translate('errorLoadTaxonomies') + ': ' + error.statusText, 'danger');
                 this.etsyComponent.callLoadingEvent(false);
                 this.etsyComponent.isLoading = false;
                 this.isLoading = false;
@@ -82,7 +94,7 @@ export class TaxonomiesComponent implements OnInit {
             },
 
             error => {
-                this.etsyComponent.callStatusEvent('Correlations could not be loaded: ' + error.statusText, 'danger');
+                this.etsyComponent.callStatusEvent(this.localization.translate('errorLoadTaxonomyCorrelations') + ': ' + error.statusText, 'danger');
                 this.etsyComponent.callLoadingEvent(false);
                 this.etsyComponent.isLoading = false;
                 this.isLoading = false;
@@ -117,7 +129,7 @@ export class TaxonomiesComponent implements OnInit {
             },
 
             error => {
-                this.etsyComponent.callStatusEvent('Categories could not be loaded: ' + error.statusText, 'danger');
+                this.etsyComponent.callStatusEvent(this.localization.translate('errorLoadCategories') + ': ' + error.statusText, 'danger');
                 this.etsyComponent.callLoadingEvent(false);
                 this.etsyComponent.isLoading = false;
                 this.isLoading = false;
@@ -190,13 +202,13 @@ export class TaxonomiesComponent implements OnInit {
 
         this.taxonomyService.saveCorrelations({correlations: this.correlations}).subscribe(
             result => {
-                this.etsyComponent.callStatusEvent('Taxonomy correlations saved successfully', 'success');
+                this.etsyComponent.callStatusEvent(this.localization.translate('successSaveTaxonomyCorrelations'), 'success');
                 this.etsyComponent.callLoadingEvent(false);
                 this.isLoading = false;
             },
 
             error => {
-                this.etsyComponent.callStatusEvent('Correlations could not be saved: ' + error.statusText, 'danger');
+                this.etsyComponent.callStatusEvent(this.localization.translate('errorSaveTaxonomyCorrelations') + ': ' + error.statusText, 'danger');
                 this.etsyComponent.callLoadingEvent(false);
                 this.isLoading = false;
             }
