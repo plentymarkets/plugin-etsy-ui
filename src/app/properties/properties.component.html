@@ -1,0 +1,99 @@
+<div style="margin: 15px 5px 5px 0px;">
+	<div class="spacer">
+		<div class="col-xs-12">
+			<etsy-toolbar breadcrumbs="Etsy > {{'propertiesCorrelations' | translate:lang}}" [isLoading]="isLoading"></etsy-toolbar>
+
+			<br>
+
+			<terra-base-toolbar>
+				<div class="btn-group" role="group">
+					<terra-button [inputIsSmall]="true"
+								  [inputIsPrimary]="true"
+								  inputIcon="icon-add"
+								  [inputIsDisabled]="isLoading"
+								  (outputClicked)="addCorrelation()"
+								  inputCaption="{{'addCorrelation' | translate:lang}}"></terra-button>
+					<terra-button [inputIsSmall]="true"
+								  [inputIsDisabled]="isLoading"
+								  inputIcon="icon-confirm"
+								  (outputClicked)="saveCorrelations()"
+								  inputCaption="Save"></terra-button>
+				</div>
+
+				<div class="btn-group" role="group" style="float: right">
+					<terra-button [inputIsSmall]="true"
+								  [inputIsPrimary]="true"
+								  [inputIsAlignRight]="true"
+								  [inputIsDisabled]="isLoading"
+								  inputIcon="icon-download"
+								  (outputClicked)="import()"
+								  inputCaption="{{'importEtsyProperties' | translate:lang}}"></terra-button>
+				</div>
+			</terra-base-toolbar>
+			<div class="row">
+				<div class="col-xs-12">
+					<table class="table table-striped table-bordered" style="overflow-x: visible">
+						<thead>
+						<tr>
+							<th>{{'property' | translate:lang}}</th>
+							<th colspan="2">{{'etsyProperty' | translate:lang}}</th>
+						</tr>
+						</thead>
+						<tbody>
+						<template ngFor let-row [ngForOf]="correlations">
+							<tr>
+								<td>
+									{{ getPropertyName(row.propertyId) }}
+
+									<terra-button
+											[inputIsDisabled]="isLoading"
+											[inputIsSmall]="true"
+											[inputIsAlignRight]="true"
+											inputIcon="icon-search"
+											(outputClicked)="openPropertiesOverlay(row)"
+											inputCaption="{{'search' | translate:lang}}"></terra-button>
+								</td>
+								<td>
+									{{ getMarketPropertyName(row.settingsId) }}
+
+									<terra-button
+											[inputIsDisabled]="isLoading"
+											[inputIsSmall]="true"
+											[inputIsAlignRight]="true"
+											inputIcon="icon-search"
+											(outputClicked)="openMarketPropertiesSettingsOverlay(row)"
+											inputCaption="{{'search' | translate:lang}}"></terra-button>
+								</td>
+								<td>
+									<terra-button
+											[inputIsSmall]="true"
+											[inputIsDisabled]="isLoading"
+											inputIcon="icon-cancel"
+											(outputClicked)="removeCorrelation(row)"
+											inputCaption="{{'delete' | translate:lang}}"></terra-button>
+								</td>
+							</tr>
+						</template>
+						</tbody>
+					</table>
+
+					<terra-overlay
+							#viewPropertiesOverlay
+							inputOverlayTitle=" "
+							[inputHasPrimaryButton]="true"
+							(outputPrimaryButtonClicked)="updateProperty($event)">
+						<terra-tree #propertyTree [inputLeafList]="propertiesTreeList"></terra-tree>
+					</terra-overlay>
+
+					<terra-overlay
+							#viewMarketPropertiesSettingsOverlay
+							inputOverlayTitle=" "
+							[inputHasPrimaryButton]="true"
+							(outputPrimaryButtonClicked)="updateMarketPropertySettings($event)">
+						<terra-tree #marketPropertySettingsTree [inputLeafList]="marketPropertiesSettingsTreeList"></terra-tree>
+					</terra-overlay>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

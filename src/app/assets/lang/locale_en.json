@@ -46,5 +46,10 @@
   "successSaveSettings": "Settings successfully saved.",
   "successSaveShippingProfileCorrelations": "Shipping profile correlations successfully saved.",
   "successImportShippingProfiles": "Shipping profiles successfully imported.",
-  "successSaveTaxonomyCorrelations": "Taxonomy correlations successfully saved."
+  "successSaveTaxonomyCorrelations": "Taxonomy correlations successfully saved.",
+
+  "propertiesCorrelations": "Properties Correlations",
+  "property": "Property",
+  "etsyProperty": "Etsy property",
+  "importEtsyProperties": "Import Etsy properties"
 }

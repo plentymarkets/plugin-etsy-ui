@@ -13,9 +13,11 @@ import { SettingsComponent } from "./settings/settings.component";
 import { TaxonomiesComponent } from "./taxonomies/taxonomies.component";
 import { TaxonomyService } from "./taxonomies/service/taxonomy.service";
 import { ToolbarComponent } from "./toolbar/toolbar.component";
+import { PropertiesComponent } from "./properties/properties.component";
+import { PropertyService } from "./properties/service/property.service";
 import { LocaleModule } from "angular2localization/angular2localization";
 import { LocalizationModule } from "angular2localization/angular2localization";
-import {LocaleService} from "angular2localization/angular2localization";
+import { LocaleService } from "angular2localization/angular2localization";
 import { LocalizationService } from "angular2localization/angular2localization";
 
 @NgModule({
@@ -33,6 +35,7 @@ import { LocalizationService } from "angular2localization/angular2localization";
         LoginComponent,
         SettingsComponent,
         TaxonomiesComponent,
+        PropertiesComponent,
         ToolbarComponent
     ],
 
@@ -41,6 +44,7 @@ import { LocalizationService } from "angular2localization/angular2localization";
         LoginService,
         SettingsService,
         TaxonomyService,
+        PropertyService,
         LocaleService,
         LocalizationService
     ],
