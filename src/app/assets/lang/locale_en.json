@@ -29,6 +29,11 @@
   "notAuthenticated": "You are currently not authenticated. Please log in.",
   "loginToEtsy": "Login to Etsy",
 
+  "propertiesCorrelations": "Properties correlations",
+  "property": "Property",
+  "etsyProperty": "Etsy property",
+  "importEtsyProperties": "Import Etsy properties",
+
   "errorLoginStatusCheck": "Login status not checked.",
   "errorFetchLoginUrl": "Could not get the login url",
   "errorLoadSettings": "Settings not loaded.",
@@ -42,14 +47,8 @@
   "errorLoadTaxonomyCorrelations": "Taxonomy correlations not loaded.",
   "errorSaveTaxonomyCorrelations": "Taxonomy correlations not saved.",
 
-
   "successSaveSettings": "Settings successfully saved.",
   "successSaveShippingProfileCorrelations": "Shipping profile correlations successfully saved.",
   "successImportShippingProfiles": "Shipping profiles successfully imported.",
   "successSaveTaxonomyCorrelations": "Taxonomy correlations successfully saved.",
-
-  "propertiesCorrelations": "Properties Correlations",
-  "property": "Property",
-  "etsyProperty": "Etsy property",
-  "importEtsyProperties": "Import Etsy properties"
 }

@@ -10,7 +10,7 @@ import { LocalizationService } from "angular2localization/angular2localization";
 import { Locale } from "angular2localization/angular2localization";
 
 @Component({
-    selector: 'shipping-profiles-table',
+    selector: 'shipping-profiles',
     template: require('./shipping-profiles.component.html'),
     styles: [require('./shipping-profiles.component.scss').toString()]
 })
@@ -111,6 +111,8 @@ export class ShippingProfilesComponent extends Locale implements OnInit {
 
         this.service.getShippingProfileSettingsList().subscribe(
             response => {
+                this.shippingProfileSettingsList = [];
+
                 for (let index in response) {
                     let data:ShippingProfileSettingsData = response[index];
 
