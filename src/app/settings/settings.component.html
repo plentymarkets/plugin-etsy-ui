@@ -21,7 +21,8 @@
 				<div class="col-lg-6">
 					<terra-text-input
 							[inputDisabled]="isLoading"
-							inputName="{{'shopId' | translate:lang}}"></terra-text-input>
+							inputName="{{'shopId' | translate:lang}}"
+							[(ngModel)]="settings.shop.shopId"></terra-text-input>
 
 					<terra-select-box
 							[inputDisabled]="isLoading"
