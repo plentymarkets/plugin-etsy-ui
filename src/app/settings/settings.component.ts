@@ -40,7 +40,7 @@ export class SettingsComponent extends Locale implements OnInit {
         this.exportLanguages = [
             {
                 value: 'en',
-                caption: this.localization.translate('successSaveSettings'),
+                caption: 'English',
                 selected: false,
             },
             {
