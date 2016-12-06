@@ -27,6 +27,7 @@
 					<terra-select-box
 							[inputDisabled]="isLoading"
 							[inputListBoxValues]="availableLanguages"
+							[(inputSelectedValue)]="settings.shop.mainLanguage"
 							inputName="{{'mainShopLanguage' | translate:lang}}"></terra-select-box>
 
 					<label>{{'exportLanguages' | translate:lang}}</label>

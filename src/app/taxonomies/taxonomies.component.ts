@@ -20,6 +20,7 @@ export class TaxonomiesComponent extends Locale implements OnInit {
     private categories:Array<any>;
     private pagingData;
     private rowInOverlay:any;
+    private correlationsLoaded = false;
 
     @ViewChild('viewTaxonomiesOverlay') public viewTaxonomiesOverlay:TerraOverlayComponent;
     @ViewChild('tree') public tree:TerraTreeComponent;
@@ -90,6 +91,8 @@ export class TaxonomiesComponent extends Locale implements OnInit {
 
                 this.etsyComponent.callLoadingEvent(false);
 
+                this.correlationsLoaded = true;
+
                 this.getData(this.pagingData.perPage, this.pagingData.currentPage);
             },
 
@@ -103,6 +106,11 @@ export class TaxonomiesComponent extends Locale implements OnInit {
     }
 
     private getData(perPage, currentPage) {
+        if(!this.correlationsLoaded)
+        {
+            return;
+        }
+
         this.etsyComponent.callLoadingEvent(true);
         this.isLoading = true;
 
