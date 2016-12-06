@@ -43,6 +43,12 @@
 						<template ngFor let-row [ngForOf]="shippingProfileCorrelationList">
 							<tr>
 								<td>
+									<terra-select-box
+											[inputDisabled]="isLoading"
+											[inputListBoxValues]="parcelServicePresetList"
+											[(inputSelectedValue)]="row.parcelServicePresetId"
+											inputName="{{ row.parcelServicePresetId }}"></terra-select-box>
+
 									<select [(ngModel)]="row.parcelServicePresetId" [disabled]="isLoading">
 										<template ngFor let-optionParcelServicePreset
 												  [ngForOf]="parcelServicePresetList">

@@ -15,6 +15,7 @@ export class SettingsComponent extends Locale implements OnInit {
     private settings;
     private isLoading:boolean = true;
     private exportLanguages:Array<TerraMultiSelectBoxValueInterface>;
+    private processes:Array<TerraMultiSelectBoxValueInterface>;
     private availableLanguages:Array<TerraSelectBoxValueInterface>;
 
     constructor(
@@ -39,7 +40,7 @@ export class SettingsComponent extends Locale implements OnInit {
         this.exportLanguages = [
             {
                 value: 'en',
-                caption: 'English',
+                caption: this.localization.translate('successSaveSettings'),
                 selected: false,
             },
             {
@@ -52,6 +53,24 @@ export class SettingsComponent extends Locale implements OnInit {
                 caption: 'French',
                 selected: false
             },
+        ];
+
+        this.processes = [
+            {
+                value: 'item_export',
+                caption: 'Item Export',
+                selected: false
+            },
+            {
+                value: 'stock_update',
+                caption: 'Stock Update',
+                selected: false
+            },
+            {
+                value: 'order_import',
+                caption: 'Order Import',
+                selected: false
+            }
         ];
 
         this.availableLanguages = [
@@ -123,6 +142,16 @@ export class SettingsComponent extends Locale implements OnInit {
                         });
                     });
                 }
+
+                if ("processes" in response.shop) {
+                    response.shop.processes.forEach((responseItem) => {
+                        this.processes.forEach((item, key) => {
+                            if (item.value == responseItem) {
+                                this.processes[key].selected = true;
+                            }
+                        });
+                    });
+                }
             }
 
             if ("payment" in response) {
@@ -141,7 +170,8 @@ export class SettingsComponent extends Locale implements OnInit {
             shop: {
                 shopId: this.settings.shop.shopId,
                 mainLanguage: this.settings.shop.mainLanguage,
-                exportLanguages: this.getSelectedExportLanguages()
+                exportLanguages: this.getSelectedExportLanguages(),
+                processes: this.getSelectedProcesses(),
             },
             payment: {
                 name: this.settings.payment.name
@@ -173,5 +203,17 @@ export class SettingsComponent extends Locale implements OnInit {
         });
 
         return exportLanguagesList;
+    }
+
+    private getSelectedProcesses():Array<any> {
+        let processesList = [];
+
+        this.processes.forEach((item) => {
+            if (item.selected === true) {
+                processesList.push(item.value);
+            }
+        });
+
+        return processesList;
     }
 }
