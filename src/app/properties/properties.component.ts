@@ -301,13 +301,13 @@ export class PropertiesComponent extends Locale implements OnInit {
             response => {
                 this.getMarketProperties();
 
-                this.etsyComponent.callStatusEvent(this.localization.translate('successImportShippingProfiles'), 'success');
+                this.etsyComponent.callStatusEvent(this.localization.translate('successImportProperties'), 'success');
                 this.etsyComponent.callLoadingEvent(false);
                 this.isLoading = false;
             },
 
             error => {
-                this.etsyComponent.callStatusEvent(this.localization.translate('errorImportShippingProfiles') + ': ' + error.statusText, 'danger');
+                this.etsyComponent.callStatusEvent(this.localization.translate('errorImportProperties') + ': ' + error.statusText, 'danger');
                 this.etsyComponent.callLoadingEvent(false);
                 this.isLoading = false;
             }

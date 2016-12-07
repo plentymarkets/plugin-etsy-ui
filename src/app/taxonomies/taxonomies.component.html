@@ -1,12 +1,10 @@
 <div style="margin: 15px 5px 5px 0px;">
 	<div class="spacer">
 		<div class="col-xs-12">
-			<etsy-toolbar breadcrumbs="Etsy > {{'taxonomyCorrelations' | translate:lang}}" [isLoading]="isLoading"></etsy-toolbar>
-
-			<br>
 			<terra-base-toolbar>
 				<div class="btn-group" role="group">
 					<terra-button [inputIsDisabled]="isLoading"
+								  [inputIsSmall]="true"
 								  inputIcon="icon-confirm"
 								  inputCaption="{{'save' | translate:lang}}"
 								  (outputClicked)="saveCorrelations()"></terra-button>
