@@ -19,6 +19,7 @@ import { LocaleModule } from "angular2localization/angular2localization";
 import { LocalizationModule } from "angular2localization/angular2localization";
 import { LocaleService } from "angular2localization/angular2localization";
 import { LocalizationService } from "angular2localization/angular2localization";
+import { ModalModule, ComponentsHelper } from 'ng2-bootstrap/ng2-bootstrap';
 
 @NgModule({
     imports: [
@@ -46,7 +47,8 @@ import { LocalizationService } from "angular2localization/angular2localization";
         TaxonomyService,
         PropertyService,
         LocaleService,
-        LocalizationService
+        LocalizationService,
+        {provide: ComponentsHelper, useClass: ComponentsHelper}
     ],
 
     bootstrap: [

@@ -76,7 +76,7 @@
 					<terra-overlay
 							#viewPropertiesOverlay
 							inputOverlayTitle=" "
-							[inputHasPrimaryButton]="true"
+							[inputPrimaryButtonInterface]="updatePropertyPrimaryButtonOverlay"
 							(outputPrimaryButtonClicked)="updateProperty($event)">
 						<terra-tree #propertyTree [inputLeafList]="propertiesTreeList"></terra-tree>
 					</terra-overlay>
@@ -84,7 +84,7 @@
 					<terra-overlay
 							#viewMarketPropertiesSettingsOverlay
 							inputOverlayTitle=" "
-							[inputHasPrimaryButton]="true"
+							[inputPrimaryButtonInterface]="updateMarketPropertySettingsPrimaryButtonOverlay"
 							(outputPrimaryButtonClicked)="updateMarketPropertySettings($event)">
 						<terra-tree #marketPropertySettingsTree [inputLeafList]="marketPropertiesSettingsTreeList"></terra-tree>
 					</terra-overlay>

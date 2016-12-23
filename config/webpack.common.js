@@ -5,15 +5,14 @@ const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 const ContextReplacementPlugin = require('webpack/lib/ContextReplacementPlugin');
 const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 
-const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
 const helpers = require('./helpers');
 
 const METADATA = {
-    baseUrl: './'
+    baseUrl: '/'
 };
 
 module.exports = function (options) {
@@ -82,12 +81,11 @@ module.exports = function (options) {
                 // Bootstrap 4
                 {
                     test: /bootstrap\/dist\/js\/umd\//,
-                    loader: 'imports'
+                    loader: 'imports-loader'
                 }
             ]
         },
         plugins: [
-            new ForkCheckerPlugin(),
 
             new CommonsChunkPlugin({
                 name: ['app', 'vendor', 'polyfills'],

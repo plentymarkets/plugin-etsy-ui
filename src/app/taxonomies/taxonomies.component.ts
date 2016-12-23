@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, HostListener, Inject, forwardRef } from '@angular/core';
-import { TerraTreeComponent, TerraMultiSelectBoxValueInterface, TerraSelectBoxValueInterface, TerraPagerInterface, TerraOverlayComponent, TerraLeafInterface } from '@plentymarkets/terra-components/index';
+import { TerraTreeComponent, TerraMultiSelectBoxValueInterface, TerraSelectBoxValueInterface, TerraPagerInterface, TerraOverlayComponent, TerraLeafInterface, TerraOverlayButtonInterface } from '@plentymarkets/terra-components/index';
 import { TaxonomyService } from "./service/taxonomy.service";
 import { TaxonomyCorrelationData } from "./data/taxonomy-correlation.data";
 import { EtsyComponent } from "../etsy-app.component";
@@ -21,6 +21,8 @@ export class TaxonomiesComponent extends Locale implements OnInit {
     private pagingData;
     private rowInOverlay:any;
     private correlationsLoaded = false;
+
+    private updateTaxonomyPrimaryButtonOverlay:TerraOverlayButtonInterface;
 
     @ViewChild('viewTaxonomiesOverlay') public viewTaxonomiesOverlay:TerraOverlayComponent;
     @ViewChild('tree') public tree:TerraTreeComponent;
@@ -55,6 +57,12 @@ export class TaxonomiesComponent extends Locale implements OnInit {
      * directive is instantiated.
      */
     ngOnInit() {
+        this.updateTaxonomyPrimaryButtonOverlay = {
+            icon:          'icon-plus',
+            caption:       'Add',
+            isDisabled:    false,
+            clickFunction: () => this.updateTaxonomy()
+        };
     }
 
     private doPaging(pagerData:TerraPagerInterface):void {
@@ -159,7 +167,7 @@ export class TaxonomiesComponent extends Locale implements OnInit {
         this.viewTaxonomiesOverlay.showOverlay();
     }
 
-    private updateTaxonomy(event) {
+    private updateTaxonomy() {
         let leaf:TerraLeafInterface = this.tree.getSelectedLeaf();
 
         if (leaf != null) {

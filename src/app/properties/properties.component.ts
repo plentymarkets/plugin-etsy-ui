@@ -1,5 +1,5 @@
 import { Component, OnInit, forwardRef, Inject, ViewChild } from '@angular/core';
-import { TerraOverlayComponent, TerraLeafInterface, TerraTreeComponent } from '@plentymarkets/terra-components/index';
+import { TerraOverlayComponent, TerraLeafInterface, TerraTreeComponent, TerraOverlayButtonInterface } from '@plentymarkets/terra-components/index';
 import { EtsyComponent } from "../etsy-app.component";
 import { Locale } from "angular2localization/angular2localization";
 import { LocaleService} from "angular2localization/angular2localization";
@@ -20,6 +20,9 @@ export class PropertiesComponent extends Locale implements OnInit {
     private marketPropertiesSettingsRowInOverlay:any;
     private propertiesTreeList:Array<TerraLeafInterface> = [];
     private marketPropertiesSettingsTreeList:Array<TerraLeafInterface> = [];
+
+    private updatePropertyPrimaryButtonOverlay:TerraOverlayButtonInterface;
+    private updateMarketPropertySettingsPrimaryButtonOverlay:TerraOverlayButtonInterface;
 
     @ViewChild('viewPropertiesOverlay') public viewPropertiesOverlay:TerraOverlayComponent;
     @ViewChild('viewMarketPropertiesSettingsOverlay') public viewMarketPropertiesSettingsOverlay:TerraOverlayComponent;
@@ -44,6 +47,19 @@ export class PropertiesComponent extends Locale implements OnInit {
      * directive is instantiated.
      */
     ngOnInit() {
+        this.updatePropertyPrimaryButtonOverlay = {
+            icon:          'icon-confirm',
+            caption:       'Add',
+            isDisabled:    false,
+            clickFunction: () => this.updateProperty()
+        };
+
+        this.updateMarketPropertySettingsPrimaryButtonOverlay = {
+            icon:          'icon-confirm',
+            caption:       'Add',
+            isDisabled:    false,
+            clickFunction: () => this.updateMarketPropertySettings()
+        };
     }
 
     private getProperties()
@@ -244,7 +260,7 @@ export class PropertiesComponent extends Locale implements OnInit {
         return leafData;
     }
 
-    private updateProperty(event) {
+    private updateProperty() {
         let leaf:TerraLeafInterface = this.propertyTree.getSelectedLeaf();
 
         if (leaf != null) {
@@ -253,7 +269,7 @@ export class PropertiesComponent extends Locale implements OnInit {
         }
     }
 
-    private updateMarketPropertySettings(event) {
+    private updateMarketPropertySettings() {
         let leaf:TerraLeafInterface = this.marketPropertySettingsTree.getSelectedLeaf();
 
         if (leaf != null) {

@@ -36,7 +36,7 @@
 
 									<terra-number-input
 											inputName="{{ getTaxonomyName(row.taxonomyId) }}"
-											[inputDisabled]="isLoading"
+											[inputIsDisabled]="isLoading"
 											[(ngModel)]="row.taxonomyId"></terra-number-input>
 									<terra-button
 											[inputIsDisabled]="isLoading"
@@ -53,8 +53,7 @@
 					<terra-overlay
 							#viewTaxonomiesOverlay
 							inputOverlayTitle=" "
-							[inputHasPrimaryButton]="true"
-							(outputPrimaryButtonClicked)="updateTaxonomy($event)"
+							[inputPrimaryButtonInterface]="updateTaxonomyPrimaryButtonOverlay"
 						   	[inputIsSmall]="true">
 						<terra-tree #tree [inputLeafList]="taxonomiesList"></terra-tree>
 					</terra-overlay>
