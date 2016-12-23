@@ -48,14 +48,14 @@ export class PropertiesComponent extends Locale implements OnInit {
      */
     ngOnInit() {
         this.updatePropertyPrimaryButtonOverlay = {
-            icon:          'icon-confirm',
+            icon:          'icon-add',
             caption:       'Add',
             isDisabled:    false,
             clickFunction: () => this.updateProperty()
         };
 
         this.updateMarketPropertySettingsPrimaryButtonOverlay = {
-            icon:          'icon-confirm',
+            icon:          'icon-add',
             caption:       'Add',
             isDisabled:    false,
             clickFunction: () => this.updateMarketPropertySettings()

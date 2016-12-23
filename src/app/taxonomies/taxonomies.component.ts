@@ -58,7 +58,7 @@ export class TaxonomiesComponent extends Locale implements OnInit {
      */
     ngOnInit() {
         this.updateTaxonomyPrimaryButtonOverlay = {
-            icon:          'icon-plus',
+            icon:          'icon-add',
             caption:       'Add',
             isDisabled:    false,
             clickFunction: () => this.updateTaxonomy()
