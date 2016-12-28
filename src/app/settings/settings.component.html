@@ -23,10 +23,25 @@
 							[(ngModel)]="settings.shop.shopId"></terra-text-input>
 
 					<label>{{'exportLanguages' | translate:lang}}</label>
-					<terra-multi-select-box
-							[inputValueList]="exportLanguages"
-							[inputIsDisabled]="false"
-							[inputIsError]="false"></terra-multi-select-box>
+
+					<div class="multiselect-container">
+						<div class="multiselect-element">
+							<div class="multiselect">
+								<div class="option-list">
+									<template ngFor let-row [ngForOf]="exportLanguages">
+										<div>
+											<div class="input-group">
+												<div class="input-group-addon">
+													<terra-checkbox [(value)]="row.selected"></terra-checkbox>
+												</div>
+												<label class="form-control">{{ row.caption }}</label>
+											</div>
+										</div>
+									</template>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div class="col-lg-6">
 					<terra-select-box
@@ -36,10 +51,24 @@
 							inputName="{{'mainShopLanguage' | translate:lang}}"></terra-select-box>
 
 					<label>{{'processes' | translate:lang}}</label>
-					<terra-multi-select-box
-							[inputValueList]="processes"
-							[inputIsDisabled]="false"
-							[inputIsError]="false"></terra-multi-select-box>
+					<div class="multiselect-container">
+						<div class="multiselect-element">
+							<div class="multiselect">
+								<div class="option-list">
+									<template ngFor let-row [ngForOf]="processes">
+										<div>
+											<div class="input-group">
+												<div class="input-group-addon">
+													<terra-checkbox [(value)]="row.selected"></terra-checkbox>
+												</div>
+												<label class="form-control">{{ row.caption }}</label>
+											</div>
+										</div>
+									</template>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 
