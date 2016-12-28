@@ -13,8 +13,6 @@
 			</terra-base-toolbar>
 
 			<br>
-			<h6>{{'shopSettings' | translate:lang}}</h6>
-			<hr>
 			<div class="row">
 				<div class="col-lg-6">
 					<terra-text-input
@@ -69,17 +67,6 @@
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-
-			<h6>{{'paymentSettings' | translate:lang}}</h6>
-			<hr>
-			<div class="row">
-				<div class="col-lg-6">
-					<terra-text-input
-							inputName="{{'paymentMethodName' | translate:lang}}"
-							[inputIsDisabled]="isLoading"
-							[(ngModel)]="settings.payment.name"></terra-text-input>
 				</div>
 			</div>
 		</div>

@@ -31,9 +31,6 @@ export class SettingsComponent extends Locale implements OnInit {
                 shopId: 0,
                 mainLanguage: 'de',
                 exportLanguages: []
-            },
-            payment: {
-                name: ''
             }
         };
 
@@ -153,12 +150,6 @@ export class SettingsComponent extends Locale implements OnInit {
                     });
                 }
             }
-
-            if ("payment" in response) {
-                if ("name" in response.payment) {
-                    settings.payment.name = response.payment.name;
-                }
-            }
         }
     }
 
@@ -172,9 +163,6 @@ export class SettingsComponent extends Locale implements OnInit {
                 mainLanguage: this.settings.shop.mainLanguage,
                 exportLanguages: this.getSelectedExportLanguages(),
                 processes: this.getSelectedProcesses(),
-            },
-            payment: {
-                name: this.settings.payment.name
             }
         };
 
