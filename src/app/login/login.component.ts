@@ -66,7 +66,7 @@ export class LoginComponent extends Locale implements OnInit {
                 var popup = window.open(
                     response.loginUrl,
                     'Etsy Login',
-                    'toolbar=no, location=#, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=600, height=600, top=0, left=50');
+                    'toolbar=no, location=#, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no, copyhistory=no, width=600, height=600, top=0, left=50');
 
                 var pollTimer = window.setInterval(() => {
                     if (popup.closed !== false) {
