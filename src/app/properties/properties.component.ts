@@ -13,7 +13,7 @@ import { PropertyService } from "./service/property.service";
 })
 export class PropertiesComponent extends Locale implements OnInit {
     private isLoading:boolean = true;
-    private correlations:Array<any>;
+    private correlations:Array<any> = [];
     private marketPropertiesNameList:Array<any> = [];
     private propertiesNameList:Array<any> = [];
     private propertiesRowInOverlay:any;
@@ -189,15 +189,25 @@ export class PropertiesComponent extends Locale implements OnInit {
         };
 
         propertiesSettings.forEach((item) => {
-            this.propertiesNameList[item.id] = item.groupName + ': ' + item.name;
 
-            if(groups[item.groupId])
+            if(item.groupId)
             {
-                groups[item.groupId].children.push(item);
+                this.propertiesNameList[item.id] = item.groupName + ': ' + item.name;
             }
             else
             {
-                groups[item.groupId] = {
+                this.propertiesNameList[item.id] = item.name;
+            }
+
+            let groupId = item.groupId ? item.groupId : 0;
+
+            if(groups[groupId])
+            {
+                groups[groupId].children.push(item);
+            }
+            else
+            {
+                groups[groupId] = {
                     groupId: item.groupId,
                     groupName: item.groupName,
                     children: [item]
