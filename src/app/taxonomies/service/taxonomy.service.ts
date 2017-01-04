@@ -40,7 +40,7 @@ export class TaxonomyService extends TerraBaseService {
 
         if(page && perPage)
         {
-            url = this.url + 'categories?page=' + page + '&itemsPerPage=' + perPage;
+            url = this.url + 'categories?page=' + page + '&itemsPerPage=' + perPage + '&lang=' + (localStorage.getItem('locale') || 'de');
         }
         else
         {
