@@ -8,7 +8,7 @@ import { MarketPropertyData } from "../data/market-property-data";
 @Injectable()
 export class PropertyService extends TerraBaseService {
     constructor(loadingBarService:TerraLoadingBarService, http:Http) {
-        super(loadingBarService, http, '/etsy/properties/');
+        super(loadingBarService, http, '/markets/etsy/properties/');
     }
 
     public getProperties():Observable<PropertyData> {
