@@ -15,10 +15,19 @@
 			<br>
 			<div class="row">
 				<div class="col-lg-6">
+					<!--
+					<terra-select-box
+							[inputDisabled]="isLoading"
+							[inputListBoxValues]="availableShops"
+							[(inputSelectedValue)]="settings.shop.shopId"
+							inputName="{{'shopId' | translate:lang}}"></terra-select-box> -->
+
 					<terra-text-input
 							[inputIsDisabled]="isLoading"
 							inputName="{{'shopId' | translate:lang}}"
-							[(ngModel)]="settings.shop.shopId"></terra-text-input>
+							[(ngModel)]="settings.shop.shopId"
+							inputTooltipText="{{ getShopList() }}"
+							inputTooltipPlacement="bottom"></terra-text-input>
 
 					<label>{{'exportLanguages' | translate:lang}}</label>
 

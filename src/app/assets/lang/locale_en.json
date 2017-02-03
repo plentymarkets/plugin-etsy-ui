@@ -55,6 +55,7 @@
   "errorLoadPropertyCorrelations": "Property correlations not loaded.",
   "errorImportProperties": "Market properties not imported.",
   "errorSavePropertyCorrelations": "Property correlations not saved.",
+  "errorLoadShops": "Etsy shops not loaded.",
 
   "successSavePropertyCorrelations": "Property correlations successfully saved.",
   "successImportProperties": "Market properties successfully imported.",

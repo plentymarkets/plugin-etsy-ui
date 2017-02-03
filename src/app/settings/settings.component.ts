@@ -5,6 +5,7 @@ import { EtsyComponent } from "../etsy-app.component";
 import { Locale } from "angular2localization/angular2localization";
 import { LocaleService} from "angular2localization/angular2localization";
 import { LocalizationService} from "angular2localization/angular2localization";
+import { ShopData } from './data/shop-data';
 
 @Component({
     selector: 'settings',
@@ -17,6 +18,7 @@ export class SettingsComponent extends Locale implements OnInit {
     private exportLanguages:Array<TerraMultiSelectBoxValueInterface>;
     private processes:Array<TerraMultiSelectBoxValueInterface>;
     private availableLanguages:Array<TerraSelectBoxValueInterface>;
+    private availableShops:Array<TerraSelectBoxValueInterface>;
 
     constructor(
         private service:SettingsService,
@@ -84,6 +86,11 @@ export class SettingsComponent extends Locale implements OnInit {
                 caption: 'French',
             },
         ];
+
+        this.availableShops = [{
+            value: null,
+            caption: 'Select..'
+        }];
     }
 
     /*
@@ -102,10 +109,6 @@ export class SettingsComponent extends Locale implements OnInit {
         this.service.getSettings().subscribe(
             response => {
                 this.mapSettings(response);
-
-                this.etsyComponent.callLoadingEvent(false);
-                this.etsyComponent.isLoading = false;
-                this.isLoading = false;
             },
 
             error => {
@@ -150,8 +153,42 @@ export class SettingsComponent extends Locale implements OnInit {
                     });
                 }
             }
+
+            this.loadShops(settings.shop.shopId);
         }
     }
+
+    private loadShops(shopId) {
+        this.etsyComponent.callLoadingEvent(true);
+
+        this.service.getShops().subscribe(
+            response => {
+                if (typeof response !== 'undefined') {
+                    for (let index in response) {
+                        let data:ShopData = response[index];
+
+                        this.availableShops.push({
+                            value: data.shopId,
+                            caption: data.shopName,
+                            active: shopId == data.shopId
+                        });
+                    }
+                }
+
+                this.etsyComponent.callLoadingEvent(false);
+                this.etsyComponent.isLoading = false;
+                this.isLoading = false;
+            },
+
+            error => {
+                this.etsyComponent.callLoadingEvent(false);
+                this.etsyComponent.callStatusEvent(this.localization.translate('errorLoadShops') + ': ' + error.statusText, 'danger');
+                this.etsyComponent.isLoading = false;
+                this.isLoading = false;
+            }
+        )
+    }
+
 
     private saveSettings():void {
         this.isLoading = true;
@@ -203,5 +240,19 @@ export class SettingsComponent extends Locale implements OnInit {
         });
 
         return processesList;
+    }
+
+    private getShopList():string {
+
+        let tooltip = '';
+
+        this.availableShops.forEach((shop) => {
+            if(shop.value)
+            {
+                tooltip += shop.caption + ' » ' + shop.value;
+            }
+        });
+
+        return tooltip;
     }
 }
