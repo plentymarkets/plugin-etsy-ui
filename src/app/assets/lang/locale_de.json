@@ -59,7 +59,7 @@
   "errorLoadPropertyCorrelations": "Merkmalverknüpfungen nicht geladen.",
   "errorSavePropertyCorrelations": "Merkmalverknüpfungen nicht gespeichert.",
   "errorImportProperties": "Marktplatzmerkmale nicht importiert.",
-  "errorLoadShops": "Etsy Shops nicht geladen.",
+  "errorLoadShops": "Etsy-Shops nicht geladen.",
 
   "successSavePropertyCorrelations": "Markmalverknüpfungen gespeichert.",
   "successImportProperties": "Marktplatzmerkmale importiert.",
