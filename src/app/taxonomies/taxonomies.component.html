@@ -4,9 +4,8 @@
 			<terra-base-toolbar>
 				<div class="btn-group" role="group">
 					<terra-button [inputIsDisabled]="isLoading"
-								  [inputIsSmall]="true"
-								  inputIcon="icon-confirm"
-								  inputCaption="{{'save' | translate:lang}}"
+								  inputTooltipText="{{ 'save' | translate:lang }}" inputTooltipPlacement="bottom"
+								  inputIcon="icon-save"
 								  (outputClicked)="saveCorrelations()"></terra-button>
 				</div>
 			</terra-base-toolbar>

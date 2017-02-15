@@ -7,7 +7,7 @@ import { ShopData } from '../data/shop-data';
 @Injectable()
 export class SettingsService extends TerraBaseService {
     constructor(loadingBarService:TerraLoadingBarService, http:Http) {
-        super(loadingBarService, http, '/markets/etsy/settings/');
+        super(loadingBarService, http, '/rest/markets/etsy/settings/');
     }
 
     public getSettings():Observable<any> {

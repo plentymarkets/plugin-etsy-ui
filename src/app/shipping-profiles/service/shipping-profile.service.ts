@@ -9,7 +9,7 @@ import { ShippingProfileCorrelationData } from '../data/shipping-profile-correla
 @Injectable()
 export class ShippingProfileService extends TerraBaseService {
     constructor(loadingBarService:TerraLoadingBarService, http:Http) {
-        super(loadingBarService, http, '/markets/etsy/shipping-profiles/');
+        super(loadingBarService, http, '/rest/markets/etsy/shipping-profiles/');
     }
 
     public getParcelServiceList():Observable<ParcelServicesData> {

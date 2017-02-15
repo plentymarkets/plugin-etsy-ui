@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class LoginService extends TerraBaseService {
     constructor(loadingBarService:TerraLoadingBarService, http:Http) {
-        super(loadingBarService, http, '/markets/etsy/auth/');
+        super(loadingBarService, http, '/rest/markets/etsy/auth/');
     }
 
     public getLoginStatus():Observable<any>
