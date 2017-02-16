@@ -1,5 +1,5 @@
 export class ParcelServicesData
 {
-  id:number;
-  name:string;
+    id:number;
+    name:string;
 }

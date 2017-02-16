@@ -1,15 +1,20 @@
-.multiselect-container {
-  .multiselect-element {
-    border: inherit;
-
-    .multiselect {
-      .option-list {
-        height: auto;
-      }
+.multiselect-container
+{
+    .multiselect-element
+    {
+        border: inherit;
+        
+        .multiselect
+        {
+            .option-list
+            {
+                height: auto;
+            }
+        }
     }
-  }
 }
 
-.btn-toolbar {
-  margin-left: 0 !important;
+.btn-toolbar
+{
+    margin-left: 0 !important;
 }

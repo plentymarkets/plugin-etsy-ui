@@ -19,53 +19,52 @@ const METADATA = webpackMerge(commonConfig({env: ENV}).metadata, {
 });
 
 module.exports = function (env) {
-  return webpackMerge(commonConfig({env: ENV}), {
+    return webpackMerge(commonConfig({env: ENV}), {
 
-    devtool: 'source-map',
+        devtool: 'source-map',
 
-    output: {
-      path: helpers.root('dist'),
-      filename: '[name].js',
-      chunkFilename: '[id].[hash].chunk.js'
-    },
-
-    plugins: [
-
-      new WebpackMd5HashPlugin(),
-
-      new ExtractTextPlugin({
-        filename: '[name].css',
-        allChunks: true
-      }),
-
-      new DefinePlugin({
-        'ENV': JSON.stringify(METADATA.ENV),
-        'HMR': METADATA.HMR,
-        'process.env': {
-          'ENV': JSON.stringify(METADATA.ENV),
-          'NODE_ENV': JSON.stringify(METADATA.ENV),
-          'HMR': METADATA.HMR,
-        }
-      }),
-
-      new UglifyJsPlugin({
-        beautify: false,
-        compress: {
-          screw_ie8 : true
+        output: {
+            path: helpers.root('dist'),
+            filename: '[name].js',
+            chunkFilename: '[id].[hash].chunk.js'
         },
-        mangle: {
-          screw_ie8 : true,
-          keep_fnames: true
-        },
-        comments: false
-      }),
 
-      new CompressionPlugin({
-        regExp: /\.css$|\.html$|\.js$|\.map$/,
-        threshold: 2 * 1024
-      })
+        plugins: [
 
-    ]
+            new DefinePlugin({
+                'ENV': JSON.stringify(METADATA.ENV),
+                'HMR': METADATA.HMR,
+                'process.env': {
+                    'ENV': JSON.stringify(METADATA.ENV),
+                    'NODE_ENV': JSON.stringify(METADATA.ENV),
+                    'HMR': METADATA.HMR
+                }
+            }),
 
-  });
-}
+            new UglifyJsPlugin({
+                beautify: false,
+                compress: {
+                    screw_ie8: true
+                },
+                mangle: {
+                    screw_ie8: true,
+                    keep_fnames: true
+                },
+                comments: false
+            }),
+
+            new CompressionPlugin({
+                regExp: /\.css$|\.html$|\.js$|\.map$/,
+                threshold: 2 * 1024
+            }),
+
+            new webpack.LoaderOptionsPlugin({
+                htmlLoader: {
+                    minimize: false // workaround for ng2
+                }
+            })
+
+        ]
+
+    });
+};

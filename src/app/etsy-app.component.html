@@ -1,29 +1,29 @@
 <div class="loading" [hidden]="!isLoading">
-	<div class="icon-referrer_backend loading-backend"></div>
-	<div class="loading-text">Loading
-		<span class="dot-one">.</span>
-		<span class="dot-two">.</span>
-		<span class="dot-three">.</span>
-	</div>
+    <div class="icon-referrer_backend loading-backend"></div>
+    <div class="loading-text">Loading
+        <span class="dot-one">.</span>
+        <span class="dot-two">.</span>
+        <span class="dot-three">.</span>
+    </div>
 </div>
 
 <div *ngIf="action == 'shipping'" [hidden]="isLoading">
-	<shipping-profiles></shipping-profiles>
+    <shipping-profiles></shipping-profiles>
 </div>
 
 <div *ngIf="action == 'login'" [hidden]="isLoading">
-	<login></login>
+    <login></login>
 </div>
 
 <div *ngIf="action == 'settings'" [hidden]="isLoading">
-	<settings></settings>
+    <settings></settings>
 </div>
 
 <div *ngIf="action == 'taxonomies'" [hidden]="isLoading">
-	<taxonomies></taxonomies>
+    <taxonomies></taxonomies>
 </div>
 
 <div *ngIf="action == 'properties'" [hidden]="isLoading">
-	<properties></properties>
+    <properties></properties>
 </div>
 

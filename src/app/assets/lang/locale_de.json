@@ -5,7 +5,6 @@
   "delete": "Löschen",
   "addCorrelation": "Verknüpfung hinzufügen",
   "importEtsyShippingProfiles": "Etsy-Versandprofile importieren",
-
   "settings": "Einstellungen",
   "shopSettings": "Shop-Einstellungen",
   "shopId": "Shop-ID",
@@ -20,27 +19,22 @@
   "processItemExport": "Artikelexport",
   "processStockUpdate": "Bestandsabgleich",
   "processOrderimport": "Auftragsimport",
-
   "taxonomyCorrelations": "Kategorie-Verknüpfungen",
   "categories": "Kategorien",
   "category": "Kategorie",
   "taxonomy": "Etsy-Kategorie",
-
   "shippingProfilesCorrelations": "Versandprofilverknüpfungen",
   "parcelServicePreset": "plentymarkets Versandprofil",
   "etsyShippingProfile": "Etsy-Versandprofil",
-
   "authentication": "Authentifizierung",
   "checkingLoginStatus": "Authentifizierungsstatus wird überprüft...",
   "alreadyAuthenticated": "Sie sind bereits authentifiziert. Sie können den Token dennoch erneuern.",
   "notAuthenticated": "Sie sind nicht authentifiziert. Loggen Sie sich ein.",
   "loginToEtsy": "Etsy-Login",
-
   "propertiesCorrelations": "Merkmalverknüpfungen",
   "property": "Merkmal",
   "etsyProperty": "Etsy-Merkmal",
   "importEtsyProperties": "Etsy-Merkmale importieren",
-
   "errorLoginStatusCheck": "Loginstatus nicht überprüft.",
   "errorFetchLoginUrl": "Login-URL nicht gefunden.",
   "errorLoadSettings": "Einstellungen nicht geladen.",
@@ -60,7 +54,6 @@
   "errorSavePropertyCorrelations": "Merkmalverknüpfungen nicht gespeichert.",
   "errorImportProperties": "Marktplatzmerkmale nicht importiert.",
   "errorLoadShops": "Etsy-Shops nicht geladen.",
-
   "successSavePropertyCorrelations": "Markmalverknüpfungen gespeichert.",
   "successImportProperties": "Marktplatzmerkmale importiert.",
   "successSaveSettings": "Einstellungen gespeichert.",

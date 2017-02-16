@@ -5,7 +5,6 @@
   "delete": "Delete",
   "addCorrelation": "Add correlation",
   "importEtsyShippingProfiles": "Import Etsy shipping profiles",
-
   "settings": "Settings",
   "shopSettings": "Shop settings",
   "shopId": "Shop ID",
@@ -17,27 +16,22 @@
   "paymentSettings": "Payment settings",
   "paymentMethodName": "Payment method name",
   "processes": "Processes",
-
   "taxonomyCorrelations": "Category correlations",
   "categories": "Categories",
   "category": "Category",
   "taxonomy": "Etsy category",
-
   "shippingProfilesCorrelations": "Shipping profiles correlations",
   "parcelServicePreset": "Parcel service preset",
   "etsyShippingProfile": "Etsy shipping profile",
-
   "authentication": "Authentication",
   "checkingLoginStatus": "Checking authentication status...",
   "alreadyAuthenticated": "You are already authenticated but you can renew your token if needed.",
   "notAuthenticated": "You are currently not authenticated. Please log in.",
   "loginToEtsy": "Login to Etsy",
-
   "propertiesCorrelations": "Properties correlations",
   "property": "Property",
   "etsyProperty": "Etsy property",
   "importEtsyProperties": "Import Etsy properties",
-
   "errorLoginStatusCheck": "Login status not checked.",
   "errorFetchLoginUrl": "Could not get the login url",
   "errorLoadSettings": "Settings not loaded.",
@@ -56,7 +50,6 @@
   "errorImportProperties": "Market properties not imported.",
   "errorSavePropertyCorrelations": "Property correlations not saved.",
   "errorLoadShops": "Etsy shops not loaded.",
-
   "successSavePropertyCorrelations": "Property correlations successfully saved.",
   "successImportProperties": "Market properties successfully imported.",
   "successSaveSettings": "Settings successfully saved.",

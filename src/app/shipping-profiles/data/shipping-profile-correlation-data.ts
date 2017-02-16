@@ -1,5 +1,5 @@
 export class ShippingProfileCorrelationData
 {
-  settingsId:number;
-  parcelServicePresetId:number;
+    settingsId:number;
+    parcelServicePresetId:number;
 }

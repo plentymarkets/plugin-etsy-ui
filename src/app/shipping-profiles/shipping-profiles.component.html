@@ -1,77 +1,78 @@
 <div style="margin: 15px 5px 5px 0px;">
-	<div class="spacer">
-		<div class="col-xs-12">
-			<terra-base-toolbar>
-				<div class="btn-group" role="group">
-					<terra-button [inputIsPrimary]="true"
-								  inputIcon="icon-add"
-								  inputIcon="icon-add"
-								  inputTooltipText="{{ 'addCorrelation' | translate:lang }}" inputTooltipPlacement="bottom"
-								  [inputIsDisabled]="isLoading"
-								  (outputClicked)="addCorrelation()"></terra-button>
-					<terra-button [inputIsDisabled]="isLoading"
-								  inputTooltipText="{{ 'save' | translate:lang }}" inputTooltipPlacement="bottom"
-								  inputIcon="icon-save"
-								  (outputClicked)="saveCorrelations()"></terra-button>
-				</div>
-
-				<div class="btn-group" role="group" style="float: right">
-					<terra-button [inputIsPrimary]="true"
-								  [inputIsAlignRight]="true"
-								  [inputIsDisabled]="isLoading"
-								  inputIcon="icon-download"
-								  (outputClicked)="import()"
-								  inputTooltipText="{{ 'importEtsyShippingProfiles' | translate:lang }}" inputTooltipPlacement="bottom"></terra-button>
-				</div>
-			</terra-base-toolbar>
-			<div class="row">
-				<div class="col-xs-12">
-					<table class="table table-striped table-bordered" style="overflow-x: visible">
-						<thead>
-						<tr>
-							<th>{{'parcelServicePreset' | translate:lang}}</th>
-							<th colspan="2">{{'etsyShippingProfile' | translate:lang}}</th>
-						</tr>
-						</thead>
-						<tbody>
-						<template ngFor let-row [ngForOf]="shippingProfileCorrelationList">
-							<tr>
-								<td>
-									<select [(ngModel)]="row.parcelServicePresetId" [disabled]="isLoading">
-										<template ngFor let-optionParcelServicePreset
-												  [ngForOf]="parcelServicePresetList">
-											<option [ngValue]="optionParcelServicePreset.value"
-													selected="{{ optionParcelServicePreset.value == row.parcelServicePresetId ? 'selected' : '' }}">
-												{{ optionParcelServicePreset.caption }}
-											</option>
-										</template>
-									</select>
-								</td>
-								<td>
-									<select [(ngModel)]="row.settingsId" [disabled]="isLoading">
-										<template ngFor let-optionShippingProfileSettings
-												  [ngForOf]="shippingProfileSettingsList">
-											<option [ngValue]="optionShippingProfileSettings.value"
-													selected="{{ optionShippingProfileSettings.value == row.settingsId ? 'selected' : '' }}">
-												{{ optionShippingProfileSettings.caption }}
-											</option>
-										</template>
-									</select>
-								</td>
-								<td>
-									<terra-button
-											[inputIsSmall]="true"
-											[inputIsDisabled]="isLoading"
-											inputIcon="icon-cancel"
-											(outputClicked)="removeCorrelation(row)"
-											inputCaption="{{'delete' | translate:lang}}"></terra-button>
-								</td>
-							</tr>
-						</template>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="spacer">
+        <div class="col-xs-12">
+            <terra-base-toolbar>
+                <div class="btn-group" role="group">
+                    <terra-button [inputIsPrimary]="true"
+                                  inputIcon="icon-add"
+                                  inputIcon="icon-add"
+                                  inputTooltipText="{{ 'addCorrelation' | translate:lang }}" inputTooltipPlacement="bottom"
+                                  [inputIsDisabled]="isLoading"
+                                  (outputClicked)="addCorrelation()"></terra-button>
+                    <terra-button [inputIsDisabled]="isLoading"
+                                  inputTooltipText="{{ 'save' | translate:lang }}" inputTooltipPlacement="bottom"
+                                  inputIcon="icon-save"
+                                  (outputClicked)="saveCorrelations()"></terra-button>
+                </div>
+                
+                <div class="btn-group" role="group" style="float: right">
+                    <terra-button [inputIsPrimary]="true"
+                                  [inputIsAlignRight]="true"
+                                  [inputIsDisabled]="isLoading"
+                                  inputIcon="icon-download"
+                                  (outputClicked)="import()"
+                                  inputTooltipText="{{ 'importEtsyShippingProfiles' | translate:lang }}"
+                                  inputTooltipPlacement="bottom"></terra-button>
+                </div>
+            </terra-base-toolbar>
+            <div class="row">
+                <div class="col-xs-12">
+                    <table class="table table-striped table-bordered" style="overflow-x: visible">
+                        <thead>
+                        <tr>
+                            <th>{{'parcelServicePreset' | translate:lang}}</th>
+                            <th colspan="2">{{'etsyShippingProfile' | translate:lang}}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <template ngFor let-row [ngForOf]="shippingProfileCorrelationList">
+                            <tr>
+                                <td>
+                                    <select [(ngModel)]="row.parcelServicePresetId" [disabled]="isLoading">
+                                        <template ngFor let-optionParcelServicePreset
+                                                  [ngForOf]="parcelServicePresetList">
+                                            <option [ngValue]="optionParcelServicePreset.value"
+                                                    selected="{{ optionParcelServicePreset.value == row.parcelServicePresetId ? 'selected' : '' }}">
+                                                {{ optionParcelServicePreset.caption }}
+                                            </option>
+                                        </template>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select [(ngModel)]="row.settingsId" [disabled]="isLoading">
+                                        <template ngFor let-optionShippingProfileSettings
+                                                  [ngForOf]="shippingProfileSettingsList">
+                                            <option [ngValue]="optionShippingProfileSettings.value"
+                                                    selected="{{ optionShippingProfileSettings.value == row.settingsId ? 'selected' : '' }}">
+                                                {{ optionShippingProfileSettings.caption }}
+                                            </option>
+                                        </template>
+                                    </select>
+                                </td>
+                                <td>
+                                    <terra-button
+                                        [inputIsSmall]="true"
+                                        [inputIsDisabled]="isLoading"
+                                        inputIcon="icon-cancel"
+                                        (outputClicked)="removeCorrelation(row)"
+                                        inputCaption="{{'delete' | translate:lang}}"></terra-button>
+                                </td>
+                            </tr>
+                        </template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
