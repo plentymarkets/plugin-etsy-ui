@@ -1,63 +1,69 @@
 <div style="margin: 15px 5px 5px 0px;">
-    <div class="spacer">
-        <div class="col-xs-12">
-            <terra-base-toolbar>
-                <div class="btn-group" role="group">
-                    <terra-button [inputIsDisabled]="isLoading"
-                                  inputTooltipText="{{ 'save' | translate:lang }}" inputTooltipPlacement="bottom"
-                                  inputIcon="icon-save"
-                                  (outputClicked)="saveCorrelations()"></terra-button>
-                </div>
-            </terra-base-toolbar>
-            
-            <terra-pager [inputPagingSize]="pagingSize"
-                         [inputDefaultPagingSize]="defaultPagingSize"
-                         [inputPagingData]="pagingData"
-                         (outputDoPaging)="doPaging($event)"></terra-pager>
-            
-            <div class="row">
-                <div class="col-xs-12">
-                    <table class="table table-striped table-bordered" style="overflow-x: visible">
-                        <thead>
-                        <tr>
-                            <th>{{'category' | translate:lang}}</th>
-                            <th>{{'taxonomy' | translate:lang}}</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <template ngFor let-row [ngForOf]="categories">
-                            <tr>
-                                <td>
-                                    {{ row.name }}
-                                </td>
-                                <td>
-                                    <input type="hidden" [(ngModel)]="row.taxonomyId">
-                                    
-                                    <terra-number-input
-                                        inputName="{{ getTaxonomyName(row.taxonomyId) }}"
-                                        [inputIsDisabled]="isLoading"
-                                        [(ngModel)]="row.taxonomyId"></terra-number-input>
-                                    <terra-button
-                                        [inputIsDisabled]="isLoading"
-                                        [inputIsSmall]="true"
-                                        inputIcon="icon-search"
-                                        (outputClicked)="openTaxonomiesOverlay(row)"
-                                        inputCaption="{{'search' | translate:lang}}"></terra-button>
-                                </td>
-                            </tr>
-                        </template>
-                        </tbody>
-                    </table>
-                    
-                    <terra-overlay
-                        #viewTaxonomiesOverlay
-                        inputOverlayTitle=" "
-                        [inputPrimaryButtonInterface]="updateTaxonomyPrimaryButtonOverlay"
-                        [inputIsSmall]="true">
-                        <terra-tree #tree [inputLeafList]="taxonomiesList"></terra-tree>
-                    </terra-overlay>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="spacer">
+		<div class="col-xs-12">
+			<terra-base-toolbar>
+				<div class="btn-group" role="group">
+					<terra-button [inputIsDisabled]="isLoading"
+								  inputTooltipText="{{ 'save' | translate:lang }}" inputTooltipPlacement="bottom"
+								  inputIcon="icon-save"
+								  (outputClicked)="saveCorrelations()"></terra-button>
+				</div>
+			</terra-base-toolbar>
+
+			<terra-pager [inputPagingSize]="pagingSize"
+						 [inputDefaultPagingSize]="defaultPagingSize"
+						 [inputPagingData]="pagingData"
+						 (outputDoPaging)="doPaging($event)"></terra-pager>
+
+			<div class="row">
+				<div class="col-xs-12">
+					<table class="table table-striped table-bordered" style="overflow-x: visible">
+						<thead>
+						<tr>
+							<th>{{'category' | translate:lang}}</th>
+							<th>{{'taxonomy' | translate:lang}}</th>
+						</tr>
+						</thead>
+						<tbody>
+						<template ngFor let-row [ngForOf]="categories">
+							<tr>
+								<td>
+									{{ row.name }}
+								</td>
+								<td>
+									<input type="hidden" [(ngModel)]="row.taxonomyId">
+
+									<div class="row">
+										<div class="col-xs-11">
+											<terra-number-input
+													inputName="{{ getTaxonomyName(row.taxonomyId) }}"
+													[inputIsDisabled]="isLoading"
+													[(ngModel)]="row.taxonomyId"></terra-number-input>
+										</div>
+										<div class="col-xs-1">
+											<terra-button
+													[inputIsDisabled]="isLoading"
+													inputIcon="icon-search"
+													inputTooltipText="{{ 'search' | translate:lang }}"
+													inputTooltipPlacement="bottom"
+													(outputClicked)="openTaxonomiesOverlay(row)"></terra-button>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</template>
+						</tbody>
+					</table>
+
+					<terra-overlay
+							#viewTaxonomiesOverlay
+							inputOverlayTitle=" "
+							[inputPrimaryButtonInterface]="updateTaxonomyPrimaryButtonOverlay"
+							[inputIsSmall]="true">
+						<terra-tree #tree [inputLeafList]="taxonomiesList"></terra-tree>
+					</terra-overlay>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

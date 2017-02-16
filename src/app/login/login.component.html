@@ -1,16 +1,21 @@
 <div style="margin: 15px 5px 5px 0px;">
     <div class="spacer">
         <div class="col-xs-12">
-            <div *ngIf="isAuthenticated === null" class="alert alert-warning">{{'checkingLoginStatus' | translate:lang}}</div>
-            <div *ngIf="isAuthenticated === true" class="alert alert-success">{{'alreadyAuthenticated' | translate:lang}}</div>
-            <div *ngIf="isAuthenticated === false" class="alert alert-danger">{{'notAuthenticated' | translate:lang}}</div>
-            
-            <terra-button
-                [inputIsLarge]="true"
-                [inputIsDisabled]="isLoading"
-                inputCaption="{{'loginToEtsy' | translate:lang}}"
-                inputIcon="icon-visibility_private"
-                (outputClicked)="openLoginPopup()"></terra-button>
+			<terra-base-toolbar>
+				<div class="btn-group" role="group">
+					<terra-button [inputIsDisabled]="isLoading"
+								  inputTooltipText="{{ 'loginToEtsy' | translate:lang }}" inputTooltipPlacement="bottom"
+								  inputIcon="icon-visibility_private"
+								  (outputClicked)="openLoginPopup()"></terra-button>
+				</div>
+			</terra-base-toolbar>
+
+			<br>
+			<terra-portlet inputPortletHeader="{{'authentication' | translate:lang}}">
+				<div *ngIf="isAuthenticated === null" class="auth-info">{{'checkingLoginStatus' | translate:lang}}</div>
+				<div *ngIf="isAuthenticated === true" class="auth-info">{{'alreadyAuthenticated' | translate:lang}}</div>
+				<div *ngIf="isAuthenticated === false" class="auth-info">{{'notAuthenticated' | translate:lang}}</div>
+			</terra-portlet>
         </div>
     </div>
 </div>

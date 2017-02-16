@@ -49,7 +49,7 @@ export class ShippingProfileService extends TerraBaseService
         );
     }
     
-    public getShippingProfileCorrelations():Observable<ShippingProfileCorrelationData>
+    public getShippingProfileCorrelations():Observable<any>
     {
         this.setAuthorization();
         
