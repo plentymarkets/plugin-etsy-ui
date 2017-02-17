@@ -24,8 +24,6 @@ export class SettingsService extends TerraBaseService
         
         url = this.url + 'all';
         
-        this.headers.set('Authorization', 'Bearer UExK7jOv75Ur62wILLMJ4GFF5kqpBQQtrjZE03gM');
-        
         return this.mapRequest(
             this.http.get(url, {
                 headers: this.headers,
@@ -42,8 +40,6 @@ export class SettingsService extends TerraBaseService
         
         url = this.url + 'save';
         
-        this.headers.set('Authorization', 'Bearer UExK7jOv75Ur62wILLMJ4GFF5kqpBQQtrjZE03gM');
-        
         return this.mapRequest(
             this.http.post(url, data, {headers: this.headers})
         );
@@ -56,8 +52,6 @@ export class SettingsService extends TerraBaseService
         let url:string;
         
         url = this.url + 'shops';
-        
-        this.headers.set('Authorization', 'Bearer UExK7jOv75Ur62wILLMJ4GFF5kqpBQQtrjZE03gM');
         
         return this.mapRequest(
             this.http.get(url, {
