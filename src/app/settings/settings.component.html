@@ -13,70 +13,70 @@
             
             <br>
             <terra-portlet inputPortletHeader="{{'settings' | translate:lang}}">
-				<div class="row">
-					<div class="col-lg-6">
-						<!-- <terra-select-box
-								[inputListBoxValues]="availableShops"
-								[(inputSelectedValue)]="settings.shop.shopId"
-								inputName="{{'shopId' | translate:lang}}"></terra-select-box> -->
-
-						<terra-text-input
-							[inputIsDisabled]="isLoading"
-							inputName="{{'shopId' | translate:lang}}"
-							[(ngModel)]="settings.shop.shopId"
-							inputTooltipText="{{ getShopList() }}"
-							inputTooltipPlacement="bottom"></terra-text-input>
-
-						<label>{{'exportLanguages' | translate:lang}}</label>
-
-						<div class="multiselect-container">
-							<div class="multiselect-element">
-								<div class="multiselect">
-									<div class="option-list">
-										<template ngFor let-row [ngForOf]="exportLanguages">
-											<div>
-												<div class="input-group">
-													<div class="input-group-addon">
-														<terra-checkbox [(value)]="row.selected"></terra-checkbox>
-													</div>
-													<label class="form-control">{{ row.caption }}</label>
-												</div>
-											</div>
-										</template>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-lg-6">
-						<terra-select-box
-								[inputIsDisabled]="isLoading"
-								[inputListBoxValues]="availableLanguages"
-								[(inputSelectedValue)]="settings.shop.mainLanguage"
-								inputName="{{'mainShopLanguage' | translate:lang}}"></terra-select-box>
-						
-						<label>{{'processes' | translate:lang}}</label>
-						<div class="multiselect-container">
-							<div class="multiselect-element">
-								<div class="multiselect">
-									<div class="option-list">
-										<template ngFor let-row [ngForOf]="processes">
-											<div>
-												<div class="input-group">
-													<div class="input-group-addon">
-														<terra-checkbox [(value)]="row.selected"></terra-checkbox>
-													</div>
-													<label class="form-control">{{ row.caption }}</label>
-												</div>
-											</div>
-										</template>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <terra-select-box [inputListBoxValues]="_availableShops"
+                                          [(inputSelectedValue)]="_selectedShop"
+                                          inputName="{{'shopId' | translate:lang}}">
+                        </terra-select-box>
+                        
+                        <terra-text-input
+                            [inputIsDisabled]="isLoading"
+                            inputName="{{'shopId' | translate:lang}}"
+                            [(ngModel)]="settings.shop.shopId"
+                            inputTooltipText="{{ getShopList() }}"
+                            inputTooltipPlacement="bottom"></terra-text-input>
+                        
+                        <label>{{'exportLanguages' | translate:lang}}</label>
+                        
+                        <div class="multiselect-container">
+                            <div class="multiselect-element">
+                                <div class="multiselect">
+                                    <div class="option-list">
+                                        <template ngFor let-row [ngForOf]="exportLanguages">
+                                            <div>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <terra-checkbox [(value)]="row.selected"></terra-checkbox>
+                                                    </div>
+                                                    <label class="form-control">{{ row.caption }}</label>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6">
+                        <terra-select-box
+                            [inputIsDisabled]="isLoading"
+                            [inputListBoxValues]="availableLanguages"
+                            [(inputSelectedValue)]="settings.shop.mainLanguage"
+                            inputName="{{'mainShopLanguage' | translate:lang}}"></terra-select-box>
+                        
+                        <label>{{'processes' | translate:lang}}</label>
+                        <div class="multiselect-container">
+                            <div class="multiselect-element">
+                                <div class="multiselect">
+                                    <div class="option-list">
+                                        <template ngFor let-row [ngForOf]="processes">
+                                            <div>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <terra-checkbox [(value)]="row.selected"></terra-checkbox>
+                                                    </div>
+                                                    <label class="form-control">{{ row.caption }}</label>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </terra-portlet>
         </div>
     </div>

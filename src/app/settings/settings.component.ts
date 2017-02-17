@@ -27,7 +27,8 @@ export class SettingsComponent extends Locale implements OnInit
     private exportLanguages:Array<TerraMultiSelectBoxValueInterface>;
     private processes:Array<TerraMultiSelectBoxValueInterface>;
     private availableLanguages:Array<TerraSelectBoxValueInterface>;
-    private availableShops:Array<TerraSelectBoxValueInterface>;
+    private _availableShops:Array<TerraSelectBoxValueInterface>;
+    private _selectedShop;
     
     constructor(private service:SettingsService,
                 @Inject(forwardRef(() => EtsyComponent)) private etsyComponent:EtsyComponent,
@@ -95,7 +96,7 @@ export class SettingsComponent extends Locale implements OnInit
             },
         ];
         
-        this.availableShops = [{
+        this._availableShops = [{
             value:   null,
             caption: 'Select..'
         }];
@@ -205,8 +206,10 @@ export class SettingsComponent extends Locale implements OnInit
                                    });
                     }
                     
-                    this.availableShops = items;
+                    this._availableShops = items;
                 }
+                
+                this._selectedShop = shopId;
                 
                 this.etsyComponent.callLoadingEvent(false);
                 this.etsyComponent.isLoading = false;
@@ -231,7 +234,7 @@ export class SettingsComponent extends Locale implements OnInit
         
         let data = {
             shop: {
-                shopId:          this.settings.shop.shopId,
+                shopId:          this._selectedShop,
                 mainLanguage:    this.settings.shop.mainLanguage,
                 exportLanguages: this.getSelectedExportLanguages(),
                 processes:       this.getSelectedProcesses(),
@@ -290,7 +293,7 @@ export class SettingsComponent extends Locale implements OnInit
         
         let tooltip = '';
         
-        this.availableShops.forEach((shop) =>
+        this._availableShops.forEach((shop) =>
                                     {
                                         if(shop.value)
                                         {
