@@ -196,11 +196,15 @@ export class SettingsComponent extends Locale implements OnInit
                     {
                         let data:ShopData = response[index];
                         
-                        this.availableShops.push({
-                                                     value:   data.shopId,
-                                                     caption: data.shopName,
-                                                     active:  shopId == data.shopId
-                                                 });
+                        let items:Array<TerraSelectBoxValueInterface> = [];
+                        
+                        items.push({
+                                       value:   data.shopId,
+                                       caption: data.shopName,
+                                       active:  shopId == data.shopId
+                                   });
+                        
+                        this.availableShops = items;
                     }
                 }
                 

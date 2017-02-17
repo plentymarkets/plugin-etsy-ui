@@ -12,7 +12,8 @@ export class SettingsService extends TerraBaseService
 {
     constructor(loadingBarService:TerraLoadingBarService, http:Http)
     {
-        super(loadingBarService, http, '/rest/markets/etsy/settings/');
+        super(loadingBarService, http, 'http://master.plentymarkets.com/rest/markets/etsy/settings/');
+        //super(loadingBarService, http, '/rest/markets/etsy/settings/');
     }
     
     public getSettings():Observable<any>
@@ -22,6 +23,8 @@ export class SettingsService extends TerraBaseService
         let url:string;
         
         url = this.url + 'all';
+        
+        this.headers.set('Authorization', 'Bearer UExK7jOv75Ur62wILLMJ4GFF5kqpBQQtrjZE03gM');
         
         return this.mapRequest(
             this.http.get(url, {
@@ -39,6 +42,8 @@ export class SettingsService extends TerraBaseService
         
         url = this.url + 'save';
         
+        this.headers.set('Authorization', 'Bearer UExK7jOv75Ur62wILLMJ4GFF5kqpBQQtrjZE03gM');
+        
         return this.mapRequest(
             this.http.post(url, data, {headers: this.headers})
         );
@@ -51,6 +56,8 @@ export class SettingsService extends TerraBaseService
         let url:string;
         
         url = this.url + 'shops';
+        
+        this.headers.set('Authorization', 'Bearer UExK7jOv75Ur62wILLMJ4GFF5kqpBQQtrjZE03gM');
         
         return this.mapRequest(
             this.http.get(url, {
