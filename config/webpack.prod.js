@@ -2,10 +2,8 @@ const helpers = require('./helpers');
 const webpack = require('webpack');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
-const WebpackMd5HashPlugin = require('webpack-md5-hash');
 const CompressionPlugin = require('compression-webpack-plugin');
 const webpackMerge = require('webpack-merge');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const commonConfig = require('./webpack.common.js');
 
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
