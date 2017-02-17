@@ -55,7 +55,8 @@ export class LoginComponent extends Locale implements OnInit
             
             error =>
             {
-                this.etsyComponent.callStatusEvent(this.localization.translate('errorLoginStatusCheck') + ': ' + error.statusText, 'danger');
+                let errorData = JSON.parse(error._body);
+                this.etsyComponent.callStatusEvent(this.localization.translate('errorLoginStatusCheck') + ': ' + errorData.error.message, 'danger');
                 this.etsyComponent.callLoadingEvent(false);
                 this.etsyComponent.isLoading = false;
                 this.isLoading = false;
@@ -74,12 +75,12 @@ export class LoginComponent extends Locale implements OnInit
                 this.etsyComponent.callLoadingEvent(false);
                 this.isLoading = false;
                 
-                var popup = window.open(
+                let popup = window.open(
                     response.loginUrl,
                     'Etsy Login',
                     'toolbar=no, location=#, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no, copyhistory=no, width=600, height=600, top=0, left=50');
                 
-                var pollTimer = window.setInterval(() =>
+                let pollTimer = window.setInterval(() =>
                                                    {
                                                        if(popup.closed !== false)
                                                        {
@@ -92,7 +93,8 @@ export class LoginComponent extends Locale implements OnInit
             
             error =>
             {
-                this.etsyComponent.callStatusEvent(this.localization.translate('errorFetchLoginUrl') + ': ' + error.statusText, 'danger');
+                let errorData = JSON.parse(error._body);
+                this.etsyComponent.callStatusEvent(this.localization.translate('errorFetchLoginUrl') + ': ' + errorData.error.message, 'danger');
                 this.etsyComponent.callLoadingEvent(false);
                 this.isLoading = false;
             }

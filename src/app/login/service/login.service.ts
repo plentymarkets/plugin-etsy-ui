@@ -33,7 +33,7 @@ export class LoginService extends TerraBaseService
     public getLoginUrl():Observable<any>
     {
         this.setAuthorization();
-        
+
         let url:string;
         
         url = this.url + 'login-url';
