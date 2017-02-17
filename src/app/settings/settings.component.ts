@@ -192,20 +192,20 @@ export class SettingsComponent extends Locale implements OnInit
             {
                 if(typeof response !== 'undefined')
                 {
+                    let items:Array<TerraSelectBoxValueInterface> = [];
+                    
                     for(let index in response)
                     {
                         let data:ShopData = response[index];
-                        
-                        let items:Array<TerraSelectBoxValueInterface> = [];
                         
                         items.push({
                                        value:   data.shopId,
                                        caption: data.shopName,
                                        active:  shopId == data.shopId
                                    });
-                        
-                        this.availableShops = items;
                     }
+                    
+                    this.availableShops = items;
                 }
                 
                 this.etsyComponent.callLoadingEvent(false);
