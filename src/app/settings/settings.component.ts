@@ -8,11 +8,13 @@ import {
     TerraMultiSelectBoxValueInterface,
     TerraSelectBoxValueInterface
 } from '@plentymarkets/terra-components/index';
-import { SettingsService } from "./service/settings.service";
-import { EtsyComponent } from "../etsy-app.component";
-import { Locale } from "angular2localization/angular2localization";
-import { LocaleService } from "angular2localization/angular2localization";
-import { LocalizationService } from "angular2localization/angular2localization";
+import { SettingsService } from './service/settings.service';
+import { EtsyComponent } from '../etsy-app.component';
+import {
+    Locale,
+    LocaleService,
+    LocalizationService
+} from 'angular2localization/angular2localization';
 import { ShopData } from './data/shop-data';
 
 @Component({
@@ -25,7 +27,9 @@ export class SettingsComponent extends Locale implements OnInit
     private settings;
     private isLoading:boolean = true;
     private exportLanguages:Array<TerraMultiSelectBoxValueInterface>;
+    private _exportLanguagesBinding:Array<string>;
     private processes:Array<TerraMultiSelectBoxValueInterface>;
+    private _processesBinding:Array<string>;
     private availableLanguages:Array<TerraSelectBoxValueInterface>;
     private _availableShops:Array<TerraSelectBoxValueInterface>;
     private _selectedShop;
@@ -60,7 +64,7 @@ export class SettingsComponent extends Locale implements OnInit
                 value:    'fr',
                 caption:  'French',
                 selected: false
-            },
+            }
         ];
         
         this.processes = [
@@ -153,30 +157,12 @@ export class SettingsComponent extends Locale implements OnInit
                 
                 if("exportLanguages" in response.shop)
                 {
-                    response.shop.exportLanguages.forEach((responseItem) =>
-                                                          {
-                                                              this.exportLanguages.forEach((item, key) =>
-                                                                                           {
-                                                                                               if(item.value == responseItem)
-                                                                                               {
-                                                                                                   this.exportLanguages[key].selected = true;
-                                                                                               }
-                                                                                           });
-                                                          });
+                    this.exportLanguagesBinding = response.shop.exportLanguages;
                 }
                 
                 if("processes" in response.shop)
                 {
-                    response.shop.processes.forEach((responseItem) =>
-                                                    {
-                                                        this.processes.forEach((item, key) =>
-                                                                               {
-                                                                                   if(item.value == responseItem)
-                                                                                   {
-                                                                                       this.processes[key].selected = true;
-                                                                                   }
-                                                                               });
-                                                    });
+                    this.processesBinding = response.shop.processes;
                 }
             }
             
@@ -236,7 +222,7 @@ export class SettingsComponent extends Locale implements OnInit
             shop: {
                 shopId:          this._selectedShop,
                 mainLanguage:    this.settings.shop.mainLanguage,
-                exportLanguages: this.getSelectedExportLanguages(),
+                exportLanguages: this.exportLanguagesBinding,
                 processes:       this.getSelectedProcesses(),
             }
         };
@@ -258,19 +244,26 @@ export class SettingsComponent extends Locale implements OnInit
         );
     }
     
-    private getSelectedExportLanguages():Array<any>
+    
+    public get exportLanguagesBinding():Array<string>
     {
-        let exportLanguagesList = [];
-        
-        this.exportLanguages.forEach((item) =>
-                                     {
-                                         if(item.selected === true)
-                                         {
-                                             exportLanguagesList.push(item.value);
-                                         }
-                                     });
-        
-        return exportLanguagesList;
+        return this._exportLanguagesBinding;
+    }
+    
+    public set exportLanguagesBinding(value:Array<string>)
+    {
+        this._exportLanguagesBinding = value;
+    }
+    
+    
+    public get processesBinding():Array<string>
+    {
+        return this._processesBinding;
+    }
+    
+    public set processesBinding(value:Array<string>)
+    {
+        this._processesBinding = value;
     }
     
     private getSelectedProcesses():Array<any>

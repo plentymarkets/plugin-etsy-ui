@@ -27,25 +27,26 @@
                             inputTooltipText="{{ getShopList() }}"
                             inputTooltipPlacement="bottom"></terra-text-input>
                         
-                        <label>{{'exportLanguages' | translate:lang}}</label>
+                        <!--<label>{{'exportLanguages' | translate:lang}}</label>-->
                         
                         <div class="multiselect-container">
-                            <div class="multiselect-element">
-                                <div class="multiselect">
-                                    <div class="option-list">
-                                        <template ngFor let-row [ngForOf]="exportLanguages">
-                                            <div>
-                                                <div class="input-group">
-                                                    <div class="input-group-addon">
-                                                        <terra-checkbox [(value)]="row.selected"></terra-checkbox>
-                                                    </div>
-                                                    <label class="form-control">{{ row.caption }}</label>
-                                                </div>
-                                            </div>
-                                        </template>
-                                    </div>
-                                </div>
-                            </div>
+                            <terra-multi-select-box [inputValueList]="exportLanguages" [(inputSelectedValueList)]="exportLanguagesBinding" inputName="{{'exportLanguages' | translate:lang}}"></terra-multi-select-box>
+                            <!--<div class="multiselect-element">-->
+                                <!--<div class="multiselect">-->
+                                    <!--<div class="option-list">-->
+                                        <!--<template ngFor let-row [ngForOf]="exportLanguages">-->
+                                            <!--<div>-->
+                                                <!--<div class="input-group">-->
+                                                    <!--<div class="input-group-addon">-->
+                                                        <!--<terra-checkbox [(value)]="row.selected"></terra-checkbox>-->
+                                                    <!--</div>-->
+                                                    <!--<label class="form-control">{{ row.caption }}</label>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</template>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
                         </div>
                     </div>
                     
@@ -56,24 +57,25 @@
                             [(inputSelectedValue)]="settings.shop.mainLanguage"
                             inputName="{{'mainShopLanguage' | translate:lang}}"></terra-select-box>
                         
-                        <label>{{'processes' | translate:lang}}</label>
+                        <!--<label>{{'processes' | translate:lang}}</label>-->
                         <div class="multiselect-container">
-                            <div class="multiselect-element">
-                                <div class="multiselect">
-                                    <div class="option-list">
-                                        <template ngFor let-row [ngForOf]="processes">
-                                            <div>
-                                                <div class="input-group">
-                                                    <div class="input-group-addon">
-                                                        <terra-checkbox [(value)]="row.selected"></terra-checkbox>
-                                                    </div>
-                                                    <label class="form-control">{{ row.caption }}</label>
-                                                </div>
-                                            </div>
-                                        </template>
-                                    </div>
-                                </div>
-                            </div>
+                            <terra-multi-select-box [inputValueList]="processes" [(inputSelectedValueList)]="processesBinding" inputName="{{'processes' | translate:lang}}"></terra-multi-select-box>
+                            <!--<div class="multiselect-element">-->
+                                <!--<div class="multiselect">-->
+                                    <!--<div class="option-list">-->
+                                        <!--<template ngFor let-row [ngForOf]="processes">-->
+                                            <!--<div>-->
+                                                <!--<div class="input-group">-->
+                                                    <!--<div class="input-group-addon">-->
+                                                        <!--<terra-checkbox [(value)]="row.selected"></terra-checkbox>-->
+                                                    <!--</div>-->
+                                                    <!--<label class="form-control">{{ row.caption }}</label>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</template>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
                         </div>
                     </div>
                 </div>

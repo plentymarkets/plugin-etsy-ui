@@ -19,12 +19,13 @@ export class SettingsService extends TerraBaseService
     public getSettings():Observable<any>
     {
         this.setAuthorization();
+        //this.headers.set('Authorization', 'Bearer v5QHsBgA9NHrOwMOvrdb2eKi02lod1Wq1VrrkmLm'); //MF
         
         let url:string;
         
         url = this.url + 'all';
         
-        this.headers.set('Authorization', 'Bearer CUYN1UmI4IO8bUdcXtCumXJTDnOJiTU1EjMMItMs');
+        this.headers.set('Authorization', 'Bearer CUYN1UmI4IO8bUdcXtCumXJTDnOJiTU1EjMMItMs'); //MS
         
         return this.mapRequest(
             this.http.get(url, {
