@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <terra-select-box [inputListBoxValues]="_availableShops"
-                                          [(inputSelectedValue)]="_selectedShop"
+                                          [(inputSelectedValue)]="settings.shop.shopId"
                                           inputName="{{'shopId' | translate:lang}}">
                         </terra-select-box>
                         

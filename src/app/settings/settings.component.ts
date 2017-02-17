@@ -147,7 +147,7 @@ export class SettingsComponent extends Locale implements OnInit
             {
                 if("shopId" in response.shop)
                 {
-                    settings.shop.shopId = response.shop.shopId;
+                    this.loadShops(response.shop.shopId);
                 }
                 
                 if("mainLanguage" in response.shop)
@@ -165,8 +165,6 @@ export class SettingsComponent extends Locale implements OnInit
                     this.processesBinding = response.shop.processes;
                 }
             }
-            
-            this.loadShops(settings.shop.shopId);
         }
     }
     
@@ -193,6 +191,8 @@ export class SettingsComponent extends Locale implements OnInit
                     }
                     
                     this._availableShops = items;
+                    
+                    this.settings.shop.shopId = shopId;
                 }
                 
                 this._selectedShop = shopId;
