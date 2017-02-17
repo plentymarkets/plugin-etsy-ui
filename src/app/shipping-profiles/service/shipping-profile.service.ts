@@ -24,7 +24,7 @@ export class ShippingProfileService extends TerraBaseService
         let url:string;
         
         url = this.url + 'parcel-service-presets';
-        
+
         return this.mapRequest(
             this.http.get(url, {
                 headers: this.headers,
@@ -40,7 +40,7 @@ export class ShippingProfileService extends TerraBaseService
         let url:string;
         
         url = this.url + 'imported';
-        
+
         return this.mapRequest(
             this.http.get(url, {
                 headers: this.headers,
@@ -56,7 +56,7 @@ export class ShippingProfileService extends TerraBaseService
         let url:string;
         
         url = this.url + 'correlations';
-        
+
         return this.mapRequest(
             this.http.get(url, {
                 headers: this.headers,
@@ -72,7 +72,7 @@ export class ShippingProfileService extends TerraBaseService
         let url:string;
         
         url = this.url + 'correlate';
-        
+
         return this.mapRequest(
             this.http.post(url, data, {headers: this.headers})
         );
@@ -85,7 +85,7 @@ export class ShippingProfileService extends TerraBaseService
         let url:string;
         
         url = this.url + 'import';
-        
+
         return this.mapRequest(
             this.http.post(url, '', {headers: this.headers})
         );

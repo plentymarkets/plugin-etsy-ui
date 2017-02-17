@@ -16,7 +16,7 @@
                     <terra-button inputIcon="icon-delete"
                                   inputTooltipText="{{ 'delete' | translate:lang }}" inputTooltipPlacement="bottom"
                                   [inputIsDisabled]="isLoading"
-                                  (outputClicked)="deleteCorrelations()()"></terra-button>
+                                  (outputClicked)="deleteCorrelations()"></terra-button>
                     
                     <terra-button [inputIsDisabled]="isLoading"
                                   inputIcon="icon-download"
@@ -43,26 +43,17 @@
                                     <terra-checkbox [(value)]="row.selected"></terra-checkbox>
                                 </td>
                                 <td>
-                                    <select [(ngModel)]="row.parcelServicePresetId" [disabled]="isLoading">
-                                        <template ngFor let-optionParcelServicePreset
-                                                  [ngForOf]="parcelServicePresetList">
-                                            <option [ngValue]="optionParcelServicePreset.value"
-                                                    selected="{{ optionParcelServicePreset.value == row.parcelServicePresetId ? 'selected' : '' }}">
-                                                {{ optionParcelServicePreset.caption }}
-                                            </option>
-                                        </template>
-                                    </select>
+									<terra-select-box
+											[inputListBoxValues]="row.listParcelServicePresets"
+											[(inputSelectedValue)]="row.parcelServicePresetId">
+									</terra-select-box>
                                 </td>
                                 <td>
-                                    <select [(ngModel)]="row.settingsId" [disabled]="isLoading">
-                                        <template ngFor let-optionShippingProfileSettings
-                                                  [ngForOf]="shippingProfileSettingsList">
-                                            <option [ngValue]="optionShippingProfileSettings.value"
-                                                    selected="{{ optionShippingProfileSettings.value == row.settingsId ? 'selected' : '' }}">
-                                                {{ optionShippingProfileSettings.caption }}
-                                            </option>
-                                        </template>
-                                    </select>
+
+									<terra-select-box
+											[inputListBoxValues]="row.listShippingProfileSettings"
+											[(inputSelectedValue)]="row.settingsId">
+									</terra-select-box>
                                 </td>
                             </tr>
                         </template>

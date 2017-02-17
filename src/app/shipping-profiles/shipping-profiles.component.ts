@@ -46,8 +46,8 @@ export class ShippingProfilesComponent extends Locale implements OnInit
                 caption: 'Default'
             }
         ];
-        
-        this.getShippingProfileCorrelations();
+
+        this.getParcelServiceList();
     }
     
     /*
@@ -59,34 +59,6 @@ export class ShippingProfilesComponent extends Locale implements OnInit
     ngOnInit()
     {
         
-    }
-    
-    private getShippingProfileCorrelations():void
-    {
-        this.etsyComponent.callLoadingEvent(true);
-        
-        this.service.getShippingProfileCorrelations().subscribe(
-            response =>
-            {
-                for(let index in response)
-                {
-                    this.shippingProfileCorrelationList.push(response[index]);
-                }
-                
-                this.etsyComponent.callLoadingEvent(false);
-                
-                this.getParcelServiceList();
-            },
-            
-            error =>
-            {
-                
-                this.etsyComponent.callStatusEvent(this.localization.translate('errorLoadShippingProfileCorrelations') + ': ' + error.statusText, 'danger');
-                this.etsyComponent.callLoadingEvent(false);
-                this.etsyComponent.isLoading = false;
-                this.isLoading = false;
-            }
-        );
     }
     
     private getParcelServiceList():void
@@ -105,8 +77,9 @@ export class ShippingProfilesComponent extends Locale implements OnInit
                                                           caption: data.name
                                                       });
                 }
-                
+
                 this.etsyComponent.callLoadingEvent(false);
+
                 this.getShippingProfileSettingsList();
             },
             
@@ -138,6 +111,8 @@ export class ShippingProfilesComponent extends Locale implements OnInit
                                                               caption: data.name
                                                           });
                 }
+
+                this.getShippingProfileCorrelations();
                 
                 this.etsyComponent.callLoadingEvent(false);
                 this.etsyComponent.isLoading = false;
@@ -153,7 +128,37 @@ export class ShippingProfilesComponent extends Locale implements OnInit
             }
         );
     }
-    
+
+    private getShippingProfileCorrelations():void
+    {
+        this.etsyComponent.callLoadingEvent(true);
+
+        this.service.getShippingProfileCorrelations().subscribe(
+            response =>
+            {
+                for(let index in response)
+                {
+                    this.shippingProfileCorrelationList.push({
+                        parcelServicePresetId: response[index].parcelServicePresetId,
+                        settingsId: response[index].settingsId,
+                        listParcelServicePresets: JSON.parse(JSON.stringify(this.parcelServicePresetList)),
+                        listShippingProfileSettings: JSON.parse(JSON.stringify(this.shippingProfileSettingsList))
+                    });
+                }
+
+                this.etsyComponent.callLoadingEvent(false);
+            },
+
+            error =>
+            {
+
+                this.etsyComponent.callStatusEvent(this.localization.translate('errorLoadShippingProfileCorrelations') + ': ' + error.statusText, 'danger');
+                this.etsyComponent.callLoadingEvent(false);
+                this.etsyComponent.isLoading = false;
+                this.isLoading = false;
+            }
+        );
+    }
     
     private saveCorrelations():void
     {
@@ -200,7 +205,9 @@ export class ShippingProfilesComponent extends Locale implements OnInit
     {
         this.shippingProfileCorrelationList.push({
                                                      settingsId:            null,
-                                                     parcelServicePresetId: null
+                                                     parcelServicePresetId: null,
+                                                     listParcelServicePresets: JSON.parse(JSON.stringify(this.parcelServicePresetList)),
+                                                     listShippingProfileSettings: JSON.parse(JSON.stringify(this.shippingProfileSettingsList))
                                                  });
     }
     
@@ -212,7 +219,7 @@ export class ShippingProfilesComponent extends Locale implements OnInit
         this.service.importShippingProfiles().subscribe(
             response =>
             {
-                this.getShippingProfileSettingsList();
+                this.reload();
                 
                 this.etsyComponent.callStatusEvent(this.localization.translate('successImportShippingProfiles'), 'success');
                 this.etsyComponent.callLoadingEvent(false);
