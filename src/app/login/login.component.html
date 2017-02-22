@@ -10,7 +10,6 @@
                 </div>
             </terra-base-toolbar>
 
-            <br>
             <terra-portlet inputPortletHeader="{{'authentication' | translate:lang}}">
                 <div *ngIf="isAuthenticated === null" class="auth-info">{{'checkingLoginStatus' | translate:lang}}</div>
                 <div *ngIf="isAuthenticated === true" class="auth-info">{{'alreadyAuthenticated' | translate:lang}}</div>

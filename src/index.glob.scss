@@ -33,6 +33,7 @@ body {
   border: 0 !important;
   padding: 0 !important;
   direction: ltr !important;
+  overflow: visible !important;
 }
 
 .loading {
@@ -125,4 +126,8 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+}
+
+.input-unit-v1 label {
+  z-index:99;
 }
