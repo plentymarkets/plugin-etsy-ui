@@ -220,7 +220,7 @@ export class SettingsComponent extends Locale implements OnInit
         
         let data = {
             shop: {
-                shopId:          this._selectedShop,
+                shopId:          this.settings.shop.shopId,
                 mainLanguage:    this.settings.shop.mainLanguage,
                 exportLanguages: this.exportLanguagesBinding,
                 processes:       this.getSelectedProcesses(),
