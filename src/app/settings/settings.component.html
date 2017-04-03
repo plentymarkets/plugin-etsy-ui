@@ -17,7 +17,7 @@
 						<terra-select-box
 								[inputIsDisabled]="isLoading"
 								[inputListBoxValues]="_availableShops"
-								[(inputSelectedValue)]="settings.shop.shopId"
+								[(ngModel)]="settings.shop.shopId"
 								inputName="{{'shopId' | translate:lang}}">
 						</terra-select-box>
 
@@ -32,7 +32,7 @@
 						<terra-select-box
 								[inputIsDisabled]="isLoading"
 								[inputListBoxValues]="availableLanguages"
-								[(inputSelectedValue)]="settings.shop.mainLanguage"
+								[(ngModel)]="settings.shop.mainLanguage"
 								inputName="{{'mainShopLanguage' | translate:lang}}"></terra-select-box>
 
 						<div class="multiselect-container">

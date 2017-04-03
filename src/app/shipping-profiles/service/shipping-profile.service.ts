@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import {
-    TerraLoadingBarService,
+    TerraLoadingSpinnerService,
     TerraBaseService
 } from '@plentymarkets/terra-components';
 import { Observable } from 'rxjs';
@@ -12,15 +12,15 @@ import { ShippingProfileCorrelationData } from '../data/shipping-profile-correla
 @Injectable()
 export class ShippingProfileService extends TerraBaseService
 {
-    constructor(loadingBarService:TerraLoadingBarService, http:Http)
+    constructor(loadingSpinnerService:TerraLoadingSpinnerService, http:Http)
     {
-        super(loadingBarService, http, '/rest/markets/etsy/shipping-profiles/');
+        super(loadingSpinnerService, http, '/rest/markets/etsy/shipping-profiles/');
     }
     
     public getParcelServiceList():Observable<ParcelServicesData>
     {
         this.setAuthorization();
-        
+
         let url:string;
         
         url = this.url + 'parcel-service-presets';
@@ -36,7 +36,7 @@ export class ShippingProfileService extends TerraBaseService
     public getShippingProfileSettingsList():Observable<ShippingProfileSettingsData>
     {
         this.setAuthorization();
-        
+
         let url:string;
         
         url = this.url + 'imported';
@@ -52,7 +52,7 @@ export class ShippingProfileService extends TerraBaseService
     public getShippingProfileCorrelations():Observable<any>
     {
         this.setAuthorization();
-        
+
         let url:string;
         
         url = this.url + 'correlations';
@@ -68,7 +68,7 @@ export class ShippingProfileService extends TerraBaseService
     public saveCorrelations(data:any):Observable<any>
     {
         this.setAuthorization();
-        
+
         let url:string;
         
         url = this.url + 'correlate';
@@ -81,7 +81,7 @@ export class ShippingProfileService extends TerraBaseService
     public importShippingProfiles():Observable<any>
     {
         this.setAuthorization();
-        
+
         let url:string;
         
         url = this.url + 'import';

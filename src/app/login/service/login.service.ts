@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import {
-    TerraLoadingBarService,
+    TerraLoadingSpinnerService,
     TerraBaseService
 } from '@plentymarkets/terra-components';
 import { Observable } from 'rxjs';
@@ -9,9 +9,9 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class LoginService extends TerraBaseService
 {
-    constructor(loadingBarService:TerraLoadingBarService, http:Http)
+    constructor(loadingSpinnerService:TerraLoadingSpinnerService, http:Http)
     {
-        super(loadingBarService, http, '/rest/markets/etsy/auth/');
+        super(loadingSpinnerService, http, '/rest/markets/etsy/auth/');
     }
     
     public getLoginStatus():Observable<any>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import {
-    TerraLoadingBarService,
+    TerraLoadingSpinnerService,
     TerraBaseService
 } from '@plentymarkets/terra-components';
 import { Observable } from 'rxjs';
@@ -11,9 +11,9 @@ import { MarketPropertyData } from "../data/market-property-data";
 @Injectable()
 export class PropertyService extends TerraBaseService
 {
-    constructor(loadingBarService:TerraLoadingBarService, http:Http)
+    constructor(loadingSpinnerService:TerraLoadingSpinnerService, http:Http)
     {
-        super(loadingBarService, http, '/rest/markets/etsy/properties/');
+        super(loadingSpinnerService, http, '/rest/markets/etsy/properties/');
     }
     
     public getProperties():Observable<PropertyData>

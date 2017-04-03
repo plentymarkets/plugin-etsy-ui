@@ -45,14 +45,14 @@
                                 <td>
 									<terra-select-box
 											[inputListBoxValues]="row.listParcelServicePresets"
-											[(inputSelectedValue)]="row.parcelServicePresetId">
+											[(ngModel)]="row.parcelServicePresetId">
 									</terra-select-box>
                                 </td>
                                 <td>
 
 									<terra-select-box
 											[inputListBoxValues]="row.listShippingProfileSettings"
-											[(inputSelectedValue)]="row.settingsId">
+											[(ngModel)]="row.settingsId">
 									</terra-select-box>
                                 </td>
                             </tr>

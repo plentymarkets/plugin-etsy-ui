@@ -33,35 +33,35 @@ export class TaxonomiesComponent extends Locale implements OnInit
     private pagingData;
     private rowInOverlay:any;
     private correlationsLoaded = false;
-    
+
     private updateTaxonomyPrimaryButtonOverlay:TerraOverlayButtonInterface;
-    
+
     @ViewChild('viewTaxonomiesOverlay') public viewTaxonomiesOverlay:TerraOverlayComponent;
     @ViewChild('tree') public tree:TerraTreeComponent;
-    
+
     constructor(private taxonomyService:TaxonomyService,
                 @Inject(forwardRef(() => EtsyComponent)) private etsyComponent:EtsyComponent,
                 locale:LocaleService,
                 localization:LocalizationService)
     {
         super(locale, localization);
-        
+
         this.localization.translationChanged.subscribe(() =>
                                                        {
                                                            this.pagingData = {
-                                                               pagingUnit:  this.localization.translate('categories'),
-                                                               total:       0,
-                                                               currentPage: 1,
-                                                               perPage:     25,
-                                                               lastPage:    0,
-                                                               from:        0,
-                                                               to:          0
+                                                               pagingUnit: this.localization.translate('categories'),
+                                                               totalsCount: 0,
+                                                               page: 1,
+                                                               itemsPerPage: 25,
+                                                               lastPageNumber: 0,
+                                                               firstOnPage: 0,
+                                                               lastOnPage: 0
                                                            };
                                                        });
-        
+
         this.getTaxonomies();
     }
-    
+
     /*
      * belong to OnInit Lifecycle hook
      * get called right after the directive's data-bound properties have been checked for the
@@ -77,26 +77,26 @@ export class TaxonomiesComponent extends Locale implements OnInit
             clickFunction: () => this.updateTaxonomy()
         };
     }
-    
+
     private doPaging(pagerData:TerraPagerInterface):void
     {
-        this.getData(pagerData.perPage, pagerData.currentPage)
+        this.getData(pagerData.itemsPerPage, pagerData.page)
     }
-    
+
     private getTaxonomies()
     {
         this.etsyComponent.callLoadingEvent(true);
-        
+
         this.taxonomyService.getTaxonomies().subscribe(
             response =>
             {
                 this.buildTaxonomiesTree(response);
-                
+
                 this.etsyComponent.callLoadingEvent(false);
-                
+
                 this.getCorrelations();
             },
-            
+
             error =>
             {
                 this.etsyComponent.callStatusEvent(this.localization.translate('errorLoadTaxonomies') + ': ' + error.statusText, 'danger');
@@ -106,23 +106,23 @@ export class TaxonomiesComponent extends Locale implements OnInit
             }
         )
     }
-    
+
     private getCorrelations()
     {
         this.etsyComponent.callLoadingEvent(true);
-        
+
         this.taxonomyService.getCorrelations().subscribe(
             response =>
             {
                 this.correlations = response;
-                
+
                 this.etsyComponent.callLoadingEvent(false);
-                
+
                 this.correlationsLoaded = true;
-                
-                this.getData(this.pagingData.perPage, this.pagingData.currentPage);
+
+                this.getData(this.pagingData.itemsPerPage, this.pagingData.page);
             },
-            
+
             error =>
             {
                 this.etsyComponent.callStatusEvent(this.localization.translate('errorLoadTaxonomyCorrelations') + ': ' + error.statusText, 'danger');
@@ -132,28 +132,28 @@ export class TaxonomiesComponent extends Locale implements OnInit
             }
         );
     }
-    
+
     private getData(perPage, currentPage)
     {
         if(!this.correlationsLoaded)
         {
             return;
         }
-        
+
         this.etsyComponent.callLoadingEvent(true);
         this.isLoading = true;
-        
+
         this.taxonomyService.getCategories(currentPage, perPage).subscribe(
             response =>
             {
                 this.calculatePagingData(response, perPage, currentPage);
-                
+
                 this.categories = response.entries;
-                
+
                 this.categories.forEach((item, key) =>
                                         {
                                             this.categories[key].taxonomyName = ' ';
-                    
+
                                             this.correlations.forEach((correlationItem) =>
                                                                       {
                                                                           if(item.categoryId == correlationItem.categoryId)
@@ -163,12 +163,12 @@ export class TaxonomiesComponent extends Locale implements OnInit
                                                                           }
                                                                       });
                                         });
-                
+
                 this.etsyComponent.callLoadingEvent(false);
                 this.etsyComponent.isLoading = false;
                 this.isLoading = false;
             },
-            
+
             error =>
             {
                 this.etsyComponent.callStatusEvent(this.localization.translate('errorLoadCategories') + ': ' + error.statusText, 'danger');
@@ -178,28 +178,28 @@ export class TaxonomiesComponent extends Locale implements OnInit
             }
         );
     }
-    
+
     private getTaxonomyName(taxonomyId):string
     {
         if(this.taxonomiesNameList[taxonomyId])
         {
             return this.taxonomiesNameList[taxonomyId];
         }
-        
+
         return ' ';
     }
-    
+
     private openTaxonomiesOverlay(row)
     {
         this.rowInOverlay = row;
-        
+
         this.viewTaxonomiesOverlay.showOverlay();
     }
-    
+
     private updateTaxonomy()
     {
         let leaf:TerraLeafInterface = this.tree.getSelectedLeaf();
-        
+
         if(leaf != null)
         {
             this.rowInOverlay.taxonomyId = leaf.id;
@@ -207,17 +207,17 @@ export class TaxonomiesComponent extends Locale implements OnInit
             this.viewTaxonomiesOverlay.hideOverlay();
         }
     }
-    
+
     private buildTaxonomiesTree(taxonomies):void
     {
         taxonomies.forEach((item) =>
                            {
                                this.taxonomiesNameList[item.id] = item.name;
-            
+
                                this.taxonomiesList.push(this.getLeaf(item));
                            });
     }
-    
+
     private getLeaf(item)
     {
         let leafData = {
@@ -226,34 +226,34 @@ export class TaxonomiesComponent extends Locale implements OnInit
             icon:        null,
             subLeafList: null
         };
-        
+
         this.taxonomiesNameList[item.id] = item.name;
-        
+
         if(item.children.length > 0)
         {
             leafData.icon = 'icon-folder';
             leafData.subLeafList = [];
-            
+
             item.children.forEach((child) =>
                                   {
                                       leafData.subLeafList.push(this.getLeaf(child));
                                   });
         }
-        
+
         return leafData;
     }
-    
+
     private saveCorrelations()
     {
         this.etsyComponent.callLoadingEvent(true);
         this.isLoading = true;
-        
+
         this.categories.forEach((categoryData) =>
                                 {
                                     this.updateOrAddCorrelation(categoryData);
                                 });
-        
-        
+
+
         this.taxonomyService.saveCorrelations({correlations: this.correlations}).subscribe(
             result =>
             {
@@ -261,7 +261,7 @@ export class TaxonomiesComponent extends Locale implements OnInit
                 this.etsyComponent.callLoadingEvent(false);
                 this.isLoading = false;
             },
-            
+
             error =>
             {
                 this.etsyComponent.callStatusEvent(this.localization.translate('errorSaveTaxonomyCorrelations') + ': ' + error.statusText, 'danger');
@@ -270,11 +270,11 @@ export class TaxonomiesComponent extends Locale implements OnInit
             }
         )
     }
-    
+
     private updateOrAddCorrelation(categoryData)
     {
         let isUpdate = false;
-        
+
         this.correlations.forEach((correlationData, key) =>
                                   {
                                       if(correlationData.categoryId == categoryData.categoryId)
@@ -290,7 +290,7 @@ export class TaxonomiesComponent extends Locale implements OnInit
                                           }
                                       }
                                   });
-        
+
         if(isUpdate == false && categoryData.taxonomyId)
         {
             this.correlations.push({
@@ -299,21 +299,21 @@ export class TaxonomiesComponent extends Locale implements OnInit
                                    })
         }
     }
-    
+
     private calculatePagingData(response, perPage, currentPage):void
     {
-        this.pagingData.total = response.totalsCount;
-        this.pagingData.currentPage = currentPage;
-        this.pagingData.perPage = perPage;
-        this.pagingData.lastPage = Math.ceil(response.totalsCount / perPage);
-        
+        this.pagingData.totalsCount = response.totalsCount;
+        this.pagingData.page = currentPage;
+        this.pagingData.itemsPerPage = perPage;
+        this.pagingData.lastPageNumber = Math.ceil(response.totalsCount / perPage);
+
         let from = perPage * (currentPage - 1);
-        this.pagingData.from = (from <= 0) ? 1 : from;
-        
-        let to = (this.pagingData.from <= 1) ? perPage : (this.pagingData.from + perPage);
-        this.pagingData.to = (to > this.pagingData.total) ? this.pagingData.total : to;
+        this.pagingData.firstOnPage = (from <= 0) ? 1 : from;
+
+        let to = (this.pagingData.firstOnPage <= 1) ? perPage : (this.pagingData.firstOnPage + perPage);
+        this.pagingData.lastOnPage = (to > this.pagingData.totalsCount) ? this.pagingData.totalsCount : to;
     }
-    
+
     private reload()
     {
         location.reload();

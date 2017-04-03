@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import {
-    TerraLoadingBarService,
+    TerraLoadingSpinnerService,
     TerraBaseService
 } from '@plentymarkets/terra-components';
 import { Observable } from 'rxjs';
@@ -10,9 +10,9 @@ import { ShopData } from '../data/shop-data';
 @Injectable()
 export class SettingsService extends TerraBaseService
 {
-    constructor(loadingBarService:TerraLoadingBarService, http:Http)
+    constructor(loadingSpinnerService:TerraLoadingSpinnerService, http:Http)
     {
-        super(loadingBarService, http, '/rest/markets/etsy/settings/');
+        super(loadingSpinnerService, http, '/rest/markets/etsy/settings/');
     }
     
     public getSettings():Observable<any>

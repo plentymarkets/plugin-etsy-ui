@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import {
-    TerraLoadingBarService,
+    TerraLoadingSpinnerService,
     TerraBaseService
 } from '@plentymarkets/terra-components';
 import { Observable } from 'rxjs';
@@ -9,15 +9,15 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class TaxonomyService extends TerraBaseService
 {
-    constructor(loadingBarService:TerraLoadingBarService, http:Http)
+    constructor(loadingSpinnerService:TerraLoadingSpinnerService, http:Http)
     {
-        super(loadingBarService, http, '/rest/markets/etsy/taxonomies/');
+        super(loadingSpinnerService, http, '/rest/markets/etsy/taxonomies/');
     }
     
     public getCorrelations():Observable<any>
     {
         this.setAuthorization();
-        
+
         let url:string;
         
         url = this.url + 'correlations';
@@ -33,7 +33,7 @@ export class TaxonomyService extends TerraBaseService
     public getTaxonomies():Observable<any>
     {
         this.setAuthorization();
-        
+
         let url:string;
         
         url = this.url + 'imported';
@@ -49,12 +49,12 @@ export class TaxonomyService extends TerraBaseService
     public getCategories(page?:number, perPage?:number):Observable<any>
     {
         this.setAuthorization();
-        
+
         let url:string;
         
         if(page && perPage)
         {
-            url = this.url + 'categories?page=' + page + '&itemsPerPage=' + perPage + '&lang=' + (localStorage.getItem('locale') || 'de');
+            url = this.url + 'categories?page=' + page + '&itemsPerPage=' + perPage + '&lang=' + (localStorage.getItem('plentymarkets_lang_') || 'de');
         }
         else
         {

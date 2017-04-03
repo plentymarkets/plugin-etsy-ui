@@ -186,7 +186,7 @@ export class SettingsComponent extends Locale implements OnInit
                         items.push({
                                        value:   data.shopId,
                                        caption: data.shopName,
-                                       active:  shopId == data.shopId
+                                       // active:  shopId == data.shopId
                                    });
                     }
                     
