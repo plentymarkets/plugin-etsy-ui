@@ -37,13 +37,13 @@ export class ShippingProfilesComponent extends Locale implements OnInit
         this.parcelServicePresetList = [
             {
                 value:   null,
-                caption: 'Default'
+                caption: ''
             }
         ];
         this.shippingProfileSettingsList = [
             {
                 value:   null,
-                caption: 'Default'
+                caption: ''
             }
         ];
 

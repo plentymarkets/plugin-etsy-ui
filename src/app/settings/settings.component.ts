@@ -102,7 +102,7 @@ export class SettingsComponent extends Locale implements OnInit
         
         this._availableShops = [{
             value:   null,
-            caption: 'Select..'
+            caption: ''
         }];
     }
     
