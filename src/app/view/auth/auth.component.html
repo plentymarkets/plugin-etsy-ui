@@ -1,0 +1,14 @@
+<terra-base-toolbar>
+    <div class="btn-group" role="group">
+        <terra-button [inputIsDisabled]="isLoading"
+                      [inputTooltipText]="'loginToEtsy' | translate:lang" [inputTooltipPlacement]="'right'"
+                      [inputIcon]="'icon-visibility_private'"
+                      (outputClicked)="openLoginPopup()"></terra-button>
+    </div>
+</terra-base-toolbar>
+
+<terra-portlet>
+    <div *ngIf="_isAuthenticated === null" class="auth-info">{{'checkingLoginStatus' | translate:lang}}</div>
+    <div *ngIf="_isAuthenticated === true" class="auth-info">{{'alreadyAuthenticated' | translate:lang}}</div>
+    <div *ngIf="_isAuthenticated === false" class="auth-info">{{'notAuthenticated' | translate:lang}}</div>
+</terra-portlet>

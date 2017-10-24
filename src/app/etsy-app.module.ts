@@ -1,58 +1,62 @@
-import { NgModule } from '@angular/core';
+import {
+    APP_INITIALIZER,
+    NgModule
+} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
-import { FormsModule } from '@angular/forms';
+import {
+    FormsModule,
+    ReactiveFormsModule
+} from '@angular/forms';
 import { TerraComponentsModule } from '@plentymarkets/terra-components/app/';
-import { ShippingProfilesComponent } from "./shipping-profiles/shipping-profiles.component";
-import { ShippingProfileService } from "./shipping-profiles/service/shipping-profile.service";
-import { LoginComponent } from "./login/login.component";
-import { LoginService } from "./login/service/login.service";
-import { SettingsService } from "./settings/service/settings.service";
-import { SettingsComponent } from "./settings/settings.component";
-import { TaxonomiesComponent } from "./taxonomies/taxonomies.component";
-import { TaxonomyService } from "./taxonomies/service/taxonomy.service";
-import { ToolbarComponent } from "./toolbar/toolbar.component";
-import { PropertiesComponent } from "./properties/properties.component";
-import { PropertyService } from "./properties/service/property.service";
-import { LocaleModule } from "angular2localization/angular2localization";
-import { LocalizationModule } from "angular2localization/angular2localization";
-import { LocaleService } from "angular2localization/angular2localization";
-import { LocalizationService } from "angular2localization/angular2localization";
-import { EtsyComponent } from './etsy-app.component';
+import { EtsyAppComponent } from './etsy-app.component';
+import { TranslationModule } from 'angular-l10n';
+import { LoadingConfig } from './core/config/loading.config';
+import { AlertConfig } from './core/config/alert.config';
+import { LocalizationConfig } from './core/localization/localization.config';
+import { AuthModule } from './view/auth/auth.module';
+import { AuthComponent } from './view/auth/auth.component';
+import { SettingsModule } from './view/settings/settings.module';
+import { SettingsComponent } from './view/settings/settings.component';
 
 @NgModule({
-              imports:      [
-                  BrowserModule,
-                  HttpModule,
-                  FormsModule,
-                  LocaleModule,
-                  LocalizationModule,
-                  TerraComponentsModule.forRoot()
-              ],
-              declarations: [
-                  EtsyComponent,
-                  ShippingProfilesComponent,
-                  LoginComponent,
-                  SettingsComponent,
-                  TaxonomiesComponent,
-                  PropertiesComponent,
-                  ToolbarComponent
-              ],
-    
-              providers: [
-                  ShippingProfileService,
-                  LoginService,
-                  SettingsService,
-                  TaxonomyService,
-                  PropertyService,
-                  LocaleService,
-                  LocalizationService
-              ],
-              bootstrap: [
-                  EtsyComponent
-              ]
-          })
+    imports:      [
+        BrowserModule,
+        HttpModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TranslationModule.forRoot(),
+        TerraComponentsModule.forRoot(),
+        AuthModule.forRoot(),
+        SettingsModule.forRoot(),
+    ],
+    declarations: [
+        EtsyAppComponent,
+        AuthComponent,
+        SettingsComponent,
+    ],
 
-export class EtsyModule
+    providers: [
+        LoadingConfig,
+        AlertConfig,
+        LocalizationConfig,
+        {
+            provide:    APP_INITIALIZER,
+            useFactory: initLocalization,
+            deps:       [LocalizationConfig],
+            multi:      true
+        }
+    ],
+    bootstrap: [
+        EtsyAppComponent
+    ]
+})
+
+export class EtsyAppModule
 {
+}
+
+export function initLocalization(localizationConfig:LocalizationConfig):Function
+{
+    return () => localizationConfig.load();
 }

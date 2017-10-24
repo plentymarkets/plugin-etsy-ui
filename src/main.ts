@@ -1,9 +1,9 @@
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { EtsyModule }  from './app';
+import { EtsyAppModule }  from './app';
 
 if (process.env.ENV === 'production') {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(EtsyModule);
+platformBrowserDynamic().bootstrapModule(EtsyAppModule);
