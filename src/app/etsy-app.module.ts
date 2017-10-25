@@ -18,6 +18,11 @@ import { AuthModule } from './view/auth/auth.module';
 import { AuthComponent } from './view/auth/auth.component';
 import { SettingsModule } from './view/settings/settings.module';
 import { SettingsComponent } from './view/settings/settings.component';
+import { ShippingProfilesComponent } from './view/shipping-profiles/shipping-profiles.component';
+import { ShippingProfilesModule } from './view/shipping-profiles/shipping-profiles.module';
+import { TaxonomiesModule } from './view/taxonomies/taxonomies.module';
+import { TaxonomiesComponent } from './view/taxonomies/taxonomies.component';
+import { TaxonomyCorrelationComponent } from './view/taxonomies/view/taxonomy-correlation/taxonomy-correlation.component';
 
 @NgModule({
     imports:      [
@@ -29,11 +34,16 @@ import { SettingsComponent } from './view/settings/settings.component';
         TerraComponentsModule.forRoot(),
         AuthModule.forRoot(),
         SettingsModule.forRoot(),
+        ShippingProfilesModule.forRoot(),
+        TaxonomiesModule.forRoot(),
     ],
     declarations: [
         EtsyAppComponent,
         AuthComponent,
         SettingsComponent,
+        ShippingProfilesComponent,
+        TaxonomiesComponent,
+        TaxonomyCorrelationComponent
     ],
 
     providers: [

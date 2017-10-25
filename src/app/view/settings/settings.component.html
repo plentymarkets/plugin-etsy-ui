@@ -12,7 +12,6 @@
                 <form [formGroup]="_settingsForm" novalidate>
                     <terra-select-box
                         #shopIdSelect
-                        [inputIsDisabled]="isLoading"
                         [inputListBoxValues]="_shopValueList"
                         [formControlName]="'shopId'"
                         [(ngModel)]="_settings.shop.shopId"
@@ -20,7 +19,6 @@
                     
                     <terra-select-box
                         #mainLanguageSelect
-                        [inputIsDisabled]="isLoading"
                         [formControlName]="'mainLanguage'"
                         [inputListBoxValues]="_mainLanguageValueList"
                         [(ngModel)]="_settings.shop.mainLanguage"

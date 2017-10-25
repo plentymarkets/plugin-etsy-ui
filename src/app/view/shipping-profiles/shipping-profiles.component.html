@@ -1,0 +1,51 @@
+<terra-base-toolbar>
+    <div class="btn-group" role="group">
+        <terra-button [inputTooltipText]="'save' | translate:lang"
+                      [inputTooltipPlacement]="'right'"
+                      [inputIcon]="'icon-save'"
+                      (outputClicked)="saveCorrelations()"></terra-button>
+    </div>
+    
+    <div class="btn-group" role="group">
+        <terra-button [inputIcon]="'icon-add'"
+                      [inputIsTertiary]="true"
+                      [inputTooltipText]="'addCorrelation' | translate:lang"
+                      [inputTooltipPlacement]="'right'"
+                      (outputClicked)="addCorrelation()"></terra-button>
+        
+        <terra-button [inputIcon]="'icon-download'"
+                      (outputClicked)="importCorrelations()"
+                      [inputTooltipText]="'importEtsyShippingProfiles' | translate:lang"
+                      [inputTooltipPlacement]="'right'"></terra-button>
+    
+    </div>
+</terra-base-toolbar>
+
+<div class="container-fluid">
+    <div class="row">
+        <template ngFor let-shippingProfileCorrelation [ngForOf]="_shippingProfileCorrelations">
+            <div class="col-xs-12 col-md-6 col-lg-3">
+                <terra-info-box>
+                    <div body>
+                        <terra-select-box
+                            [inputListBoxValues]="_parcelServicePresetValueList"
+                            [(ngModel)]="shippingProfileCorrelation.parcelServicePresetId"
+                            [inputName]="'Plentymarkets Versandprofil'"></terra-select-box>
+                        
+                        <terra-select-box
+                            [inputListBoxValues]="_shippingProfileSettingsValueList"
+                            [(ngModel)]="shippingProfileCorrelation.settingsId"
+                            [inputName]="'Etsy Versandprofil'"></terra-select-box>
+                    </div>
+                    <div buttons>
+                        <terra-button [inputIcon]="'icon-delete'"
+                                      (outputClicked)="deleteCorrelation(shippingProfileCorrelation)"
+                                      [inputIsSecondary]="true"></terra-button>
+                    
+                    </div>
+                </terra-info-box>
+            </div>
+        </template>
+    
+    </div>
+</div>

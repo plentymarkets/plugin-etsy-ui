@@ -58,20 +58,20 @@ export class TaxonomiesService extends TerraBaseService
         );
     }
 
-    public getCategories(filters:CategoryParameterInterface):Observable<CategoriesInterface>
+    public getCategories():Observable<CategoriesInterface>
     {
         this.setAuthorization();
         this.setHeader();
 
-        let url:string;
-
-        filters.lang = this.translation.getLanguage();
+        let url:string = this.url + 'categories';
 
         return this.mapRequest(
             this.http.get(url, {
                 headers: this.headers,
                 body:    '',
-                search:  this.createUrlSearchParams(filters)
+                search:  {
+                    lang: this.translation.getLanguage()
+                }
             })
         );
     }

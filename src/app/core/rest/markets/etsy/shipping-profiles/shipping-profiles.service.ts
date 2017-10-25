@@ -6,7 +6,7 @@ import {
 } from '@plentymarkets/terra-components';
 import { Observable } from 'rxjs';
 import { ParcelServicePresetInterface } from './data/parcel-service-preset.interface';
-import { ShippingProfileInterface } from './data/shipping-profile.interface';
+import { ShippingProfileSettingsInterface } from './data/shipping-profile-settings.interface';
 import { ShippingProfileCorrelationInterface } from './data/shipping-profile-correlation.interface';
 
 @Injectable()
@@ -41,7 +41,7 @@ export class ShippingProfilesService extends TerraBaseService
         );
     }
 
-    public getShippingProfileSettingsList():Observable<Array<ShippingProfileInterface>>
+    public getShippingProfileSettingsList():Observable<Array<ShippingProfileSettingsInterface>>
     {
         this.setAuthorization();
         this.setHeader();
@@ -82,7 +82,7 @@ export class ShippingProfilesService extends TerraBaseService
                 {},
                 {
                     headers: this.headers,
-                    body:    shippingProfileCorrelations
+                    body:    { correlations: shippingProfileCorrelations}
                 })
         );
     }
