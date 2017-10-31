@@ -1,0 +1,26 @@
+<div class="container-fluid">
+    <div class="row">
+        <template ngFor let-taxonomyCorrelation [ngForOf]="taxonomyCorrelations">
+            <div class="col-xs-12" [ngClass]="{'col-md-6 col-lg-3': _isFocused}">
+                <terra-info-box [inputIsSelected]="taxonomyCorrelation.taxonomy.id && taxonomyCorrelation.taxonomy.id === _selectedTaxonomyCorrelation?.taxonomy.id && taxonomyCorrelation.category.id === _selectedTaxonomyCorrelation?.category.id">
+                    <div body style="white-space: initial">
+                        Plentymarkets Kategorie: <br><b [innerHtml]="getCategoryName(taxonomyCorrelation.category)"></b>
+                        <br><br>
+                        Etsy Kategorie: <br><b [innerHtml]="getTaxonomyName(taxonomyCorrelation.taxonomy)"></b>
+                    </div>
+                    <div buttons>
+                        <terra-button [inputIcon]="'icon-filter_add'"
+                                      [inputIsDisabled]="taxonomyCorrelation.taxonomy.id && taxonomyCorrelation.taxonomy.id === _selectedTaxonomyCorrelation?.taxonomy.id && taxonomyCorrelation.category.id === _selectedTaxonomyCorrelation?.category.id"
+                                      (outputClicked)="editCorrelation(taxonomyCorrelation)"
+                                      [inputIsPrimary]="true"></terra-button>
+                        <terra-button [inputIcon]="'icon-delete'"
+                                      [inputIsDisabled]="taxonomyCorrelation.taxonomy.id && taxonomyCorrelation.taxonomy.id === _selectedTaxonomyCorrelation?.taxonomy.id && taxonomyCorrelation.category.id === _selectedTaxonomyCorrelation?.category.id"
+                                      (outputClicked)="onDeleteBtnClicked(taxonomyCorrelation)"
+                                      [inputIsSecondary]="true"></terra-button>
+                    
+                    </div>
+                </terra-info-box>
+            </div>
+        </template>
+    </div>
+</div>

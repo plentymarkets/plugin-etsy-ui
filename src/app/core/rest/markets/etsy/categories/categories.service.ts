@@ -5,12 +5,11 @@ import {
     TerraBaseService
 } from '@plentymarkets/terra-components';
 import { Observable } from 'rxjs';
-import { TaxonomyCorrelationInterface } from './data/taxonomy-correlation.interface';
-import { TaxonomyInterface } from './data/taxonomy.interface';
 import { TranslationService } from 'angular-l10n';
+import { CategoryInterface } from './data/category.interface';
 
 @Injectable()
-export class TaxonomiesService extends TerraBaseService
+export class CategoriesService extends TerraBaseService
 {
     private bearer:string;
 
@@ -18,7 +17,7 @@ export class TaxonomiesService extends TerraBaseService
                 http:Http,
                 public translation:TranslationService)
     {
-        super(loadingBarService, http, '/rest/markets/etsy/taxonomies/');
+        super(loadingBarService, http, '/rest/markets/etsy/categories/');
 
         if(process.env.ENV !== 'production')
         {
@@ -27,7 +26,7 @@ export class TaxonomiesService extends TerraBaseService
         }
     }
 
-    public getTaxonomy(id:number):Observable<TaxonomyInterface>
+    public getCategory(id:number):Observable<CategoryInterface>
     {
         this.setAuthorization();
         this.setHeader();
@@ -38,15 +37,15 @@ export class TaxonomiesService extends TerraBaseService
             this.http.get(url, {
                 headers: this.headers,
                 body:    '',
-                search: {
+                search:  {
                     lang: this.translation.getLanguage(),
                     with: ['path']
                 }
             })
         );
-    }
-    
-    public getTaxonomies():Observable<Array<TaxonomyInterface>>
+    }    
+
+    public getCategories():Observable<Array<CategoryInterface>>
     {
         this.setAuthorization();
         this.setHeader();
@@ -57,44 +56,11 @@ export class TaxonomiesService extends TerraBaseService
             this.http.get(url, {
                 headers: this.headers,
                 body:    '',
-                search: {
+                search:  {
                     lang: this.translation.getLanguage(),
                     with: ['children']
                 }
             })
-        );
-    }
-
-    public getCorrelations():Observable<Array<TaxonomyCorrelationInterface>>
-    {
-        this.setAuthorization();
-        this.setHeader();
-
-        let url:string = this.url + 'correlations';
-
-        return this.mapRequest(
-            this.http.get(url, {
-                headers: this.headers,
-            })
-        );
-    }
-    
-    public saveCorrelations(taxonomyCorrelations:Array<TaxonomyCorrelationInterface>):Observable<void>
-    {
-        this.setAuthorization();
-        this.setHeader();
-
-        let url = this.url + 'correlations';
-
-        return this.mapRequest(
-            this.http.post(url,
-                {},
-                {
-                    headers: this.headers,
-                    body: {
-                        correlations: taxonomyCorrelations
-                    }
-                })
         );
     }
 

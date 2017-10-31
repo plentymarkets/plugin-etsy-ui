@@ -22,7 +22,6 @@ import { ShippingProfilesComponent } from './view/shipping-profiles/shipping-pro
 import { ShippingProfilesModule } from './view/shipping-profiles/shipping-profiles.module';
 import { TaxonomiesModule } from './view/taxonomies/taxonomies.module';
 import { TaxonomiesComponent } from './view/taxonomies/taxonomies.component';
-import { TaxonomyCorrelationComponent } from './view/taxonomies/view/taxonomy-correlation/taxonomy-correlation.component';
 
 @NgModule({
     imports:      [
@@ -43,7 +42,6 @@ import { TaxonomyCorrelationComponent } from './view/taxonomies/view/taxonomy-co
         SettingsComponent,
         ShippingProfilesComponent,
         TaxonomiesComponent,
-        TaxonomyCorrelationComponent
     ],
 
     providers: [

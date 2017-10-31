@@ -1,5 +1,8 @@
+import { TaxonomyInterface } from './taxonomy.interface';
+import { CategoryInterface } from '../../categories/data/category.interface';
+
 export interface TaxonomyCorrelationInterface
 {
-    taxonomyId:string|number;
-    categoryId:string|number;
+    taxonomy:TaxonomyInterface;
+    category:CategoryInterface;
 }

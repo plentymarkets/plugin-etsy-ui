@@ -1,9 +1,10 @@
 export interface TaxonomyInterface
 {
-    categoryId:string|number;
-    id:string|number;
+    id:number;
     level:number;
-    name:string
-    parentId?:string|number;
+    name:string;
+    isLeaf:boolean;
+    parentId:number;
     children?:Array<TaxonomyInterface>;
+    path?:Array<TaxonomyInterface>;
 }
