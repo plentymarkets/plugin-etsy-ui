@@ -1,12 +1,9 @@
 import {
     Component,
     Input,
-    OnInit,
-    ViewChild
+    OnInit
 } from '@angular/core';
 import {
-    TerraTreeComponent,
-    TerraOverlayComponent,
     TerraLeafInterface,
     TerraSplitViewComponentInterface,
     TerraMultiSplitViewInterface,

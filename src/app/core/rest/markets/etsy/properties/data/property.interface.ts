@@ -4,4 +4,5 @@ export interface PropertyInterface
     name:string;
     groupId:number;
     groupName:string;
+    children?:Array<PropertyInterface>;
 }

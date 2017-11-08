@@ -4,13 +4,18 @@
                   (outputClicked)="onSaveBtnClicked()"></terra-button>
     
     <terra-button [inputIsDisabled]="_isLoading"
+                  [inputIcon]="'icon-download'"
+                  [inputTooltipText]="'properties.tooltips.import' | translate:lang"
+                  [inputTooltipPlacement]="'right'"
+                  (outputClicked)="import()"></terra-button>
+    
+    <terra-button [inputIsDisabled]="_isLoading"
                   [inputIcon]="'icon-add'"
                   [inputIsTertiary]="true"
-                  [inputTooltipText]="'shippingProfiles.tooltips.addCorrelation' | translate:lang"
+                  [inputTooltipText]="'properties.tooltips.addCorrelation' | translate:lang"
                   [inputTooltipPlacement]="'right'"
                   (outputClicked)="addCorrelation()"></terra-button>
 </terra-base-toolbar>
-
 
 <div class="terra-view" *ngIf="!_isLoading">
     <terra-multi-split-view [inputConfig]="_editSplitViewConfig" [inputShowBreadcrumbs]="true"></terra-multi-split-view>

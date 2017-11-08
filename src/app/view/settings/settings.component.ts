@@ -108,15 +108,15 @@ export class SettingsComponent extends Translation implements OnInit
         this._mainLanguageValueList = [
             {
                 value:   'en',
-                caption: 'English',
+                caption: this.translation.translate('settings.languages.english'),
             },
             {
                 value:   'de',
-                caption: 'German',
+                caption: this.translation.translate('settings.languages.german'),
             },
             {
                 value:   'fr',
-                caption: 'French',
+                caption: this.translation.translate('settings.languages.french'),
             },
         ];
     }
@@ -126,17 +126,17 @@ export class SettingsComponent extends Translation implements OnInit
         this._exportLanguagesValueList = [
             {
                 value:    'en',
-                caption:  'English',
+                caption:  this.translation.translate('settings.languages.english'),
                 selected: false,
             },
             {
                 value:    'de',
-                caption:  'German',
+                caption:  this.translation.translate('settings.languages.german'),
                 selected: false
             },
             {
                 value:    'fr',
-                caption:  'French',
+                caption:  this.translation.translate('settings.languages.french'),
                 selected: false
             }
         ];
@@ -147,17 +147,17 @@ export class SettingsComponent extends Translation implements OnInit
         this._processesValueList = [
             {
                 value:    'item_export',
-                caption:  'Item Export',
+                caption:  this.translation.translate('settings.processes.itemExport'),
                 selected: false
             },
             {
                 value:    'stock_update',
-                caption:  'Stock Update',
+                caption:  this.translation.translate('settings.processes.stockUpdate'),
                 selected: false
             },
             {
                 value:    'order_import',
-                caption:  'Order Import',
+                caption:  this.translation.translate('settings.processes.orderImport'),
                 selected: false
             },
         ];
@@ -272,14 +272,14 @@ export class SettingsComponent extends Translation implements OnInit
         this._settingsService.saveSettings(this._settings).subscribe(
             response =>
             {
-                this._alertConfig.callStatusEvent(this.translation.translate('successSaveSettings'), 'success');
+                this._alertConfig.callStatusEvent(this.translation.translate('settings.alerts.settingsSaved'), 'success');
 
                 this._loadingConfig.callLoadingEvent(false);
             },
 
             error =>
             {
-                this._alertConfig.callStatusEvent(this.translation.translate('errorSaveSettings') + ': ' + error.statusText, 'danger');
+                this._alertConfig.callStatusEvent(this.translation.translate('settings.alerts.settingsNotSaved') + ': ' + error.statusText, 'danger');
 
                 this._loadingConfig.callLoadingEvent(false);
             }

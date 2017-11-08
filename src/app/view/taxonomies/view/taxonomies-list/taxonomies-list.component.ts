@@ -13,9 +13,6 @@ import {
     TranslationService
 } from 'angular-l10n';
 import { TaxonomyCorrelationInterface } from '../../../../core/rest/markets/etsy/taxonomies/data/taxonomy-correlation.interface';
-import { TaxonomiesService } from '../../../../core/rest/markets/etsy/taxonomies/taxonomies.service';
-import { LoadingConfig } from '../../../../core/config/loading.config';
-import { AlertConfig } from '../../../../core/config/alert.config';
 import { TaxonomiesSplitConfig } from '../../config/taxonomies-split.config';
 import { TaxonomyInterface } from '../../../../core/rest/markets/etsy/taxonomies/data/taxonomy.interface';
 import { isNullOrUndefined } from 'util';
@@ -107,7 +104,7 @@ export class TaxonomiesListComponent extends Translation implements OnInit, Terr
             names.push(cat.name);
         });
         
-        return names.join(' &raquo; ');
+        return names.join(' » ');
     }
 
     private getTaxonomyName(taxonomy:TaxonomyInterface)
@@ -118,6 +115,6 @@ export class TaxonomiesListComponent extends Translation implements OnInit, Terr
             names.push(cat.name);
         });
 
-        return names.join(' &raquo; ');
+        return names.join(' » ');
     }
 }

@@ -8,33 +8,33 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-12 col-md-6 col-lg-6">
-            <terra-portlet [inputPortletHeader]="'settings' | translate:lang">
+            <terra-portlet [inputPortletHeader]="'settings.title' | translate:lang">
                 <form [formGroup]="_settingsForm" novalidate>
                     <terra-select-box
                         #shopIdSelect
                         [inputListBoxValues]="_shopValueList"
                         [formControlName]="'shopId'"
                         [(ngModel)]="_settings.shop.shopId"
-                        [inputName]="'shopId' | translate:lang"></terra-select-box>
+                        [inputName]="'settings.form.shopId' | translate:lang"></terra-select-box>
                     
                     <terra-select-box
                         #mainLanguageSelect
                         [formControlName]="'mainLanguage'"
                         [inputListBoxValues]="_mainLanguageValueList"
                         [(ngModel)]="_settings.shop.mainLanguage"
-                        [inputName]="'mainShopLanguage' | translate:lang"></terra-select-box>
+                        [inputName]="'settings.form.mainLanguage' | translate:lang"></terra-select-box>
                     
                     <terra-multi-select-box
                         #exportLanguagesMultiSelect
                         [inputValueList]="_exportLanguagesValueList"
-                        [inputName]="'exportLanguages' | translate:lang"
+                        [inputName]="'settings.form.exportLanguages' | translate:lang"
                         [(inputSelectedValueList)]="_settings.shop.exportLanguages"></terra-multi-select-box>
                     
                     <terra-multi-select-box
                         #processesMultiSelect
                         [inputValueList]="_processesValueList"
                         [(inputSelectedValueList)]="_settings.shop.processes"
-                        [inputName]="'processes' | translate:lang"></terra-multi-select-box>
+                        [inputName]="'settings.form.processes' | translate:lang"></terra-multi-select-box>
                 </form>
             </terra-portlet>
         </div>

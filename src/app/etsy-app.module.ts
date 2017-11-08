@@ -22,6 +22,8 @@ import { ShippingProfilesComponent } from './view/shipping-profiles/shipping-pro
 import { ShippingProfilesModule } from './view/shipping-profiles/shipping-profiles.module';
 import { TaxonomiesModule } from './view/taxonomies/taxonomies.module';
 import { TaxonomiesComponent } from './view/taxonomies/taxonomies.component';
+import { PropertiesModule } from './view/properties/properties.module';
+import { PropertiesComponent } from './view/properties/properties.component';
 
 @NgModule({
     imports:      [
@@ -35,6 +37,7 @@ import { TaxonomiesComponent } from './view/taxonomies/taxonomies.component';
         SettingsModule.forRoot(),
         ShippingProfilesModule.forRoot(),
         TaxonomiesModule.forRoot(),
+        PropertiesModule.forRoot(),
     ],
     declarations: [
         EtsyAppComponent,
@@ -42,6 +45,7 @@ import { TaxonomiesComponent } from './view/taxonomies/taxonomies.component';
         SettingsComponent,
         ShippingProfilesComponent,
         TaxonomiesComponent,
+        PropertiesComponent,
     ],
 
     providers: [

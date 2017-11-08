@@ -1,21 +1,19 @@
 <terra-base-toolbar>
     <div class="btn-group" role="group">
-        <terra-button [inputTooltipText]="'save' | translate:lang"
-                      [inputTooltipPlacement]="'right'"
-                      [inputIcon]="'icon-save'"
+        <terra-button [inputIcon]="'icon-save'"
                       (outputClicked)="saveCorrelations()"></terra-button>
     </div>
     
     <div class="btn-group" role="group">
         <terra-button [inputIcon]="'icon-add'"
                       [inputIsTertiary]="true"
-                      [inputTooltipText]="'addCorrelation' | translate:lang"
+                      [inputTooltipText]="'shippingProfiles.tooltips.addCorrelation' | translate:lang"
                       [inputTooltipPlacement]="'right'"
                       (outputClicked)="addCorrelation()"></terra-button>
         
         <terra-button [inputIcon]="'icon-download'"
                       (outputClicked)="importCorrelations()"
-                      [inputTooltipText]="'importEtsyShippingProfiles' | translate:lang"
+                      [inputTooltipText]="'shippingProfiles.tooltips.import' | translate:lang"
                       [inputTooltipPlacement]="'right'"></terra-button>
     
     </div>
@@ -30,12 +28,12 @@
                         <terra-select-box
                             [inputListBoxValues]="_parcelServicePresetValueList"
                             [(ngModel)]="shippingProfileCorrelation.parcelServicePresetId"
-                            [inputName]="'Plentymarkets Versandprofil'"></terra-select-box>
+                            [inputName]="'shippingProfiles.list.plentymarketsShippingProfile' | translate:lang"></terra-select-box>
                         
                         <terra-select-box
                             [inputListBoxValues]="_shippingProfileSettingsValueList"
                             [(ngModel)]="shippingProfileCorrelation.settingsId"
-                            [inputName]="'Etsy Versandprofil'"></terra-select-box>
+                            [inputName]="'shippingProfiles.list.etsyShippingProfile' | translate:lang"></terra-select-box>
                     </div>
                     <div buttons>
                         <terra-button [inputIcon]="'icon-delete'"

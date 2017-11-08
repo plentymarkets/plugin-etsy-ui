@@ -28,8 +28,6 @@ export class TaxonomiesComponent extends Translation implements OnInit
 
     private _isLoading:boolean;
 
-    private _taxonomiesNameList:Array<string>;
-    private _categoriesNameList:Array<string>;
     private _taxonomyCorrelations:Array<TaxonomyCorrelationInterface>;
 
     constructor(private _taxonomiesService:TaxonomiesService,
@@ -43,10 +41,7 @@ export class TaxonomiesComponent extends Translation implements OnInit
 
         this._isLoading = false;
 
-        this._taxonomiesNameList = [];
-        this._categoriesNameList = [];
         this._taxonomyCorrelations = [];
-        
     }
 
     ngOnInit()
@@ -81,7 +76,7 @@ export class TaxonomiesComponent extends Translation implements OnInit
                     module:                TaxonomiesListModule.forRoot(),
                     defaultWidth:          'col-xs-12 col-md-4 col-lg-3',
                     focusedWidth:          'col-xs-12 col-md-12 col-lg-12',
-                    name:                  'Correlations',
+                    name:                  this.translation.translate('taxonomies.splitViewNames.correlations'),
                     mainComponentName:     TaxonomiesListModule.getMainComponent(),
                     isBackgroundColorGrey: true,
                     inputs:                [
@@ -153,13 +148,13 @@ export class TaxonomiesComponent extends Translation implements OnInit
         this._taxonomiesService.saveCorrelations(this._taxonomyCorrelations).subscribe(
             result =>
             {
-                this._alertConfig.callStatusEvent(this.translation.translate('successSaveTaxonomyCorrelations'), 'success');
+                this._alertConfig.callStatusEvent(this.translation.translate('taxonomies.alerts.correlationsSaved'), 'success');
                 this._loadingConfig.callLoadingEvent(false);
             },
 
             error =>
             {
-                this._alertConfig.callStatusEvent(this.translation.translate('errorSaveTaxonomyCorrelations') + ': ' + error.statusText,
+                this._alertConfig.callStatusEvent(this.translation.translate('taxonomies.alerts.correlationsNotSaved') + ' ' + error.statusText,
                     'danger');
                 this._loadingConfig.callLoadingEvent(false);
             }

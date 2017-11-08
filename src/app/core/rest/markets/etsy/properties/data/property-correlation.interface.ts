@@ -1,5 +1,8 @@
+import { PropertyInterface } from './property.interface';
+import { SystemPropertyInterface } from './system-property.interface';
+
 export interface PropertyCorrelationInterface
 {
-    settingsId:string|number;
-    propertyId:string|number;
+    property:PropertyInterface;
+    systemProperty:SystemPropertyInterface;
 }

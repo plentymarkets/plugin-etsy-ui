@@ -38,19 +38,30 @@ export class AuthComponent extends Translation implements OnInit
     {
         this._loadingConfig.callLoadingEvent(true);
 
+        this._alertConfig.callStatusEvent(this.translation.translate('auth.alerts.checkingLoginStatus'), 'warning');
+
         this._authService.getLoginStatus().subscribe(
             response =>
             {
                 this._isAuthenticated = response.status;
 
                 this._loadingConfig.callLoadingEvent(false);
+
+                if(this._isAuthenticated)
+                {
+                    this._alertConfig.callStatusEvent(this.translation.translate('auth.alerts.alreadyAuthenticated'), 'success');
+                }
+                else
+                {
+                    this._alertConfig.callStatusEvent(this.translation.translate('auth.alerts.notAuthenticated'), 'danger');
+                }
             },
 
             error =>
             {
                 let message:any = error.json();
 
-                this._alertConfig.callStatusEvent(this.translation.translate('errorLoginStatusCheck') + ': ' + message.error.code + ' ' + message.error.message,
+                this._alertConfig.callStatusEvent(this.translation.translate('auth.alerts.loginStatusCheckError') + ' ' + message.error.code + ' ' + message.error.message,
                     'danger');
 
                 this._loadingConfig.callLoadingEvent(false);
@@ -87,7 +98,7 @@ export class AuthComponent extends Translation implements OnInit
             {
                 let message:any = error.json();
 
-                this._alertConfig.callStatusEvent(this.translation.translate('errorFetchLoginUrl') + ': ' + message.error.code + ' ' + message.error.message,
+                this._alertConfig.callStatusEvent(this.translation.translate('auth.alerts.fetchLoginUrlError') + ' ' + message.error.code + ' ' + message.error.message,
                     'danger');
 
                 this._loadingConfig.callLoadingEvent(false);

@@ -6,8 +6,8 @@ import {
 } from '@plentymarkets/terra-components';
 import { Observable } from 'rxjs';
 import { PropertyInterface } from "./data/property.interface";
-import { MarketPropertyInterface } from "./data/market-property.interface";
 import { PropertyCorrelationInterface } from './data/property-correlation.interface';
+import { SystemPropertyInterface } from './data/system-property.interface';
 
 @Injectable()
 export class PropertiesService extends TerraBaseService
@@ -30,7 +30,7 @@ export class PropertiesService extends TerraBaseService
         this.setAuthorization();
         this.setHeader();
 
-        let url:string = this.url + 'properties';
+        let url:string = this.url;
 
         return this.mapRequest(
             this.http.get(url, {
@@ -39,12 +39,12 @@ export class PropertiesService extends TerraBaseService
         );
     }
 
-    public getMarketProperties():Observable<MarketPropertyInterface>
+    public getSystemProperties():Observable<SystemPropertyInterface>
     {
         this.setAuthorization();
         this.setHeader();
 
-        let url:string = this.url + 'imported';
+        let url:string = this.url + 'system-properties';
 
         return this.mapRequest(
             this.http.get(url, {
@@ -74,17 +74,20 @@ export class PropertiesService extends TerraBaseService
         this.setAuthorization();
         this.setHeader();
 
-        let url:string = this.url + 'correlate';
+        let url:string = this.url + 'correlations';
 
         return this.mapRequest(
-            this.http.post(url, {}, {
-                headers: this.headers,
-                body:    propertyCorrelations
-            })
+            this.http.post(url,
+                {}, {
+                    headers: this.headers,
+                    body:    {
+                        correlations: propertyCorrelations
+                    }
+                })
         );
     }
 
-    public importMarketProperties():Observable<void>
+    public importProperties():Observable<void>
     {
         this.setAuthorization();
         this.setHeader();

@@ -140,14 +140,14 @@ export class ShippingProfilesComponent extends Translation implements OnInit
         this._shippingProfilesService.saveCorrelations(this._shippingProfileCorrelations).subscribe(
             response =>
             {
-                this._alertConfig.callStatusEvent(this.translation.translate('successSaveShippingProfileCorrelations'), 'success');
+                this._alertConfig.callStatusEvent(this.translation.translate('shippingProfiles.alerts.correlationsSaved'), 'success');
                 
                 this._loadingConfig.callLoadingEvent(false);
             },
 
             error =>
             {
-                this._alertConfig.callStatusEvent(this.translation.translate('errorSaveShippingProfileCorrelations') + ': ' + error.statusText,
+                this._alertConfig.callStatusEvent(this.translation.translate('shippingProfiles.alerts.correlationsNotSaved') + ' ' + error.statusText,
                     'danger');
 
                 this._loadingConfig.callLoadingEvent(false);
@@ -164,14 +164,14 @@ export class ShippingProfilesComponent extends Translation implements OnInit
             {
                 this.initData();
 
-                this._alertConfig.callStatusEvent(this.translation.translate('successImportShippingProfiles'), 'success');
+                this._alertConfig.callStatusEvent(this.translation.translate('shippingProfiles.alerts.shippingProfilesImported'), 'success');
                 
                 this._loadingConfig.callLoadingEvent(false);
             },
 
             error =>
             {
-                this._alertConfig.callStatusEvent(this.translation.translate('errorImportShippingProfiles') + ': ' + error.statusText,
+                this._alertConfig.callStatusEvent(this.translation.translate('shippingProfiles.alerts.shippingProfilesNotImported') + ' ' + error.statusText,
                     'danger');
                 
                 this._loadingConfig.callLoadingEvent(false);
