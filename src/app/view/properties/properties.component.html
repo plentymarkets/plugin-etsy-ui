@@ -3,18 +3,20 @@
                   [inputIcon]="'icon-save'"
                   (outputClicked)="onSaveBtnClicked()"></terra-button>
     
-    <terra-button [inputIsDisabled]="_isLoading"
-                  [inputIcon]="'icon-download'"
-                  [inputTooltipText]="'properties.tooltips.import' | translate:lang"
-                  [inputTooltipPlacement]="'right'"
-                  (outputClicked)="import()"></terra-button>
-    
-    <terra-button [inputIsDisabled]="_isLoading"
-                  [inputIcon]="'icon-add'"
-                  [inputIsTertiary]="true"
-                  [inputTooltipText]="'properties.tooltips.addCorrelation' | translate:lang"
-                  [inputTooltipPlacement]="'right'"
-                  (outputClicked)="addCorrelation()"></terra-button>
+    <div class="btn-group" role="group">
+        <terra-button [inputIsDisabled]="_isLoading"
+                      [inputIcon]="'icon-add'"
+                      [inputIsTertiary]="true"
+                      [inputTooltipText]="'properties.tooltips.addCorrelation' | translate:lang"
+                      [inputTooltipPlacement]="'right'"
+                      (outputClicked)="addCorrelation()"></terra-button>
+        
+        <terra-button [inputIsDisabled]="_isLoading"
+                      [inputIcon]="'icon-download'"
+                      [inputTooltipText]="'properties.tooltips.import' | translate:lang"
+                      [inputTooltipPlacement]="'right'"
+                      (outputClicked)="import()"></terra-button>
+    </div>
 </terra-base-toolbar>
 
 <div class="terra-view" *ngIf="!_isLoading">

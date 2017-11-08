@@ -26,6 +26,8 @@ export class ShippingProfilesComponent extends Translation implements OnInit
     private _shippingProfileSettingsValueList:Array<TerraSelectBoxValueInterface>;
     
     private _shippingProfileCorrelations:Array<ShippingProfileCorrelationInterface>;
+
+    private _isLoading:boolean;
     
     constructor(private _shippingProfilesService:ShippingProfilesService,
                 public translation:TranslationService,
@@ -38,6 +40,8 @@ export class ShippingProfilesComponent extends Translation implements OnInit
         this._shippingProfileSettingsValueList = [];
         
         this._shippingProfileCorrelations = [];
+
+        this._isLoading = false;
     }
 
     ngOnInit()
@@ -47,6 +51,8 @@ export class ShippingProfilesComponent extends Translation implements OnInit
 
     private initData()
     {
+        this._isLoading = true;
+        
         this._loadingConfig.callLoadingEvent(true);
 
         Observable.combineLatest(
@@ -64,6 +70,8 @@ export class ShippingProfilesComponent extends Translation implements OnInit
         ).subscribe(
             (data:any) =>
             {
+                this._isLoading = false;
+                
                 this._shippingProfileCorrelations = data.shippingProfileCorrelations;
                 
                 this.createParcelServicePresetsList(data.parcelServicePresets);
@@ -73,6 +81,8 @@ export class ShippingProfilesComponent extends Translation implements OnInit
             },
             (error:any) =>
             {
+                this._isLoading = false;
+                
                 this._loadingConfig.callLoadingEvent(false);
 
                 let message:any = error.json();

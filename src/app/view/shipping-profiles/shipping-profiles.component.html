@@ -1,21 +1,21 @@
 <terra-base-toolbar>
-    <div class="btn-group" role="group">
-        <terra-button [inputIcon]="'icon-save'"
-                      (outputClicked)="saveCorrelations()"></terra-button>
-    </div>
+    <terra-button [inputIsDisabled]="_isLoading"
+                  [inputIcon]="'icon-save'"
+                  (outputClicked)="saveCorrelations()"></terra-button>
     
     <div class="btn-group" role="group">
-        <terra-button [inputIcon]="'icon-add'"
+        <terra-button [inputIsDisabled]="_isLoading"
+                      [inputIcon]="'icon-add'"
                       [inputIsTertiary]="true"
                       [inputTooltipText]="'shippingProfiles.tooltips.addCorrelation' | translate:lang"
                       [inputTooltipPlacement]="'right'"
                       (outputClicked)="addCorrelation()"></terra-button>
         
-        <terra-button [inputIcon]="'icon-download'"
-                      (outputClicked)="importCorrelations()"
+        <terra-button [inputIsDisabled]="_isLoading"
+                      [inputIcon]="'icon-download'"
                       [inputTooltipText]="'shippingProfiles.tooltips.import' | translate:lang"
-                      [inputTooltipPlacement]="'right'"></terra-button>
-    
+                      [inputTooltipPlacement]="'right'"
+                      (outputClicked)="importCorrelations()"></terra-button>
     </div>
 </terra-base-toolbar>
 
