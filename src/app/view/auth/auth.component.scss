@@ -1,5 +1,17 @@
-.auth-info
+:host /deep/
+.info-box {
+    height: auto !important;
+    
+    .info-box-text
+    {
+        max-width: 100% !important;
+        min-width: 50%;
+        
+    }
+}
+
+:host /deep/
+.info-box-text div div
 {
-    padding: 20px;
-    text-align: center;
+    overflow:inherit !important;
 }

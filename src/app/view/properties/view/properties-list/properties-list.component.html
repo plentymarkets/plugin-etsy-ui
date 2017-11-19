@@ -9,10 +9,14 @@
                         {{ 'properties.list.property' | translate:lang }}: <br><b [innerHtml]="propertyCorrelation.property.groupName + ' » ' + propertyCorrelation.property.name"></b>
                     </div>
                     <div buttons>
-                        <terra-button [inputIcon]="'icon-filter_add'"
+                        <terra-button [inputIcon]="'icon-category_edit'"
                                       (outputClicked)="editCorrelation(propertyCorrelation)"
+                                      [inputTooltipText]="'properties.list.buttons.edit' | translate:lang"
+                                      [inputTooltipPlacement]="'bottom'"
                                       [inputIsPrimary]="true"></terra-button>
                         <terra-button [inputIcon]="'icon-delete'"
+                                      [inputTooltipText]="'properties.list.buttons.delete' | translate:lang"
+                                      [inputTooltipPlacement]="'bottom'"
                                       [inputIsDisabled]="propertyCorrelation.property.id && propertyCorrelation.property.id === _selectedPropertyCorrelation?.property.id && propertyCorrelation.systemProperty.id === _selectedPropertyCorrelation?.systemProperty.id"
                                       (outputClicked)="onDeleteBtnClicked(propertyCorrelation)"
                                       [inputIsSecondary]="true"></terra-button>

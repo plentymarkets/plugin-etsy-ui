@@ -1,6 +1,45 @@
 <terra-base-toolbar>
-    <terra-button [inputIsDisabled]="isLoading"
+    <terra-button [inputIsDisabled]="_isLoading || _isAuthenticated"
                   [inputIsTertiary]="true"
                   [inputIcon]="'icon-plugin_productive'"
                   (outputClicked)="openLoginPopup()"></terra-button>
 </terra-base-toolbar>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-md-3 col-lg-3">
+            <ng-template ngFor let-account [ngForOf]="_accountList">
+                <terra-info-box>
+                        <span body>
+                            <b>{{'auth.account.status' | translate:lang}}:</b> {{ account.status ? ('auth.account.active' | translate:lang) : ('auth.account.inactive' | translate:lang) }}<br>
+                            <b>{{'auth.account.consumerKey' | translate:lang}}:</b> <code>{{ account.consumerKey }}</code><br>
+                            <b>{{'auth.account.sharedSecret' | translate:lang}}:</b> <code>{{ account.sharedSecret }}</code><br>
+                        </span>
+                    
+                        <div buttons>
+                            <terra-button
+                                [inputIcon]="'icon-delete'"
+                                [inputIsSecondary]="true"
+                                [inputTooltipText]="'auth.account.remove' | translate:lang"
+                                [inputTooltipPlacement]="'bottom'"
+                                (outputClicked)="onShowRemoveAccountOverlayBtnClick()">
+                            </terra-button>
+                        </div>
+                </terra-info-box>
+            </ng-template>
+        </div>
+    </div>
+</div>
+
+<terra-overlay
+    #overlay
+    [inputOverlayTitle]="'auth.account.removeAccount' | translate:lang"
+    [inputPrimaryButtonInterface]="_removeBtn"
+    [inputSecondaryButtonInterface]="_cancelBtn"
+    [inputIsStatic]="true"
+    [inputIsSmall]="true"
+    [inputIsCloseable]="false">
+    <div>
+        {{'auth.account.removeConfirmationMessage' | translate:lang}}
+    </div>
+</terra-overlay>

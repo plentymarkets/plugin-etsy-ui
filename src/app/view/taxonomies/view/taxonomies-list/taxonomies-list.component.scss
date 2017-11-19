@@ -1,8 +1,6 @@
 :host /deep/
 .info-box {
-	height: auto !important;
-	
 	.info-box-text {
-		padding-bottom: 0 !important;
+		overflow: inherit !important;
 	}
 }

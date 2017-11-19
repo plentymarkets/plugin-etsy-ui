@@ -14,7 +14,8 @@
       "es6"
     ],
     "types": [
-      "node"
+      "node",
+      "interact.js"
     ]
   },
   "exclude": [

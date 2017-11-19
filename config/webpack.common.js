@@ -42,6 +42,14 @@ module.exports = function (options) {
                     exclude: [helpers.root('src/index.html')]
                 },
                 {
+                    test: /\.css$/,
+                    use: [
+                        'to-string-loader',
+                        'style-loader',
+                        'css-loader'
+                    ]
+                },
+                {
                     test: /\.scss$/,
                     exclude: [/\.glob\.scss$/],
                     loaders: [
@@ -139,10 +147,7 @@ module.exports = function (options) {
 
             new CopyWebpackPlugin([
                 {from: 'src/app/assets', to: 'assets'},
-                {
-                    from: 'node_modules/@plentymarkets/terra-components/app/assets/',
-                    to: 'node_modules/@plentymarkets/terra-components/app/assets/'
-                }
+                {from: 'node_modules/@plentymarkets/terra-components/app/assets/lang', to: 'assets/lang/terra-components/'}
             ]),
 
             new LoaderOptionsPlugin({

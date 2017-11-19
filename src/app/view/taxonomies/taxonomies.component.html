@@ -1,14 +1,14 @@
 <terra-base-toolbar>
     <terra-button [inputIsDisabled]="_isLoading"
-                  [inputIcon]="'icon-save'"
-                  (outputClicked)="onSaveBtnClicked()"></terra-button>
-    
-    <terra-button [inputIsDisabled]="_isLoading"
                   [inputIcon]="'icon-add'"
                   [inputIsTertiary]="true"
                   [inputTooltipText]="'shippingProfiles.tooltips.addCorrelation' | translate:lang"
                   [inputTooltipPlacement]="'right'"
                   (outputClicked)="addCorrelation()"></terra-button>
+    
+    <terra-button [inputIsDisabled]="_isLoading"
+                  [inputIcon]="'icon-save'"
+                  (outputClicked)="onSaveBtnClicked()"></terra-button>
 </terra-base-toolbar>
 
 

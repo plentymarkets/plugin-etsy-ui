@@ -5,7 +5,7 @@ import {
     TerraLoadingSpinnerService,
 } from '@plentymarkets/terra-components';
 import { Observable } from 'rxjs';
-import { AuthStatusInterface } from './data/auth-status.interface';
+import { AccountInterface } from './data/account.interface';
 import { LoginUrlInterface } from './data/login-url.interface';
 
 @Injectable()
@@ -24,7 +24,7 @@ export class AuthService extends TerraBaseService
         }
     }
 
-    public getLoginStatus():Observable<AuthStatusInterface>
+    public getLoginStatus():Observable<Array<AccountInterface>>
     {
         this.setAuthorization();
         this.setHeader();
@@ -45,6 +45,20 @@ export class AuthService extends TerraBaseService
 
         return this.mapRequest(
             this.http.get(url, {
+                headers: this.headers,
+            })
+        );
+    }
+    
+    public deleteAccount():Observable<any>
+    {
+        this.setAuthorization();
+        this.setHeader();
+
+        let url:string = this.url;
+
+        return this.mapRequest(
+            this.http.delete(url, {
                 headers: this.headers,
             })
         );

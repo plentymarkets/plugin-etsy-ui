@@ -1,11 +1,23 @@
 {
   "auth": {
+    "account": {
+      "consumerKey": "Consumer key",
+      "sharedSecret": "Shared secret",
+      "status": "Status",
+      "remove": "Löschen",
+      "cancel": "Abbrechen",
+      "active": "aktiv",
+      "inactive": "inaktiv",
+      "removeAccount": "Konto Löschen",
+      "removeConfirmationMessage": "Alle Einstellungen für dieses Konto werden gelöscht. Konto wirklich löschen?"
+    },
     "alerts": {
       "checkingLoginStatus": "Authentifizierungsstatus wird überprüft.",
       "alreadyAuthenticated": "Sie sind bereits authentifiziert. Sie können den Token dennoch erneuern.",
       "notAuthenticated": "Sie sind nicht authentifiziert. Loggen Sie sich ein.",
       "loginStatusCheckError": "Loginstatus nicht überprüft.",
-      "fetchLoginUrlError": "Login-URL nicht gefunden."
+      "fetchLoginUrlError": "Login-URL nicht gefunden.",
+      "cannotDeleteAccount": "Konto nicht gelöscht"
     }
   },
   "settings": {
@@ -56,7 +68,11 @@
     },
     "list": {
       "plentymarketsCategory": "Plentymarkets-Kategorie",
-      "etsyTaxonomy": "Etsy-Kategorie"
+      "etsyTaxonomy": "Etsy-Kategorie",
+      "buttons": {
+        "edit": "Bearbeiten",
+        "delete": "Löschen"
+      }
     },
     "correlation": {
       "plentymarketsCategory": "Plentymarkets-Kategorie",
@@ -76,7 +92,11 @@
     },
     "list": {
       "systemProperty": "Plentymarkets-Merkmal",
-      "property": "Etsy-Merkmal"
+      "property": "Etsy-Merkmal",
+      "buttons": {
+        "edit": "Bearbeiten",
+        "delete": "Löschen"
+      }
     },
     "correlation": {
       "systemProperty": "Plentymarkets-Merkmal",

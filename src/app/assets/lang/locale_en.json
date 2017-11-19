@@ -1,11 +1,24 @@
 {
   "auth": {
+    "account": {
+      "consumerKey": "Consumer key",
+      "sharedSecret": "Shared secret",
+      "status": "Status",
+      "requestsRemaining": "Requests remaining",
+      "remove": "Remove",
+      "cancel": "Cancel",
+      "active": "active",
+      "inactive": "inactive",
+      "removeAccount": "Remove Account",
+      "removeConfirmationMessage": "All settings for this account will be deleted. Really delete account?"
+    },
     "alerts": {
       "checkingLoginStatus": "Checking authentication status.",
       "alreadyAuthenticated": "You are already authenticated but you can renew your token if needed.",
       "notAuthenticated": "You are currently not authenticated. Please log in.",
       "loginStatusCheckError": "Login status not checked.",
-      "fetchLoginUrlError": "Could not get the login url."
+      "fetchLoginUrlError": "Could not get the login url.",
+      "cannotDeleteAccount": "Account not deleted"
     }
   },
   "settings": {
@@ -56,7 +69,11 @@
     },
     "list": {
       "plentymarketsCategory": "Plentymarkets category",
-      "etsyTaxonomy": "Etsy category"
+      "etsyTaxonomy": "Etsy category",
+      "buttons": {
+        "edit": "Edit",
+        "delete": "Delete"
+      }
     },
     "correlation": {
       "plentymarketsCategory": "Plentymarkets category",
@@ -76,7 +93,11 @@
     },
     "list": {
       "systemProperty": "Plentymarkets property",
-      "property": "Etsy property"
+      "property": "Etsy property",
+      "buttons": {
+        "edit": "Edit",
+        "delete": "Delete"
+      }
     },
     "correlation": {
       "systemProperty": "Plentymarkets property",
