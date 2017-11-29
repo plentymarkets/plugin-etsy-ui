@@ -77,7 +77,7 @@ export class TaxonomiesListComponent extends Translation implements OnInit, Terr
 
         if(isNullOrUndefined(taxonomyCorrelation.category.name) || isNullOrUndefined(taxonomyCorrelation.taxonomy.name))
         {
-            name = 'New taxonomy' + this.getNewCorrelationsCounter();
+            name = this.translation.translate('taxonomies.splitViewNames.newCorrelation') + this.getNewCorrelationsCounter();
         }
         
         this._editSplitViewConfig.addView({

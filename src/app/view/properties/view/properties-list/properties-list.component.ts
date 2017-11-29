@@ -78,7 +78,7 @@ export class PropertiesListComponent extends Translation implements OnInit, Terr
 
         if(isNullOrUndefined(propertyCorrelation.property.name) || isNullOrUndefined(propertyCorrelation.systemProperty.name))
         {
-            name = 'New property' + this.getNewCorrelationsCounter();
+            name = this.translation.translate('properties.splitViewNames.newCorrelation') + this.getNewCorrelationsCounter();
         }
 
         this._editSplitViewConfig.addView({
