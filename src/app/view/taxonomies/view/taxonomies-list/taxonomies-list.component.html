@@ -18,7 +18,7 @@
                         <terra-button [inputIcon]="'icon-delete'"
                                       [inputTooltipText]="'taxonomies.list.buttons.delete' | translate:lang"
                                       [inputTooltipPlacement]="'bottom'"
-                                      [inputIsDisabled]="taxonomyCorrelation.taxonomy.id && taxonomyCorrelation.taxonomy.id === _selectedTaxonomyCorrelation?.taxonomy.id && taxonomyCorrelation.category.id === _selectedTaxonomyCorrelation?.category.id"
+                                      [inputIsDisabled]="_selectedTaxonomyCorrelation && taxonomyCorrelation.uiId === _selectedTaxonomyCorrelation.uiId"
                                       (outputClicked)="onDeleteBtnClicked(taxonomyCorrelation)"
                                       [inputIsSecondary]="true"></terra-button>
                     

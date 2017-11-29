@@ -33,7 +33,7 @@
                         <terra-button [inputIcon]="'icon-delete'"
                                       [inputTooltipText]="'properties.list.buttons.delete' | translate:lang"
                                       [inputTooltipPlacement]="'bottom'"
-                                      [inputIsDisabled]="propertyCorrelation.property.id && propertyCorrelation.property.id === _selectedPropertyCorrelation?.property.id && propertyCorrelation.systemProperty.id === _selectedPropertyCorrelation?.systemProperty.id"
+                                      [inputIsDisabled]="_selectedPropertyCorrelation && propertyCorrelation.uiId === _selectedPropertyCorrelation.uiId"
                                       (outputClicked)="onDeleteBtnClicked(propertyCorrelation)"
                                       [inputIsSecondary]="true"></terra-button>
                     
