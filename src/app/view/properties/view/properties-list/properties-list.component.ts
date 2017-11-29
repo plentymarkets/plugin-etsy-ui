@@ -74,10 +74,17 @@ export class PropertiesListComponent extends Translation implements OnInit, Terr
     {
         this._selectedPropertyCorrelation = propertyCorrelation;
 
+        let name:string = propertyCorrelation.property.name + ' + ' + propertyCorrelation.systemProperty.name;
+
+        if(isNullOrUndefined(propertyCorrelation.property.name) || isNullOrUndefined(propertyCorrelation.systemProperty.name))
+        {
+            name = 'New property' + this.getNewCorrelationsCounter();
+        }
+
         this._editSplitViewConfig.addView({
             module:                PropertyCorrelationModule.forRoot(),
             defaultWidth:          'col-xs-12 col-md-8 col-lg-9',
-            name:                  propertyCorrelation.property.name + ' + ' + propertyCorrelation.systemProperty.name,
+            name:                  name,
             mainComponentName:     PropertyCorrelationModule.getMainComponent(),
             isBackgroundColorGrey: true,
             inputs:                [
@@ -95,5 +102,25 @@ export class PropertiesListComponent extends Translation implements OnInit, Terr
                 }
             ]
         }, this.splitViewInstance);
+    }
+
+    private getNewCorrelationsCounter():string
+    {
+        let counter:number = 0;
+
+        this.propertyCorrelations.forEach((propertyCorrelation:PropertyCorrelationInterface) =>
+        {
+            if(isNullOrUndefined(propertyCorrelation.property.name) && isNullOrUndefined(propertyCorrelation.systemProperty.name))
+            {
+                counter++;
+            }
+        });
+
+        if(counter > 1)
+        {
+            return ' (' + counter + ')'
+        }
+        
+        return '';
     }
 }

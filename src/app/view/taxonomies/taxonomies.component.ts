@@ -29,6 +29,8 @@ export class TaxonomiesComponent extends Translation implements OnInit
     private _isLoading:boolean;
 
     private _taxonomyCorrelations:Array<TaxonomyCorrelationInterface>;
+    
+    private _lastUiId:number;
 
     constructor(private _taxonomiesService:TaxonomiesService,
                 private _categoriesService:CategoriesService,
@@ -42,6 +44,8 @@ export class TaxonomiesComponent extends Translation implements OnInit
         this._isLoading = false;
 
         this._taxonomyCorrelations = [];
+
+        this._lastUiId = 0;
     }
 
     ngOnInit()
@@ -70,7 +74,15 @@ export class TaxonomiesComponent extends Translation implements OnInit
         ).subscribe(
             (data:any) =>
             {
-                this._taxonomyCorrelations = data.taxonomyCorrelations;
+                data.taxonomyCorrelations.forEach((taxonomyCorrelation:TaxonomyCorrelationInterface) => {
+                    this._lastUiId++;
+
+                    this._taxonomyCorrelations.push({
+                        uiId: this._lastUiId,
+                        taxonomy: taxonomyCorrelation.taxonomy,
+                        category: taxonomyCorrelation.category
+                    });
+                });
                 
                 this._editSplitViewConfig.addView({
                     module:                TaxonomiesListModule.forRoot(),
@@ -114,10 +126,13 @@ export class TaxonomiesComponent extends Translation implements OnInit
     
     private addCorrelation()
     {
+        this._lastUiId++;
+        
         this._taxonomyCorrelations.push({
+            uiId: this._lastUiId,
             taxonomy: {
                 id: null,
-                name: '[-]',
+                name: null,
                 isLeaf: true,
                 parentId: null,
                 level: 0,
@@ -126,7 +141,7 @@ export class TaxonomiesComponent extends Translation implements OnInit
             },
             category: {
                 id: null,
-                name: '[-]',
+                name: null,
                 isLeaf: true,
                 parentId: null,
                 level: 0,

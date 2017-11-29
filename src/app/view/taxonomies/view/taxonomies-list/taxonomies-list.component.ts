@@ -72,11 +72,18 @@ export class TaxonomiesListComponent extends Translation implements OnInit, Terr
     private editCorrelation(taxonomyCorrelation:TaxonomyCorrelationInterface)
     {
         this._selectedTaxonomyCorrelation = taxonomyCorrelation;
+
+        let name:string = taxonomyCorrelation.category.name + ' + ' + taxonomyCorrelation.taxonomy.name;
+
+        if(isNullOrUndefined(taxonomyCorrelation.category.name) || isNullOrUndefined(taxonomyCorrelation.taxonomy.name))
+        {
+            name = 'New taxonomy' + this.getNewCorrelationsCounter();
+        }
         
         this._editSplitViewConfig.addView({
             module:                TaxonomyCorrelationModule.forRoot(),
             defaultWidth:          'col-xs-12 col-md-8 col-lg-9',
-            name:                  taxonomyCorrelation.category.name + ' + ' + taxonomyCorrelation.taxonomy.name,
+            name:                  name,
             mainComponentName:     TaxonomyCorrelationModule.getMainComponent(),
             isBackgroundColorGrey: true,
             inputs:                [
@@ -104,7 +111,13 @@ export class TaxonomiesListComponent extends Translation implements OnInit, Terr
             names.push(cat.name);
         });
         
-        return names.join(' » ');
+        if(names.length)
+        {
+            return names.join(' » ');    
+        }
+        
+        return '-';
+        
     }
 
     private getTaxonomyName(taxonomy:TaxonomyInterface)
@@ -115,6 +128,31 @@ export class TaxonomiesListComponent extends Translation implements OnInit, Terr
             names.push(cat.name);
         });
 
-        return names.join(' » ');
+        if(names.length)
+        {
+            return names.join(' » ');    
+        }
+        
+        return '-';
+    }
+
+    private getNewCorrelationsCounter():string
+    {
+        let counter:number = 0;
+
+        this.taxonomyCorrelations.forEach((taxonomyCorrelation:TaxonomyCorrelationInterface) =>
+        {
+            if(isNullOrUndefined(taxonomyCorrelation.category.name) && isNullOrUndefined(taxonomyCorrelation.taxonomy.name))
+            {
+                counter++;
+            }
+        });
+
+        if(counter > 1)
+        {
+            return ' (' + counter + ')'
+        }
+
+        return '';
     }
 }

@@ -28,6 +28,8 @@ export class PropertiesComponent extends Translation implements OnInit
     private _isLoading:boolean;
 
     private _propertyCorrelations:Array<PropertyCorrelationInterface>;
+    
+    private _lastUiId:number;
 
     constructor(public translation:TranslationService,
                 private _editSplitViewConfig:PropertiesSplitConfig,
@@ -40,6 +42,8 @@ export class PropertiesComponent extends Translation implements OnInit
         this._isLoading = false;
 
         this._propertyCorrelations = [];
+        
+        this._lastUiId = 0;
     }
 
     ngOnInit()
@@ -68,7 +72,17 @@ export class PropertiesComponent extends Translation implements OnInit
         ).subscribe(
             (data:any) =>
             {
-                this._propertyCorrelations = data.propertyCorrelations;
+                data.propertyCorrelations.forEach((propertyCorrelation:PropertyCorrelationInterface) => {
+                    this._lastUiId++;
+
+                    this._propertyCorrelations.push({
+                       uiId: this._lastUiId,
+                       systemProperty: propertyCorrelation.systemProperty,
+                       property: propertyCorrelation.property
+                   });
+                });
+                
+                //this._propertyCorrelations = data.propertyCorrelations;
 
                 this._editSplitViewConfig.addView({
                     module:                PropertiesListModule.forRoot(),
@@ -112,18 +126,21 @@ export class PropertiesComponent extends Translation implements OnInit
 
     private addCorrelation()
     {
+        this._lastUiId++;
+        
         this._propertyCorrelations.push({
+            uiId: this._lastUiId,
             property:       {
                 id:        null,
                 groupId:   null,
-                name:      '[-]',
-                groupName: '[-]',
+                name:      null,
+                groupName: null,
             },
             systemProperty: {
                 id:        null,
                 groupId:   null,
-                name:      '[-]',
-                groupName: '[-]',
+                name:      null,
+                groupName: null,
             }
         })
     }

@@ -96,7 +96,7 @@ export class TaxonomyCorrelationComponent extends Translation implements OnInit,
                                    (data:any) =>
                                    {
                                        this.taxonomyCorrelation.taxonomy = data.taxonomy;
-                                       
+                                       this.updateViewName();
                                        this._loadingConfig.callLoadingEvent(false);
                                    },
                                    (error:any) =>
@@ -170,6 +170,7 @@ export class TaxonomyCorrelationComponent extends Translation implements OnInit,
                                    (data:any) =>
                                    {
                                        this.taxonomyCorrelation.category = data.category;
+                                       this.updateViewName();
 
                                        this._loadingConfig.callLoadingEvent(false);
                                    },
@@ -208,5 +209,30 @@ export class TaxonomyCorrelationComponent extends Translation implements OnInit,
         }
 
         return leafData;
+    }
+
+    private updateViewName():void
+    {
+        let taxonomyName:string;
+        let categoryName:string;
+
+        if(!isNullOrUndefined(this.taxonomyCorrelation.taxonomy.name))
+        {
+            taxonomyName = this.taxonomyCorrelation.taxonomy.name;
+        }
+        else
+        {
+            taxonomyName = '?';
+        }
+
+        if(!isNullOrUndefined(this.taxonomyCorrelation.category.name))
+        {
+            categoryName = this.taxonomyCorrelation.category.name;
+        }
+        else {
+            categoryName = '?';
+        }
+
+        this.splitViewInstance.name = taxonomyName + ' + ' + categoryName;
     }
 }

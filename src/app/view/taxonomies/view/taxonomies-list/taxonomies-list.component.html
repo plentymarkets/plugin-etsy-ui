@@ -3,7 +3,7 @@
         <template ngFor let-taxonomyCorrelation [ngForOf]="taxonomyCorrelations">
             <div class="col-xs-12" [ngClass]="{'col-md-6 col-lg-3': _isFocused}">
                 <terra-info-box
-                    [inputIsSelected]="taxonomyCorrelation.taxonomy.id && taxonomyCorrelation.taxonomy.id === _selectedTaxonomyCorrelation?.taxonomy.id && taxonomyCorrelation.category.id === _selectedTaxonomyCorrelation?.category.id">
+                    [inputIsSelected]="_selectedTaxonomyCorrelation && taxonomyCorrelation.uiId === _selectedTaxonomyCorrelation.uiId">
                     <div body style="white-space: initial">
                         {{ 'taxonomies.list.plentymarketsCategory' | translate:lang }}: <br><b [innerHtml]="getCategoryName(taxonomyCorrelation.category)"></b>
                         <br><br>

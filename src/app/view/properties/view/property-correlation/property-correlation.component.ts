@@ -18,6 +18,7 @@ import { PropertyInterface } from '../../../../core/rest/markets/etsy/properties
 import { SystemPropertyInterface } from '../../../../core/rest/markets/etsy/properties/data/system-property.interface';
 import { PropertyCorrelationInterface } from '../../../../core/rest/markets/etsy/properties/data/property-correlation.interface';
 import { PropertiesSplitConfig } from '../../config/properties-split.config';
+import { isNullOrUndefined } from 'util';
 
 @Component({
     selector: 'property-correlation',
@@ -115,6 +116,7 @@ export class PropertyCorrelationComponent extends Translation implements OnInit,
                     clickFunction: () =>
                                    {
                                        this.propertyCorrelation.property = child;
+                                       this.updateViewName();
                                    }
                 });
             });
@@ -181,11 +183,37 @@ export class PropertyCorrelationComponent extends Translation implements OnInit,
                     clickFunction: () =>
                                    {
                                        this.propertyCorrelation.systemProperty = child;
+                                       this.updateViewName();
                                    }
                 });
             });
         }
 
         return leafData;
+    }
+    
+    private updateViewName():void
+    {
+        let marketPropertyName:string;
+        let systemPropertyName:string;
+        
+        if(!isNullOrUndefined(this.propertyCorrelation.property.name))
+        {
+            marketPropertyName = this.propertyCorrelation.property.name;
+        }
+        else
+        {
+            marketPropertyName = '?';
+        }
+        
+        if(!isNullOrUndefined(this.propertyCorrelation.systemProperty.name))
+        {
+            systemPropertyName = this.propertyCorrelation.systemProperty.name;
+        }
+        else {
+            systemPropertyName = '?';
+        }
+        
+        this.splitViewInstance.name = marketPropertyName + ' + ' + systemPropertyName;
     }
 }

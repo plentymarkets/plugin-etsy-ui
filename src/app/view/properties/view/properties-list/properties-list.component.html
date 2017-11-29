@@ -2,11 +2,27 @@
     <div class="row">
         <template ngFor let-propertyCorrelation [ngForOf]="propertyCorrelations">
             <div class="col-xs-12" [ngClass]="{'col-md-6 col-lg-3': _isFocused}">
-                <terra-info-box [inputIsSelected]="propertyCorrelation.property.id && propertyCorrelation.property.id === _selectedPropertyCorrelation?.property.id && propertyCorrelation.systemProperty.id === _selectedPropertyCorrelation?.systemProperty.id">
+                <terra-info-box [inputIsSelected]="_selectedPropertyCorrelation && propertyCorrelation.uiId === _selectedPropertyCorrelation.uiId">
                     <div body style="white-space: initial">
-                        {{ 'properties.list.systemProperty' | translate:lang }}: <br><b [innerHtml]="propertyCorrelation.systemProperty.groupName + ' » ' + propertyCorrelation.systemProperty.name"></b>
+                        {{ 'properties.list.systemProperty' | translate:lang }}:
+                        
+                        <span *ngIf="propertyCorrelation.systemProperty.groupName;else no_system_property">
+                            <br><b [innerHtml]="propertyCorrelation.systemProperty.groupName + ' » ' + propertyCorrelation.systemProperty.name"></b>
+                        </span>
+                        <ng-template #no_system_property>
+                            <br><b>-</b>
+                        </ng-template>
+                        
                         <br><br>
-                        {{ 'properties.list.property' | translate:lang }}: <br><b [innerHtml]="propertyCorrelation.property.groupName + ' » ' + propertyCorrelation.property.name"></b>
+                        
+                        {{ 'properties.list.property' | translate:lang }}:
+                        <span *ngIf="propertyCorrelation.property.groupName;else no_market_property">
+                            <br><b [innerHtml]="propertyCorrelation.property.groupName + ' » ' + propertyCorrelation.property.name"></b>    
+                        </span>
+                        <ng-template #no_market_property>
+                            <br><b>-</b>
+                        </ng-template>
+                        
                     </div>
                     <div buttons>
                         <terra-button [inputIcon]="'icon-category_edit'"
