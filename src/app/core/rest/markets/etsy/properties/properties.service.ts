@@ -8,13 +8,16 @@ import { Observable } from 'rxjs';
 import { PropertyInterface } from "./data/property.interface";
 import { PropertyCorrelationInterface } from './data/property-correlation.interface';
 import { SystemPropertyInterface } from './data/system-property.interface';
+import {TranslationService} from "angular-l10n";
 
 @Injectable()
 export class PropertiesService extends TerraBaseService
 {
     private bearer:string;
 
-    constructor(loadingBarService:TerraLoadingSpinnerService, http:Http)
+    constructor(public translation:TranslationService,
+                loadingBarService:TerraLoadingSpinnerService, 
+                http:Http)
     {
         super(loadingBarService, http, '/rest/markets/etsy/properties/');
 
@@ -35,6 +38,9 @@ export class PropertiesService extends TerraBaseService
         return this.mapRequest(
             this.http.get(url, {
                 headers: this.headers,
+                params: {
+                    lang: this.translation.getLanguage()
+                }
             })
         );
     }
@@ -49,7 +55,9 @@ export class PropertiesService extends TerraBaseService
         return this.mapRequest(
             this.http.get(url, {
                 headers: this.headers,
-                body:    ''
+                params: {
+                    lang: this.translation.getLanguage()
+                }
             })
         );
     }
