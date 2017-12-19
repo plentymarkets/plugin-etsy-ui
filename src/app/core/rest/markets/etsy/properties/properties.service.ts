@@ -72,7 +72,9 @@ export class PropertiesService extends TerraBaseService
         return this.mapRequest(
             this.http.get(url, {
                 headers: this.headers,
-                body:    ''
+                params: {
+                    lang: this.translation.getLanguage()
+                }
             })
         );
     }
