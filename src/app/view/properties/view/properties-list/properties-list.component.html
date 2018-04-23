@@ -5,13 +5,16 @@
                 <terra-info-box [inputIsSelected]="_selectedPropertyCorrelation && propertyCorrelation.uiId === _selectedPropertyCorrelation.uiId">
                     <div body style="white-space: initial">
                         {{ 'properties.list.systemProperty' | translate:lang }}:
-                        
-                        <span *ngIf="propertyCorrelation.systemProperty.groupName;else no_system_property">
+
+                        <span *ngIf="propertyCorrelation.systemProperty.groupName">
                             <br><b [innerHtml]="propertyCorrelation.systemProperty.groupName + ' » ' + propertyCorrelation.systemProperty.name"></b>
                         </span>
-                        <ng-template #no_system_property>
+                        <span *ngIf="propertyCorrelation.systemProperty.name && !propertyCorrelation.systemProperty.groupName">
+                            <br><b [innerHtml]="propertyCorrelation.systemProperty.name"></b>
+                        </span>
+                        <span *ngIf="!propertyCorrelation.systemProperty.name && !propertyCorrelation.systemProperty.groupName">
                             <br><b>-</b>
-                        </ng-template>
+                        </span>
                         
                         <br><br>
                         

@@ -130,21 +130,37 @@ export class PropertyCorrelationComponent extends Translation implements OnInit,
         this._systemPropertiesTree = [];
 
         let systemPropertyGroups = [];
+        
+        let systemPropertyWithoutGroups = [];
 
         systemProperties.forEach((systemProperty:SystemPropertyInterface) =>
         {
-            if(systemPropertyGroups[systemProperty.groupId])
+            if(!isNullOrUndefined(systemProperty.groupId))
             {
-                systemPropertyGroups[systemProperty.groupId].children.push(systemProperty);
+                if(systemPropertyGroups[systemProperty.groupId])
+                {
+                    systemPropertyGroups[systemProperty.groupId].children.push(systemProperty);
+                }
+                else
+                {
+                    systemPropertyGroups[systemProperty.groupId] = {
+                        groupId:   systemProperty.groupId,
+                        groupName: systemProperty.groupName,
+                        name:      systemProperty.name,
+                        children:  [systemProperty]
+                    };
+                }
             }
             else
             {
-                systemPropertyGroups[systemProperty.groupId] = {
-                    groupId:   systemProperty.groupId,
-                    groupName: systemProperty.groupName,
-                    name:      systemProperty.name,
-                    children:  [systemProperty]
-                };
+                systemPropertyWithoutGroups.push(
+                    {
+                        groupId:   systemProperty.groupId,
+                        groupName: systemProperty.groupName,
+                        name:      systemProperty.name,
+                        children:  [systemProperty]
+                    }
+                );
             }
         });
 
@@ -155,6 +171,27 @@ export class PropertyCorrelationComponent extends Translation implements OnInit,
                 this._systemPropertiesTree.push(this.getSystemPropertyChildren(systemPropertyGroup));
             }
         });
+        
+        systemPropertyWithoutGroups.forEach((systemProperty:SystemPropertyInterface) => 
+        {
+            systemProperty.children.forEach((child) => {
+                let leafData = {
+                    caption:     child.name,
+                    id:          child.id,
+                    icon:        null,
+                    subLeafList: null,
+                    isActive:    child.id === this.propertyCorrelation.systemProperty.id,
+                    isOpen:      true,
+                    clickFunction: () =>
+                    {
+                        this.propertyCorrelation.systemProperty = child;
+                        this.updateViewName();
+                    }
+                };
+
+                this._systemPropertiesTree.push(leafData)
+            });
+        })
     }
 
     private getSystemPropertyChildren(systemProperty:SystemPropertyInterface)
