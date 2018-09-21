@@ -1,0 +1,28 @@
+<terra-base-toolbar>
+    <terra-button
+        [inputIsDisabled]="isLoading"
+        [inputIcon]="'icon-save'"
+        (outputClicked)="saveSettings()">
+    </terra-button>
+</terra-base-toolbar>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-md-6 col-lg-6">
+            <terra-portlet [inputPortletHeader]="'legal-informations.title' | translate:lang">
+                <terra-select-box
+                    #shopIdSelect
+                    [inputListBoxValues]="_languages"
+                    [(ngModel)]="_selectedLanguage"
+                    [inputName]="'settings.form.shopId' | translate:lang"
+                    (outputValueChanged)="setLegalInformationForLanguage()"
+                >
+                </terra-select-box>
+                <terra-text-area-input 
+                    [inputName]="'settings.form.shopId' | translate:lang"
+                    [(ngModel)]="_value"
+                    [inputMaxRows]="20">
+                </terra-text-area-input>
+            </terra-portlet>
+        </div>
+    </div>
+</div>

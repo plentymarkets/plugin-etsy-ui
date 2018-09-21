@@ -5,18 +5,15 @@ import {
     TerraBaseService
 } from '@plentymarkets/terra-components';
 import { Observable } from 'rxjs';
-import { SettingsInterface } from './data/settings.interface';
-import { SettingsParameterInterface } from './data/settings.parameter.interface';
-import { ShopInterface } from './data/shop.interface';
 
 @Injectable()
-export class SettingsService extends TerraBaseService
+export class LegalInformationService extends TerraBaseService 
 {
     private bearer:string;
 
     constructor(loadingBarService:TerraLoadingSpinnerService, http:Http)
     {
-        super(loadingBarService, http, '/rest/markets/etsy/settings/');
+        super(loadingBarService, http, '/rest/markets/etsy/settings/legal-information');
 
         if(process.env.ENV !== 'production')
         {
@@ -24,49 +21,45 @@ export class SettingsService extends TerraBaseService
             this.url = process.env.BASE_URL + this.url;
         }
     }
-
-    public getSettings():Observable<SettingsInterface>
-    {
-        this.setAuthorization();
-        this.setHeader();
-
-        let url:string = this.url + 'all';
-
-        return this.mapRequest(
-            this.http.get(url, {
-                headers: this.headers,
-                body:    ''
-            })
-        );
-    }
-
-    public saveSettings(settingsParameterInterface:SettingsParameterInterface):Observable<void>
-    {
-        this.setAuthorization();
-        this.setHeader();
-
-        let url:string = this.url + 'save';
     
+    public saveLegalInformation(legalInformationSettings):Observable<void>
+    {
+        this.setAuthorization();
+        this.setHeader();
+
         return this.mapRequest(
-            this.http.post(url,
+            this.http.post(this.url,
                 {},
                 {
                     headers: this.headers,
-                    body:    settingsParameterInterface
+                    body:    legalInformationSettings
                 })
         );
     }
+    
+    public updateLegalInformation(legalInformationSettings):Observable<void> {
+        this.setAuthorization();
+        this.setHeader();
 
-    public getShops():Observable<Array<ShopInterface>>
+        return this.mapRequest(
+            this.http.post(this.url + '/' + legalInformationSettings.id,
+                {},
+                {
+                    headers: this.headers,
+                    body:    legalInformationSettings
+                })
+        );
+    }
+    
+    public loadLegalInformation()
     {
         this.setAuthorization();
         this.setHeader();
 
-        let url:string = this.url + 'shops';
-
         return this.mapRequest(
-            this.http.get(url, {
+            this.http.get(this.url, {
                 headers: this.headers,
+                body:    ''
             })
         );
     }
