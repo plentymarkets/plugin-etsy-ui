@@ -62,7 +62,31 @@ export class LegalInformationComponent extends Translation implements OnInit {
     }
     
     private loadSettings()
-    {}
+    {
+        this.legalInformationService.loadLegalInformation().subscribe(
+            response =>
+            {
+                this.fillLegalInformationData(response);
+                this._alertConfig.callStatusEvent(this.translation.translate('settings.alerts.settingsSaved'), 'success');
+
+                this._loadingConfig.callLoadingEvent(false);
+            },
+
+            error =>
+            {
+                this._alertConfig.callStatusEvent(this.translation.translate('settings.alerts.settingsNotSaved') + ': ' + error.statusText, 'danger');
+
+                this._loadingConfig.callLoadingEvent(false);
+            }
+        );
+    }
+    
+    private fillLegalInformationData(responseList:any)
+    {
+        for (let entry of responseList.entries) {
+            this.values[entry.lang] = entry.value;
+        }
+    }
     
     private saveSettings()
     {
