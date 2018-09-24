@@ -35,15 +35,15 @@ export class LegalInformationComponent extends Translation implements OnInit {
         this._languages = [
             {
                 value: 'de',
-                caption: 'de'
+                caption: this.translation.translate('settings.languages.german')
             },
             {
                 value: 'en',
-                caption: 'en'
+                caption: this.translation.translate('settings.languages.english')
             },
             {
                 value: 'fr',
-                caption: 'fr'
+                caption: this.translation.translate('settings.languages.french')
             }
         ];
 
