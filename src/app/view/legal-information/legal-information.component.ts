@@ -46,6 +46,12 @@ export class LegalInformationComponent extends Translation implements OnInit {
                 caption: 'fr'
             }
         ];
+
+        this.values = {
+            de: '',
+            en: '',
+            fr: '',
+        }
     }
     
     ngOnInit()
@@ -83,9 +89,11 @@ export class LegalInformationComponent extends Translation implements OnInit {
     
     private fillLegalInformationData(responseList:any)
     {
-        for (let entry of responseList.entries) {
+        responseList.forEach((entry) => {
             this.values[entry.lang] = entry.value;
-        }
+        });
+
+        this.setLegalInformationForLanguage();
     }
     
     private saveSettings()

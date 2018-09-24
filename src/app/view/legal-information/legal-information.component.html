@@ -19,7 +19,7 @@
                 </terra-select-box>
                 <terra-text-area-input 
                     [inputName]="'settings.form.shopId' | translate:lang"
-                    [(ngModel)]="_value"
+                    [(ngModel)]="values[_selectedLanguage]"
                     [inputMaxRows]="20">
                 </terra-text-area-input>
             </terra-portlet>
