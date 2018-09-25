@@ -102,7 +102,7 @@ export class LegalInformationComponent extends Translation implements OnInit {
         
         let legalInformationSettings = {
             id: null,
-            value: this._value,
+            value: this.values[this._selectedLanguage],
             lang: this._selectedLanguage
         };
         
