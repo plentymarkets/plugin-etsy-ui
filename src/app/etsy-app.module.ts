@@ -18,12 +18,6 @@ import { AuthModule } from './view/auth/auth.module';
 import { AuthComponent } from './view/auth/auth.component';
 import { SettingsModule } from './view/settings/settings.module';
 import { SettingsComponent } from './view/settings/settings.component';
-import { ShippingProfilesComponent } from './view/shipping-profiles/shipping-profiles.component';
-import { ShippingProfilesModule } from './view/shipping-profiles/shipping-profiles.module';
-import { TaxonomiesModule } from './view/taxonomies/taxonomies.module';
-import { TaxonomiesComponent } from './view/taxonomies/taxonomies.component';
-import { PropertiesModule } from './view/properties/properties.module';
-import { PropertiesComponent } from './view/properties/properties.component';
 import { LegalInformationModule } from './view/legal-information/legal-information.module';
 import { LegalInformationComponent } from './view/legal-information/legal-information.component';
 
@@ -37,18 +31,12 @@ import { LegalInformationComponent } from './view/legal-information/legal-inform
         TerraComponentsModule.forRoot(),
         AuthModule.forRoot(),
         SettingsModule.forRoot(),
-        ShippingProfilesModule.forRoot(),
-        TaxonomiesModule.forRoot(),
-        PropertiesModule.forRoot(),
         LegalInformationModule.forRoot(),
     ],
     declarations: [
         EtsyAppComponent,
         AuthComponent,
         SettingsComponent,
-        ShippingProfilesComponent,
-        TaxonomiesComponent,
-        PropertiesComponent,
         LegalInformationComponent,
     ],
 
